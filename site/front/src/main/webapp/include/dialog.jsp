@@ -17,10 +17,10 @@
             在这里添加一些文本
          </div>
          <div class="modal-footer tc">
-            <button type="button" class="btn btn-default" 
+            <button type="button" class="btn btn-default mr20" 
                data-dismiss="modal" id="modalCancel">取消
             </button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal" id="modalOk">
+            <button type="button" class="btn btn-primary ml20" data-dismiss="modal" id="modalOk">
                	确定
             </button>
          </div>

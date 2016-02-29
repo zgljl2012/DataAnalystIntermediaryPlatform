@@ -25,7 +25,7 @@ public class C3P0Util {
     static{
         cpds = new ComboPooledDataSource();
         String driverClass = "com.mysql.jdbc.Driver";   
-        String jdbcURL = "jdbc:mysql://localhost:3306/db_01?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true";   
+        String jdbcURL = "jdbc:mysql://localhost:3306/db_01?useUnicode=true&characterEncoding=utf-8&autoReconnect=true";   
         String user = "root";   
         String password = "";   
         try {

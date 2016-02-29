@@ -40,5 +40,12 @@
    <%--对话框 --%>
    <%@include file="/include/dialog.jsp" %>
    <script src="/front/publics/js/user/index.js"></script>
+   <script src="/front/publics/js/common/dialog.js"></script>
+   <script>
+   <%--用户名验证正则表达式 --%>
+   var regUsername = /^[a-zA-Z][a-zA-Z0-9_]{5,18}$/;
+   <%--分析师基础资料修改地址--%>
+   var fxsBaseInfoUpdateUrl = "/front/user/fxsUpdate";
+   </script>
 </body>
 </html>

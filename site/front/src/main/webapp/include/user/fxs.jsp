@@ -33,12 +33,12 @@
       			<div class="col-sm-4">
       				<span>用户名:</span>
       				<input type="text" name="username" value="<%=ljlSession.getUsername() %>" maxlength="18" disabled/>
-      				<a onclick="edit('username','编辑','完成', updateUsername)" class="cp">编辑</a>
+      				<a edit onclick="edit('username','编辑','完成', updateUsername)" class="cp">编辑</a>
       			</div>
       			<div class="col-sm-5">
       				<span>真实姓名:</span>
-      				<input type="text" name="realname" value="<%=ljlSession.getUsername() %>" maxlength="18" disabled/>
-      				<a onclick="edit('realname','编辑','完成', updateRealname)" class="cp">编辑</a>
+      				<input type="text" name="realName" value="<%=ljlSession.getUsername() %>" maxlength="18" disabled/>
+      				<a edit onclick="edit('realName','编辑','完成', updateRealname)" class="cp">编辑</a>
       			</div>
       		</div>
       		<div class="row mt20">
@@ -47,19 +47,19 @@
       				<input type="text" name="email" value="<%=ljlSession.getUsername() %>" maxlength="18" disabled/>
       				<a onclick="edit('email','编辑','完成', updateEmail)" class="cp">编辑</a>
       			</div>
-      			<div class="col-sm-4">
+      			<div class="col-sm-5">
       				<span>出生日期:</span>
-      				<input id="startDate" readonly disabled class="dateTime" type="text" name="startDate">
-      				<a onclick="edit('startDate', '编辑','完成',updateDate)" class="cp">编辑</a>
+      				<input id="bornDate" readonly disabled class="dateTime" type="text" name="bornDate">
+      				<a edit onclick="edit('bornDate', '编辑','完成',updateDate)" class="cp">编辑</a>
       			</div>
-      			<div class="col-sm-4">
+      			<div class="col-sm-3">
       				<span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</span>
       				<select name="gender" disabled>
       					<option value="BM">保密</option>
       					<option value="NAN">男</option>
       					<option value="NV">女</option>
       				</select>
-      				<a onclick="edit('gender','编辑','完成', updateGender)" class="cp">编辑</a>
+      				<a edit onclick="edit('gender','编辑','完成', updateGender)" class="cp">编辑</a>
       			</div>
       			
       		</div>

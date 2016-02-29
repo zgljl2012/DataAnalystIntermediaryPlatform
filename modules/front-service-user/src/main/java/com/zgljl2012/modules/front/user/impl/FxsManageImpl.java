@@ -49,37 +49,37 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 		try(PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
 			conn.setAutoCommit(false);
 			if(query!=null) {
+				int i = 1;
 				if(query.getRealName() != null) {
-					pstmt.setString(1, query.getRealName());
+					pstmt.setString(i++, query.getRealName());
 				}
 				if(query.getGender() != null) {
-					pstmt.setString(2, query.getGender().name());
+					pstmt.setString(i++, query.getGender().name());
 				}
 				if(query.getBornDate() != null) {
-					pstmt.setDate(3, new java.sql.Date(query.getBornDate().getTime()));
+					pstmt.setDate(i++, new java.sql.Date(query.getBornDate().getTime()));
 				}
 				if(query.getPersonalIntroduce() != null) {
-					pstmt.setString(4, query.getPersonalIntroduce());
+					pstmt.setString(i++, query.getPersonalIntroduce());
 				}
 				if(query.getEmployDate() != null) {
-					pstmt.setDate(5, new java.sql.Date(query.getEmployDate().getTime()));
+					pstmt.setDate(i++, new java.sql.Date(query.getEmployDate().getTime()));
 				}
 				if(query.getSchool() != null) {
-					pstmt.setString(6, query.getSchool());
+					pstmt.setString(i++, query.getSchool());
 				}
 				if(query.getCompany() != null) {
-					pstmt.setString(7, query.getCompany());
+					pstmt.setString(i++, query.getCompany());
 				}
 				if(query.getHeadImgLink() != null) {
-					pstmt.setString(8, query.getHeadImgLink());
+					pstmt.setString(i++, query.getHeadImgLink());
 				}
 			}
 			pstmt.execute();
+			conn.commit();
 		} catch(Exception e) {
 			conn.rollback();
 			throw e;
 		}
 	}
-	
-	
 }

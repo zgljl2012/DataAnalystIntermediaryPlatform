@@ -1,5 +1,6 @@
 package com.zgljl2012.modules.front.user;
 
+import com.zgljl2012.framework.service.Service;
 import com.zgljl2012.modules.front.user.query.T20Query;
 
 /**
@@ -7,7 +8,7 @@ import com.zgljl2012.modules.front.user.query.T20Query;
  * @version 2016年2月29日上午10:05:23
  * 分析师用户管理
  */
-public interface FxsManage {
+public interface FxsManage extends Service{
 	
 	/**
 	 * 根据T20Query里的内容，更新T20

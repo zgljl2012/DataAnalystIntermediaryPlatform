@@ -10,6 +10,8 @@ import com.zgljl2012.framework.util.JSON;
  */
 public class TestJSON {
 	
+	
+	
 	@Test
 	public void test() {
 		JSON j = new JSON();
@@ -27,4 +29,17 @@ public class TestJSON {
 		j.put("d", "4");
 		System.out.println(j.toString());
 	}
+	
+	@Test
+	public void testObject() {
+		JSON j = new JSON();
+		A a = new A();
+		a.a = 1;
+		a.b = "Hello";
+		
+		j.put("data", a);
+		System.out.println(j.toString());
+	}
+	
+	
 }

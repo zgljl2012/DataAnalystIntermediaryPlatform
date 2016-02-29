@@ -238,6 +238,9 @@ public class UserManageImpl extends AbstractService implements UserManage{
 		if(StringHelper.isEmpty(username)) {
 			throw new Exception("用户名不能为空");
 		}
+		if(this.isUsernameExists(username)) {
+			throw new Exception("用户名已被占用，请重新输入用户名");
+		}
 		String sql = "UPDATE T10 SET F02 = ? WHERE F01 = ?";
 		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, username);
