@@ -24,7 +24,6 @@ function initFxs() {
 	    forceParse: 0,
 	    format:"yyyy-mm-dd"
 	});
-	
 	// 初始化数据
 	$.ajax({
 		type:"get",
@@ -51,6 +50,14 @@ function initFxs() {
 			showAlert("网络连接出错！请刷新重试！");
 		}
 	});
+}
+
+/**
+ * 改变头像
+ */
+function changeHeadImage() {
+	// 初始化上传图像控件
+	$("#imgImputDialog").modal("show");
 }
 
 /**

@@ -64,7 +64,6 @@
       				</select>
       				<a edit onclick="edit('gender','编辑','完成', updateGender)" class="cp">编辑</a>
       			</div>
-      			
       		</div>
       	</div>
       </div>
@@ -84,4 +83,39 @@
    </div>
 </div>
 	</div></div>
+	<%--上传图片对话框 --%>
+    <div class="modal fade" id="imgImputDialog" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" 
+               data-dismiss="modal" aria-hidden="true">
+                  &times;
+            </button>
+            <h4 class="modal-title">
+               	上传图片
+            </h4>
+         </div>
+         <div class="modal-body">
+            <form enctype="multipart/form-data" action="/front/uploadHeadImage" method="post">
+                <input id="file-0a" name="imgHead" class="file" type="file" multiple data-min-file-count="1">
+            </form>
+         </div>
+         <div class="modal-footer tc">
+            <button type="button" class="btn btn-default mr20" 
+               data-dismiss="modal">取消
+            </button>
+            <button type="button" class="btn btn-primary ml20" data-dismiss="modal">
+               	确定
+            </button>
+         </div>
+      </div><!-- /.modal-content -->
+</div></div><!-- /.modal -->
 </div>
+<script>
+$('#file-0a').fileinput({
+    language: 'zh',
+    allowedFileExtensions : ['jpg', 'png','gif'],
+});
+</script>
