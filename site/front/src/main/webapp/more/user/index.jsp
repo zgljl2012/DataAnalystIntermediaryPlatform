@@ -12,14 +12,18 @@
 <link href="publics/css/offcanvas.css" rel="stylesheet">
 <link href="publics/css/zg-common.css" rel="stylesheet"/>
 <link href="publics/css/app.css" rel="stylesheet"/>
-<link href="publics/css/date/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+
+<link href="publics/css/plugins/date/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+<link href="publics/css/plugins/fileInput/fileinput.css" rel="stylesheet"/>
+
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-<!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
-<script src="publics/js/ie-emulation-modes-warning.js"></script>
+<!--[if lt IE 9]><script src="publics/js/ie8-responsive-file-warning.js"></script><![endif]-->
 <script type="text/javascript" src="publics/js/jquery.min.js"></script>
 <script type="text/javascript" src="publics/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="publics/js/date/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript" src="publics/js/date/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="publics/js/plugins/date/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="publics/js/plugins/date/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="publics/js/plugins/fileInput/fileinput.min.js"></script>
+<script type="text/javascript" src="publics/js/plugins/fileInput/fileinput_locale_zh.js"></script>
 <%--验证用户有没有登录 --%>
 <%@include file="/include/validate.jsp" %>
 <%
@@ -42,10 +46,14 @@
    <script src="/front/publics/js/user/index.js"></script>
    <script src="/front/publics/js/common/dialog.js"></script>
    <script>
+   <%--用户类型--%>
+   var userType = '<%=userType%>';
    <%--用户名验证正则表达式 --%>
    var regUsername = /^[a-zA-Z][a-zA-Z0-9_]{5,18}$/;
    <%--分析师基础资料修改地址--%>
    var fxsBaseInfoUpdateUrl = "/front/user/fxsUpdate";
+   <%--分析师基础资料获取Url--%>
+   var fxsBaseInfoUrl = "/front/user/fxsBaseInfo";
    </script>
 </body>
 </html>

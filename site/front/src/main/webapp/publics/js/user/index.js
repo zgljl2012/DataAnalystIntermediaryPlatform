@@ -3,6 +3,15 @@
 var global = new Object();
 
 $(function(){
+	if(userType == 'FXS') {
+		initFxs();
+	}
+});
+
+/**
+ * 当用户为分析师时调用此初始化
+ */
+function initFxs() {
 	//初始化日期控件
 	$('#bornDate').datetimepicker({  
 	    language:  'zh-CN',  
@@ -16,14 +25,33 @@ $(function(){
 	    format:"yyyy-mm-dd"
 	});
 	
-	// 初始化
-	global.map = [];
-	global.map["username"] = $("input[name='username']").val();
-	global.map["realName"] = $("input[name='realName']").val();
-	global.map["bornDate"] = $("input[name='bornDate']").val();
-	global.map["gender"] = $("input[name='gender']").val();
-	
-});
+	// 初始化数据
+	$.ajax({
+		type:"get",
+		url:fxsBaseInfoUrl,
+		success:function(data){
+			data = eval('('+data+')');
+			$("input[name='username']").val(data.t10.F02);
+			$("input[name='realName']").val(data.t20.F02);
+			$("input[name='bornDate']").val(data.t20.F04);
+			$("input[name='email']").val(data.t10.F03);
+			$("select[name='gender']").val(data.t20.F03);
+			// 初始化
+			global.map = [];
+			global.map["username"] = $("input[name='username']").val();
+			global.map["realName"] = $("input[name='realName']").val();
+			global.map["bornDate"] = $("input[name='bornDate']").val();
+			global.map["gender"] = $("select[name='gender']").val();
+			global.map["email"] = $("input[name='email']").val();
+			// 设置用户状态
+			global.userStatus = data.t10.F08; 
+		},
+		error:function(err) {
+			console.log(err);
+			showAlert("网络连接出错！请刷新重试！");
+		}
+	});
+}
 
 /**
  * 使一个input变成可编辑的
@@ -65,6 +93,9 @@ function edit(name, a_hint1, a_hint2, callback) {
 								a.nextAll("a[cancel]").remove();
 							}
 						}
+					},
+					error:function(err) {
+						showAlert("网络连接出错！请刷新重试！");
 					}
 				});
 			}
@@ -72,6 +103,11 @@ function edit(name, a_hint1, a_hint2, callback) {
 	}
 }
 
+/**
+ * 分析师取消按钮
+ * @param name
+ * @param a_hint1
+ */
 function cancel(name, a_hint1) {
 	var e = $("input[name="+name+"]");
 	if(name=="gender") {
@@ -116,7 +152,17 @@ function updateRealname() {
  * 修改邮箱
  */
 function updateEmail() {
-	console.log("邮箱");
+	if(global.userStatus == "WJH") {
+		showAlert("此邮箱尚未激活！不允许修改");
+		return false;
+	}
+	showDialog("更改邮箱提示","修改邮箱会让用户状态变为未激活，" +
+		"在邮箱验证后才能激活用户，在此之前，" +
+		"不能进行投标操作。确定进行邮箱修改？", 
+		function() {
+			
+	});
+	return false;
 }
 
 /**

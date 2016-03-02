@@ -1,5 +1,6 @@
 package com.zgljl2012.framework.util;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -36,27 +37,39 @@ public class JSON {
 	 */
 	public void put(String key, Object value) {
 		Class<? extends Object> cls = value.getClass();
-		// 获取所有方法
-		Method[] methods = cls.getMethods();
+		Field[] fields = cls.getDeclaredFields();
 		StringBuilder builder = new StringBuilder();
 		JSON json = new JSON();
-		for(Method method : methods) {
-			if(method.getName().startsWith("get")) {
-				try {
+		for(Field field : fields) {
+			String methodName = "get";
+			methodName += 
+					field.getName().substring(0, 1).toUpperCase()
+					+ field.getName().substring(1);
+			try {
+				Method method = cls.getMethod(methodName,null);
+				if(method != null) {
 					Object o = method.invoke(value, null);
-					String k = method.getName().substring(3);
-					String v = o.toString();
-					json.put(k, v);
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					if(o != null) {
+						String k = method.getName().substring(3);
+						String v = o.toString();
+						json.put(k, v);
+					}
 				}
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		this.put(key, json);

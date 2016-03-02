@@ -25,8 +25,11 @@
 <div id="myTabContent" class="tab-content">
    <div class="tab-pane fade in active" id="baseInfo">
       <div class="row mt20">
-      	<div class="col-sm-1">
-      		<img src="#" title="点击上传图像" width="100" height="100"/>
+      	<div class="col-sm-1 tc">
+      		<img src="#" width="100" height="100" class="display_block"/>
+      		<div class="form-group tc ml10">
+                <input onclick="changeHeadImage()" type="button" class="btn btn-primary fs05 mt5" value="上传图像">
+            </div>
       	</div>
       	<div class="col-sm-10 ml20">
       		<div class="row mt10">

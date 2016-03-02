@@ -2,7 +2,11 @@ package com.zgljl2012.modules.front.user.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
+import com.zgljl2012.common.database.T20;
+import com.zgljl2012.common.database.enums.Gender;
 import com.zgljl2012.framework.service.AbstractService;
 import com.zgljl2012.modules.front.user.FxsManage;
 import com.zgljl2012.modules.front.user.query.T20Query;
@@ -80,6 +84,30 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 		} catch(Exception e) {
 			conn.rollback();
 			throw e;
+		}
+	}
+
+	@Override
+	public T20 getT20(int uid) throws Exception {
+		Connection conn = getConnection();
+		String sql = "SELECT F02,F03,F04,F05,F06,F07,F08,F09 FROM T20 WHERE F01 = "+uid;
+		try(Statement stmt = conn.createStatement()) {
+			ResultSet rs = stmt.executeQuery(sql);
+			if(rs.next()) {
+				T20 t = new T20();
+				t.setF01(uid);
+				t.setF02(rs.getString(1));
+				t.setF03(Gender.parse(rs.getString(2)));
+				t.setF04(rs.getDate(3));
+				t.setF05(rs.getString(4));
+				t.setF06(rs.getDate(5));
+				t.setF07(rs.getString(6));
+				t.setF08(rs.getString(7));
+				t.setF09(rs.getString(8));
+				return t;
+			} else {
+				throw new Exception("没有找到该用户！");
+			}
 		}
 	}
 }

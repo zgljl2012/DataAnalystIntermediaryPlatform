@@ -1,6 +1,7 @@
 package com.zgljl2012.framework.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -8,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.zgljl2012.framework.controller.Controller;
-import com.zgljl2012.framework.service.ServiceManage;
-import com.zgljl2012.framework.simple.service.ServiceManageSimple;
 
 /**
  *@author 廖金龙
@@ -17,8 +16,9 @@ import com.zgljl2012.framework.simple.service.ServiceManageSimple;
  */
 @SuppressWarnings("serial")
 public abstract class AbstractServlet extends HttpServlet{
-	protected ServiceManage serviceManage = new ServiceManageSimple();
+	
 	protected Controller controller;
+	
 	@Override
 	public void init() throws ServletException {
 		controller = (Controller) this.getServletContext().getAttribute("controller");
@@ -84,5 +84,16 @@ public abstract class AbstractServlet extends HttpServlet{
 	 */
 	protected void redirect(HttpServletResponse res, String url) throws IOException {
 		res.sendRedirect(url);
+	}
+	
+	/**
+	 * 输出字符串给客户端
+	 * @param res
+	 * @param s
+	 * @throws IOException
+	 */
+	protected void out(HttpServletResponse res, String s) throws IOException {
+		PrintWriter out = res.getWriter();
+		out.println(s);
 	}
 }
