@@ -20,6 +20,14 @@ public enum SystemVariable implements VariableBean{
 			// TODO Auto-generated method stub
 			return "4";
 		}
+	},
+	
+	FILE_UPLOAD_PATH("文件上传路径") {
+		@Override
+		public String getValue() {
+			// 默认为用户路径
+			return System.getProperty("user.home");
+		}
 	}
 	;
 	

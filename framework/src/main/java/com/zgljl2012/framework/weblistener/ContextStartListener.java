@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.fileupload.FileUpload;
 import com.zgljl2012.framework.service.ServiceManage;
 import com.zgljl2012.framework.servlet.session.LjlSession;
 import com.zgljl2012.framework.simple.service.ServiceManageSimple;
@@ -87,6 +88,12 @@ public class ContextStartListener implements  ServletContextListener{
 			public void redirect(HttpServletResponse res, String url)
 					throws IOException {
 				res.sendRedirect(url);
+			}
+
+			@Override
+			public FileUpload getFileUpload() {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		};
 		arg0.getServletContext().setAttribute("controller", controller);

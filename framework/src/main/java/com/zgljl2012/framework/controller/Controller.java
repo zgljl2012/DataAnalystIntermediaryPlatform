@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.zgljl2012.framework.fileupload.FileUpload;
 import com.zgljl2012.framework.service.ServiceManage;
 import com.zgljl2012.framework.servlet.session.LjlSession;
 import com.zgljl2012.framework.variable.VariableManage;
@@ -58,4 +59,10 @@ public interface Controller {
 	 * @throws IOException
 	 */
 	public void redirect(HttpServletResponse res, String url) throws IOException;
+	
+	/**
+	 * 获取文件上传器
+	 * @return
+	 */
+	public FileUpload getFileUpload();
 }

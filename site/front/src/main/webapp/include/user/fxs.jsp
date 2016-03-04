@@ -97,19 +97,21 @@
                	上传图片
             </h4>
          </div>
+         <form id="fileForm" enctype="multipart/form-data" action="/front/uploadHeadImage" method="post" onSubmit="return fileUpload()">
          <div class="modal-body">
-            <form enctype="multipart/form-data" action="/front/uploadHeadImage" method="post">
                 <input id="file-0a" name="imgHead" class="file" type="file" multiple data-min-file-count="1">
-            </form>
+            	<input name="filename" class="display_none" type="text"/>
+            
          </div>
          <div class="modal-footer tc">
             <button type="button" class="btn btn-default mr20" 
                data-dismiss="modal">取消
             </button>
-            <button type="button" class="btn btn-primary ml20" data-dismiss="modal">
+            <button type="button" class="btn btn-primary ml20" data-dismiss="modal" onclick="$('#fileForm').submit()">
                	确定
             </button>
          </div>
+         </form>
       </div><!-- /.modal-content -->
 </div></div><!-- /.modal -->
 </div>
@@ -118,4 +120,18 @@ $('#file-0a').fileinput({
     language: 'zh',
     allowedFileExtensions : ['jpg', 'png','gif'],
 });
+$("input[name='filename']").addClass("display_none");
+function fileUpload() {
+	var elem = $("div[class='file-caption-name']");
+	if(elem == null) {
+		return false;
+	}
+	var filename = elem.text();
+	if(filename==null|| filename!=null&&$.trim(filename)=="") {
+		return false;
+	}
+	$("input[name='filename']").val(filename);
+	$("input[name='filename']").removeClass("display_none");
+	return true;
+}
 </script>
