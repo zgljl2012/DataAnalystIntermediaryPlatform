@@ -26,7 +26,7 @@ public enum SystemVariable implements VariableBean{
 		@Override
 		public String getValue() {
 			// 默认为用户路径
-			return System.getProperty("user.home");
+			return System.getProperty("user.home")+"/ljl-project-file";
 		}
 	}
 	;

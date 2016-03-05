@@ -252,5 +252,11 @@ public class UserManageImpl extends AbstractService implements UserManage{
 		}
 	}
 
+	@Override
+	public void updateHeadImage(String fileName) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

@@ -88,4 +88,11 @@ public interface UserManage extends Service {
 	 * @throws Exception
 	 */
 	public void updateUsername(int uid, String username) throws Exception;
+	
+	/**
+	 * 上传图像，存储图像的相对路径到数据库
+	 * @param fileName
+	 * @throws Exception
+	 */
+	public void updateHeadImage(String fileName) throws Exception;
 }

@@ -14,6 +14,7 @@ import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.fileupload.FileUpload;
 import com.zgljl2012.framework.service.ServiceManage;
 import com.zgljl2012.framework.servlet.session.LjlSession;
+import com.zgljl2012.framework.simple.fileupload.FileUploadSimple;
 import com.zgljl2012.framework.simple.service.ServiceManageSimple;
 import com.zgljl2012.framework.simple.servlet.session.LjlSessionSimple;
 import com.zgljl2012.framework.simple.variable.VariableManageSimple;
@@ -40,11 +41,15 @@ public class ContextStartListener implements  ServletContextListener{
 			
 			private VariableManage variableManage = new VariableManageSimple(null);
 			
+			private FileUpload fileUpload = new FileUploadSimple();
+			
+			@Override
 			public ServiceManage getServiceManage() {
 				// TODO Auto-generated method stub
 				return serviceManage;
 			}
-
+			
+			@Override
 			public VariableManage getVariableManage() {
 				// TODO Auto-generated method stub
 				return variableManage;
@@ -93,7 +98,7 @@ public class ContextStartListener implements  ServletContextListener{
 			@Override
 			public FileUpload getFileUpload() {
 				// TODO Auto-generated method stub
-				return null;
+				return fileUpload;
 			}
 		};
 		arg0.getServletContext().setAttribute("controller", controller);
