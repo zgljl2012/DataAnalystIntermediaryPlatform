@@ -77,7 +77,7 @@ public class FileUploadSimple implements FileUpload{
 	}
 
 	@Override
-	public String getPath(String path) {
+	public String getPath() {
 		// TODO Auto-generated method stub
 		return path;
 	}

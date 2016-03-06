@@ -8,6 +8,7 @@ import java.sql.Statement;
 import com.zgljl2012.common.database.T20;
 import com.zgljl2012.common.database.enums.Gender;
 import com.zgljl2012.framework.service.AbstractService;
+import com.zgljl2012.framework.util.StringHelper;
 import com.zgljl2012.modules.front.user.FxsManage;
 import com.zgljl2012.modules.front.user.query.T20Query;
 
@@ -108,6 +109,21 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 			} else {
 				throw new Exception("没有找到该用户！");
 			}
+		}
+	}
+	
+	@Override
+	public void updateHeadImage(int uid, String fileName) throws Exception {
+		// TODO Auto-generated method stub
+		Connection conn = getConnection();
+		if(StringHelper.isEmpty(fileName)) {
+			throw new Exception("头像链接为空！");
+		}
+		String sql = "UPDATE T20 SET F09 = ? WHERE F01 = ?";
+		try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, fileName);
+			pstmt.setInt(2, uid);
+			pstmt.execute();
 		}
 	}
 }

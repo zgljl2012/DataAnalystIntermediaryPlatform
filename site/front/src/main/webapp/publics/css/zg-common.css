@@ -1,15 +1,15 @@
 .fr{float:right;}
 .fl{float:left;}
-.mt10{margin-top:10px;}.mt5{margin-top:5px;}.mt15{margin-top:15px;}.mt20{margin-top:20px;}
-.ml10{margin-left:10px;} .ml5{margin-left:5px;} .ml15{margin-left:15px;} .ml20{margin-left:20px;}
+.mt10{margin-top:10px;}.mt5{margin-top:5px;}.mt15{margin-top:15px;}.mt20{margin-top:20px;} .mt25{margin-top:25px;}.mt40{margin-top:40px;}
+.ml10{margin-left:10px;} .ml5{margin-left:5px;} .ml15{margin-left:15px;} .ml20{margin-left:20px;}.ml25{margin-left:25px;}.ml30{margin-left:30px;}
 .mr10{margin-right:10px;} .mr5{margin-right:5px;} .mr15{margin-right:15px;} .mr20{margin-right:20px;}
 .mb10{margin-bottom:10px;}.mb5{margin-bottom:5px;}.mb15{margin-bottom:15px;}.mb20{margin-bottom:20px;}
 .tc{text-align:center;}.tl{text-align:left;} .tr{text-align:right;}
 .fs05{font-size:0.5em;}
-.red{color:red;}
+.red{color:red;} .gray{color:gray;}
 .green{color:green;}
 .display_none{display:none;} .display_block{display:block;}
-.fs12{font-size:1.2em;} .fs20{font-size:2em;}
+.fs12{font-size:1.2em;} .fs20{font-size:2em;} .fs15{font-size:1.5em;}
 .cp{cursor:pointer;}
 .zg-price {
 	color:#ff8a00;

@@ -27,4 +27,11 @@ public interface FxsManage extends Service{
 	 */
 	public T20 getT20(int uid) throws Exception;
 	
+	/**
+	 * 上传图像，存储图像的相对路径到数据库
+	 * @param fileName
+	 * @throws Exception
+	 */
+	public void updateHeadImage(int uid, String fileName) throws Exception;
+	
 }

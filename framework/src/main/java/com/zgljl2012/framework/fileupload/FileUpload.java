@@ -44,6 +44,6 @@ public interface FileUpload {
 	 * @param path
 	 * @return
 	 */
-	public String getPath(String path);
+	public String getPath();
 	
 }

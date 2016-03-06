@@ -35,13 +35,21 @@ function initFxs() {
 			$("input[name='bornDate']").val(data.t20.F04);
 			$("input[name='email']").val(data.t10.F03);
 			$("select[name='gender']").val(data.t20.F03);
+			// 设置头像
+			var url = "/front/uploadHeadImage?filePath=" + data.t20.F09;
+			if(data.t20.F09 != null) {
+				$("img[name='headImg']").attr("src", url);
+			}
+			// 毕业院校
+			$("input[name='school']").val(data.t20.F07);
 			// 初始化
 			global.map = [];
-			global.map["username"] = $("input[name='username']").val();
-			global.map["realName"] = $("input[name='realName']").val();
-			global.map["bornDate"] = $("input[name='bornDate']").val();
+			global.map["username"] = $("input[name='username']").val()||"";
+			global.map["realName"] = $("input[name='realName']").val()||"";
+			global.map["bornDate"] = $("input[name='bornDate']").val()||"";
 			global.map["gender"] = $("select[name='gender']").val();
 			global.map["email"] = $("input[name='email']").val();
+			global.map["school"] = $("input[name='school']").val();
 			// 设置用户状态
 			global.userStatus = data.t10.F08; 
 		},
@@ -120,7 +128,9 @@ function cancel(name, a_hint1) {
 	if(name=="gender") {
 		e = $("select[name="+name+"]")
 	}
-	e.val(global.map[name]);
+	if(global.map)
+		if(global.map[name])
+			e.val(global.map[name]);
 	e.attr("disabled","disabled");
 	var a = e.nextAll("a[edit]");
 	a.html(a_hint1);
@@ -183,5 +193,18 @@ function updateGender(){
  * 修改出生日期
  */
 function updateDate() {
+	var date = $("input[name='bornDate']").val();
+	var date1 = new Date(date);
+	if(date1 >= new Date()) {
+		showAlert("您输入的出生日期"+date+"不合法");
+		return false;
+	}
+	return true;
+}
+
+/**
+ * 毕业院校
+ */
+function updateSchool() {
 	return true;
 }

@@ -250,13 +250,5 @@ public class UserManageImpl extends AbstractService implements UserManage{
 				throw new Exception("没有找到该用户！");
 			}
 		}
-	}
-
-	@Override
-	public void updateHeadImage(String fileName) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
+	}	
 }
