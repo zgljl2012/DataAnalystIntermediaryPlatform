@@ -33,7 +33,8 @@ public class FxsBaseInfo extends AbstractServlet{
 		FxsManage fxsManage = controller.getServiceManage().getService(FxsManage.class);
 		T20 t20 = fxsManage.getT20(uid);
 		json.put("t20", t20);
-		out(res, json.toString());
+		String s = json.toString();
+		out(res, s);
 	}
 
 	@Override

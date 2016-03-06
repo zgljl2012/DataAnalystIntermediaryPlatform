@@ -65,9 +65,12 @@
       </div>
       <hr>
       <div class="row">
-      	<div class="row ml20"><span class="fs15 ml10 gray">个人简介</span></div>
+      	<div class="row ml20">
+      		<span class="fs15 ml10 gray">个人简介</span>
+      		<a edit onclick="edit('personalIntroduce', '编辑','完成',updatePersonalIntroduce)" class="cp">编辑</a>
+      	</div>
       	<div class="row ml30 mt10">
-      		<textarea style="width:50%;height:150px;" placeholder="请您对自己作一个简单的介绍，100字左右" maxlength=250></textarea>
+      		<textarea disabled name="personalIntroduce" style="width:50%;height:150px;" placeholder="请您对自己作一个简单的介绍，100字左右" maxlength=250></textarea>
       	</div>
       </div>
    </div>

@@ -41,5 +41,18 @@ public class TestJSON {
 		System.out.println(j.toString());
 	}
 	
+	@Test
+	public void testYinhao() {
+		String s = "Hello\"World\"";
+		s = s.replace("\"", "\\\"");
+		System.out.println(s);
+	}
+	
+	@Test
+	public void testXiegang() {
+		String s = "\\\\hello";
+		s = s.replace("\\", "\\\\");
+		System.out.println(s);
+	}
 	
 }

@@ -19,6 +19,9 @@ public class JSON {
 	}
 	
 	public void put(String key, String value) {
+		value = value.replace("\"", "\\\"");	// 处理双引号
+		value = value.replace("\r", "\\r");		// 处理换行符
+		value = value.replace("\n", "\\n");		// 处理回车
 		map.put(key, value);
 	}
 	
@@ -38,7 +41,6 @@ public class JSON {
 	public void put(String key, Object value) {
 		Class<? extends Object> cls = value.getClass();
 		Field[] fields = cls.getDeclaredFields();
-		StringBuilder builder = new StringBuilder();
 		JSON json = new JSON();
 		for(Field field : fields) {
 			String methodName = "get";

@@ -29,12 +29,14 @@ function initFxs() {
 		type:"get",
 		url:fxsBaseInfoUrl,
 		success:function(data){
+			console.log(data);
 			data = eval('('+data+')');
 			$("input[name='username']").val(data.t10.F02);
 			$("input[name='realName']").val(data.t20.F02);
 			$("input[name='bornDate']").val(data.t20.F04);
 			$("input[name='email']").val(data.t10.F03);
 			$("select[name='gender']").val(data.t20.F03);
+			$("textarea[name='personalIntroduce'").val(data.t20.F05);
 			// 设置头像
 			var url = "/front/uploadHeadImage?filePath=" + data.t20.F09;
 			if(data.t20.F09 != null) {
@@ -50,6 +52,7 @@ function initFxs() {
 			global.map["gender"] = $("select[name='gender']").val();
 			global.map["email"] = $("input[name='email']").val();
 			global.map["school"] = $("input[name='school']").val();
+			global.map["personalIntroduce"] = $("textarea[name='personalIntroduce'").val();
 			// 设置用户状态
 			global.userStatus = data.t10.F08; 
 		},
@@ -81,6 +84,10 @@ function edit(name, a_hint1, a_hint2, callback) {
 		e = $("select[name="+name+"]")
 	}
 	var a = e.nextAll("a[edit]");
+	if(name=="personalIntroduce") {
+		e = $("textarea[name="+name+"]");
+		a = e.parent().prev().children("a[edit]");
+	}
 	if(a.html() == a_hint1) {
 		e.removeAttr("disabled");
 		a.html(a_hint2);
@@ -128,11 +135,15 @@ function cancel(name, a_hint1) {
 	if(name=="gender") {
 		e = $("select[name="+name+"]")
 	}
+	var a = e.nextAll("a[edit]");
+	if(name=="personalIntroduce") {
+		e = $("textarea[name="+name+"]");
+		a = e.parent().prev().children("a[edit]");
+	}
 	if(global.map)
 		if(global.map[name])
 			e.val(global.map[name]);
 	e.attr("disabled","disabled");
-	var a = e.nextAll("a[edit]");
 	a.html(a_hint1);
 	// 去掉取消按钮
 	var c = a.nextAll("a[cancel]");
@@ -206,5 +217,13 @@ function updateDate() {
  * 毕业院校
  */
 function updateSchool() {
+	return true;
+}
+
+/**
+ * 个人简介
+ * @returns {Boolean}
+ */
+function updatePersonalIntroduce() {
 	return true;
 }
