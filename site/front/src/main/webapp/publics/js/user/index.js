@@ -13,7 +13,7 @@ $(function(){
  */
 function initFxs() {
 	//初始化日期控件
-	$('#bornDate').datetimepicker({  
+	$('input[date]').datetimepicker({  
 	    language:  'zh-CN',  
 	    weekStart: 1,  
 	    todayBtn:  1,  
@@ -37,6 +37,8 @@ function initFxs() {
 			$("input[name='email']").val(data.t10.F03);
 			$("select[name='gender']").val(data.t20.F03);
 			$("textarea[name='personalIntroduce'").val(data.t20.F05);
+			$("input[name='employDate']").val(data.t20.F06);
+			$("input[name='commany']").val(data.t20.F08);
 			// 设置头像
 			var url = "/front/uploadHeadImage?filePath=" + data.t20.F09;
 			if(data.t20.F09 != null) {
@@ -53,6 +55,8 @@ function initFxs() {
 			global.map["email"] = $("input[name='email']").val();
 			global.map["school"] = $("input[name='school']").val();
 			global.map["personalIntroduce"] = $("textarea[name='personalIntroduce'").val();
+			global.map["employDate"] = $("input[name='employDate']");
+			global.map["commany"] = $("input[name='commany']").val();
 			// 设置用户状态
 			global.userStatus = data.t10.F08; 
 		},
@@ -225,5 +229,26 @@ function updateSchool() {
  * @returns {Boolean}
  */
 function updatePersonalIntroduce() {
+	return true;
+}
+
+/**
+ * 毕业日期
+ */
+function updateEmployDate() {
+	var date = $("input[name='employDate']").val();
+	var date1 = new Date(date);
+	if(date1 >= new Date()) {
+		showAlert("您输入的毕业日期"+date+"不合法");
+		return false;
+	}
+	return true;
+}
+
+/**
+ * 当前公司
+ * @returns {Boolean}
+ */
+function updateCommany() {
 	return true;
 }

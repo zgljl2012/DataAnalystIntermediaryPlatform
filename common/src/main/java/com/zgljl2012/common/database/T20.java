@@ -11,7 +11,7 @@ import com.zgljl2012.framework.database.AbstractEntity;
  *
  */
 @SuppressWarnings("serial")
-public class T20 extends AbstractEntity{
+public class T20 extends AbstractEntity {
 	/**
 	 * 用户ID
 	 */
@@ -38,9 +38,24 @@ public class T20 extends AbstractEntity{
 	public String F05;
 	
 	/**
-	 * 就业时间
+	 * 毕业时间
 	 */
 	public Date F06;
+	
+	/**
+	 * 毕业院校（限20个字）
+	 */
+	public String F07;
+	
+	/**
+	 * 当前公司（可选自由职业，限30个字）
+	 */
+	public String F08;
+	
+	/**
+	 * 头像链接
+	 */
+	public String F09;
 	
 	public int getF01() {
 		return F01;
@@ -113,20 +128,4 @@ public class T20 extends AbstractEntity{
 	public void setF09(String f09) {
 		F09 = f09;
 	}
-
-	/**
-	 * 毕业院校（限20个字）
-	 */
-	public String F07;
-	
-	/**
-	 * 当前公司（可选自由职业，限30个字）
-	 */
-	public String F08;
-	
-	/**
-	 * 头像链接
-	 */
-	public String F09;
-	
 }

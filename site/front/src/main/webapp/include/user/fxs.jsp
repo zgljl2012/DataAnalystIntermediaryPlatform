@@ -25,7 +25,7 @@
       	<div class="col-sm-10 ml20">
       		<div class="row mt20">
       			<div class="col-sm-4">
-      				<span>用户名:</span>
+      				<span>用&nbsp;&nbsp;户&nbsp;&nbsp;名:</span>
       				<input type="text" name="username" value="<%=ljlSession.getUsername() %>" maxlength="18" disabled/>
       				<a edit onclick="edit('username','编辑','完成', updateUsername)" class="cp">编辑</a>
       			</div>
@@ -37,17 +37,17 @@
       		</div>
       		<div class="row mt25">
       			<div class="col-sm-4">
-      				<span>邮&nbsp;&nbsp;&nbsp;&nbsp;箱:</span>
+      				<span>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱:</span>
       				<input type="text" name="email" value="" maxlength="18" disabled/>
       				<a onclick="edit('email','编辑','完成', updateEmail)" class="cp">编辑</a>
       			</div>
       			<div class="col-sm-5">
       				<span>出生日期:</span>
-      				<input id="bornDate" readonly disabled class="dateTime" type="text" name="bornDate">
+      				<input date id="bornDate" readonly disabled class="dateTime" type="text" name="bornDate">
       				<a edit onclick="edit('bornDate', '编辑','完成',updateDate)" class="cp">编辑</a>
       			</div>
       			<div class="col-sm-3">
-      				<span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</span>
+      				<span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</span>
       				<select name="gender" disabled>
       					<option value="BM">保密</option>
       					<option value="NAN">男</option>
@@ -57,9 +57,16 @@
       			</div>
       		</div>
       		<div class="row mt20">
-      			<span>&nbsp;毕业院校:</span>
-      			<input type="text" name="school" value="" maxlength="40" style="width:52.2%;" disabled/>
-      			<a edit onclick="edit('school','编辑','完成', updateSchool)" class="cp">编辑</a>
+      			<div class="col-sm-9">
+	      			<span>毕业院校:</span>
+	      			<input type="text" name="school" value="" maxlength="40" style="width:70.8%;" disabled/>
+	      			<a edit onclick="edit('school','编辑','完成', updateSchool)" class="cp">编辑</a>
+      			</div>
+      			<div class="col-sm-3">
+      				<span>毕业时间:</span>
+      				<input date readonly disabled class="dateTime" type="text" name="employDate" style="width:37%;">
+      				<a edit onclick="edit('employDate', '编辑','完成',updateEmployDate)" class="cp">编辑</a>
+      			</div>
       		</div>
       	</div>
       </div>
@@ -71,6 +78,17 @@
       	</div>
       	<div class="row ml30 mt10">
       		<textarea disabled name="personalIntroduce" style="width:50%;height:150px;" placeholder="请您对自己作一个简单的介绍，100字左右" maxlength=250></textarea>
+      	</div>
+      </div>
+      <hr>
+      <div class="row">
+      	<div class="row ml20">
+      		<span class="fs15 ml10 gray">从业经历</span>
+      	</div>
+      	<div class="row ml30 mt10">
+      		<span class="gray">当前公司:</span>
+	      	<input placeholder="可填写自由职业" type="text" name="commany" value="" maxlength="60" style="width:70.8%;" disabled/>
+	      	<a edit onclick="edit('commany','编辑','完成', updateCommany)" class="cp">编辑</a>
       	</div>
       </div>
    </div>
