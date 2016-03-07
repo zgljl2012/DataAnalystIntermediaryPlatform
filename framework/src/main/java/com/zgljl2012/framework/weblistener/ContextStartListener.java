@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.database.DatabaseProvider;
 import com.zgljl2012.framework.fileupload.FileUpload;
 import com.zgljl2012.framework.service.ServiceManage;
 import com.zgljl2012.framework.servlet.session.LjlSession;
+import com.zgljl2012.framework.simple.database.DatabaseProviderSimple;
 import com.zgljl2012.framework.simple.fileupload.FileUploadSimple;
 import com.zgljl2012.framework.simple.service.ServiceManageSimple;
 import com.zgljl2012.framework.simple.servlet.session.LjlSessionSimple;
@@ -37,11 +39,14 @@ public class ContextStartListener implements  ServletContextListener{
 		// TODO Auto-generated method stub
 		Controller controller = new Controller() {
 			
-			private ServiceManage serviceManage = new ServiceManageSimple();
+			private ServiceManage serviceManage = new ServiceManageSimple(this);
 			
 			private VariableManage variableManage = new VariableManageSimple(null);
 			
 			private FileUpload fileUpload = new FileUploadSimple();
+			
+			// 数据库连接池管理
+			private DatabaseProvider db = new DatabaseProviderSimple();
 			
 			@Override
 			public ServiceManage getServiceManage() {
@@ -99,6 +104,12 @@ public class ContextStartListener implements  ServletContextListener{
 			public FileUpload getFileUpload() {
 				// TODO Auto-generated method stub
 				return fileUpload;
+			}
+
+			@Override
+			public DatabaseProvider getDatabaseProvider() {
+				// TODO Auto-generated method stub
+				return db;
 			}
 		};
 		arg0.getServletContext().setAttribute("controller", controller);

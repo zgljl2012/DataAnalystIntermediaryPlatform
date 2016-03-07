@@ -6,9 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.database.DatabaseProvider;
-import com.zgljl2012.framework.simple.database.DatabaseProviderSimple;
-import com.zgljl2012.framework.simple.service.ServiceManageSimple;
 
 /** 
  * @author 廖金龙
@@ -17,10 +16,16 @@ import com.zgljl2012.framework.simple.service.ServiceManageSimple;
  */
 public abstract class AbstractService implements Service{
 	
+	// 控制器
+	protected Controller controller;
+	
 	// 数据库连接池管理
-	private DatabaseProvider db = new DatabaseProviderSimple();
-	// 服务管理器
-	protected ServiceManage serviceManage = new ServiceManageSimple();
+	private DatabaseProvider db;
+	
+	public AbstractService(Controller controller) {
+		this.controller = controller;
+		this.db = controller.getDatabaseProvider();
+	}
 	
 	/**
 	 * 获取数据库连接
@@ -103,5 +108,11 @@ public abstract class AbstractService implements Service{
 	 */
 	public Timestamp getNowTimestamp() {
 		return new Timestamp(new java.util.Date().getTime());
+	}
+	
+	@Override
+	public Controller getController() {
+		// TODO Auto-generated method stub
+		return this.controller;
 	}
 }

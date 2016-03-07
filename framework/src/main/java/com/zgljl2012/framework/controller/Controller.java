@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.zgljl2012.framework.database.DatabaseProvider;
 import com.zgljl2012.framework.fileupload.FileUpload;
 import com.zgljl2012.framework.service.ServiceManage;
 import com.zgljl2012.framework.servlet.session.LjlSession;
@@ -65,4 +66,10 @@ public interface Controller {
 	 * @return
 	 */
 	public FileUpload getFileUpload();
+	
+	/**
+	 * 数据库提供者
+	 * @return
+	 */
+	public DatabaseProvider getDatabaseProvider();
 }
