@@ -14,7 +14,7 @@
 
 ###部署安装
 
-数据库：MYSQL 5.6
-服务器：Tomcat 7
-开发工具：eclipse JavaEE 版
-项目管理工具：Maven（eclipse的JavaEE版一般自带Maven）
+- 数据库：MYSQL 5.6
+- 服务器：Tomcat 7
+- 开发工具：eclipse JavaEE 版
+- 项目管理工具：Maven（eclipse的JavaEE版一般自带Maven）
