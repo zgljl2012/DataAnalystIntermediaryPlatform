@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.zgljl2012.common.database.T10;
 import com.zgljl2012.common.database.T11;
+import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.email.SendEmail;
 import com.zgljl2012.framework.service.AbstractService;
 import com.zgljl2012.framework.util.MD5Util;
@@ -11,6 +12,11 @@ import com.zgljl2012.modules.front.user.UserManage;
 
 public class RegisterValidate extends AbstractService{
 	
+	public RegisterValidate(Controller controller) {
+		super(controller);
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * 通过此接口将拼接URL的权力交给调用者
 	 */
@@ -49,7 +55,7 @@ public class RegisterValidate extends AbstractService{
         
         SendEmail.send(t.F02, sb.toString());
         
-        UserManage userManage = serviceManage.getService(UserManage.class);
+        UserManage userManage = controller.getServiceManage().getService(UserManage.class);
         userManage.setRegisterValidate(t);
 	}
 	
@@ -67,7 +73,7 @@ public class RegisterValidate extends AbstractService{
 		 * 3. 判断激活码是否正确
 		 * 4. 在T10中更新用户状态
 		 */
-		UserManage userManage = serviceManage.getService(UserManage.class);
+		UserManage userManage = controller.getServiceManage().getService(UserManage.class);
 		T11 t11 = userManage.getRegisterValidate(email);
 		T10 t10 = userManage.getUserByEmail(email);
 		if(t11 == null || t10 == null) {

@@ -1,13 +1,44 @@
 package com.zgljl2012.framework.service;
 
+import com.zgljl2012.framework.controller.Controller;
+
 /**
  * 服务管理器接口
  * @author Administrator
  */
 public interface ServiceManage {
 	
-	// 获取对应接口的实现类
+	/**
+	 * 获取对应接口的实现类
+	 * 其实是一种工厂方法
+	 * @param service
+	 * @return
+	 */
 	public <T extends Service>T getService(Class<T> service);
+	
+	/**
+	 * 直接指定实现类的包名进行引用
+	 * @param service
+	 * @param implName
+	 * @return
+	 */
+	public <T extends Service>T getService(Class<T> service, String implName);
+	
+	/**
+	 * 直接指定实现类
+	 * @param <Impl>
+	 * @param service
+	 * @param impl
+	 * @return
+	 */
+	public <T extends Service, Impl extends AbstractService>
+		T getService(Class<T> service, Class<Impl> impl);
+	
+	/**
+	 * 获取Controller
+	 * @return
+	 */
+	public Controller getController();
 	
 	// 设置实现类的子文件夹名（限定只能使用子文件夹）
 	public void setImplSolder(String solder);

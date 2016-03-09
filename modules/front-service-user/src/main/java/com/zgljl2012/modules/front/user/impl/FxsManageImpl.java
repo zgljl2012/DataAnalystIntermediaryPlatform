@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import com.zgljl2012.common.database.T20;
 import com.zgljl2012.common.database.enums.Gender;
+import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.service.AbstractService;
 import com.zgljl2012.framework.util.StringHelper;
 import com.zgljl2012.modules.front.user.FxsManage;
@@ -18,6 +19,11 @@ import com.zgljl2012.modules.front.user.query.T20Query;
  * 分析师管理实现类
  */
 public class FxsManageImpl extends AbstractService implements FxsManage{
+
+	public FxsManageImpl(Controller controller) {
+		super(controller);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public void update(int uid, T20Query query) throws Exception{

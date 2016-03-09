@@ -2,8 +2,10 @@ package com.zgljl2012.framework.test.service;
 
 import java.sql.Timestamp;
 
+import org.easymock.EasyMock;
 import org.junit.Test;
 
+import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.service.AbstractService;
 
 /**
@@ -14,7 +16,8 @@ public class TestAbstractService {
 	
 	@Test
 	public void testGetNowTimestamp() {
-		AbstractService as = new AbstractService(){
+		Controller controller = EasyMock.createMock(Controller.class);
+		AbstractService as = new AbstractService(controller){
 			
 		};
 		Timestamp ts = as.getNowTimestamp();

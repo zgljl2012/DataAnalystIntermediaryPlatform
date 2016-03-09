@@ -13,7 +13,7 @@
         <dependent-module archiveName="common-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/common/common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="context-root" value="com.zgljl2012.front"/>
         <property name="java-output-path" value="/front/target/classes"/>
+        <property name="context-root" value="front"/>
     </wb-module>
 </project-modules>

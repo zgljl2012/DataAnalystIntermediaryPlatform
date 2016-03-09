@@ -54,7 +54,7 @@ public class RegisterServlet extends AbstractServlet{
 			}
 			int uid = userManage.register(username, StringHelper.crypt(password), email, userType);
 			if(uid > 0) {
-				new RegisterValidate().processRegister(uid, email, new RegisterUrl(){
+				new RegisterValidate(controller).processRegister(uid, email, new RegisterUrl(){
 					public String url(String email, String hexCode) {
 						return "http://localhost:8080/register.jsp?email="+email+"&hexCode="+hexCode;
 					}

@@ -10,6 +10,7 @@ import com.zgljl2012.common.database.T11;
 import com.zgljl2012.common.database.enums.Bool;
 import com.zgljl2012.common.database.enums.T10_F05;
 import com.zgljl2012.common.database.enums.T10_F08;
+import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.service.AbstractService;
 import com.zgljl2012.framework.util.StringHelper;
 import com.zgljl2012.modules.front.user.UserManage;
@@ -19,6 +20,11 @@ import com.zgljl2012.modules.front.user.UserManage;
  * UserManage的实现类
  */
 public class UserManageImpl extends AbstractService implements UserManage{
+
+	public UserManageImpl(Controller controller) {
+		super(controller);
+		// TODO Auto-generated constructor stub
+	}
 
 	public int login(String username, String password) throws Exception {
 		// TODO Auto-generated method stub
