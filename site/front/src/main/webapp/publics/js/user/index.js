@@ -51,12 +51,12 @@ function initFxs() {
 			global.map["username"] = $("input[name='username']").val()||"";
 			global.map["realName"] = $("input[name='realName']").val()||"";
 			global.map["bornDate"] = $("input[name='bornDate']").val()||"";
-			global.map["gender"] = $("select[name='gender']").val();
-			global.map["email"] = $("input[name='email']").val();
-			global.map["school"] = $("input[name='school']").val();
-			global.map["personalIntroduce"] = $("textarea[name='personalIntroduce'").val();
-			global.map["employDate"] = $("input[name='employDate']");
-			global.map["commany"] = $("input[name='commany']").val();
+			global.map["gender"] = $("select[name='gender']").val()||"";
+			global.map["email"] = $("input[name='email']").val()||"";
+			global.map["school"] = $("input[name='school']").val()||"";
+			global.map["personalIntroduce"] = $("textarea[name='personalIntroduce'").val()||"";
+			global.map["employDate"] = $("input[name='employDate']").val()||"";
+			global.map["commany"] = $("input[name='commany']").val()||"";
 			// 设置用户状态
 			global.userStatus = data.t10.F08; 
 		},
@@ -144,9 +144,11 @@ function cancel(name, a_hint1) {
 		e = $("textarea[name="+name+"]");
 		a = e.parent().prev().children("a[edit]");
 	}
-	if(global.map)
-		if(global.map[name])
+	if(global.map != null) {
+		if(global.map[name] != null) {
 			e.val(global.map[name]);
+		}
+	}
 	e.attr("disabled","disabled");
 	a.html(a_hint1);
 	// 去掉取消按钮
