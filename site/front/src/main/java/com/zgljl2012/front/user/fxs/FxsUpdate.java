@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.zgljl2012.common.database.enums.Gender;
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.service.annotation.Impl;
 import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.framework.util.StringHelper;
@@ -26,7 +27,14 @@ import com.zgljl2012.modules.front.user.query.T20Query;
 @SuppressWarnings("serial")
 @WebServlet(name="FxsUpdate", urlPatterns={"/user/fxsUpdate"})
 public class FxsUpdate extends AbstractServlet{
-
+	
+	@Impl
+	FxsManage fxsManage;
+	
+	@Impl
+	UserManage userManage;
+	
+	
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse res,
 			Controller controller) throws Exception {
@@ -38,8 +46,6 @@ public class FxsUpdate extends AbstractServlet{
 	protected void post(final HttpServletRequest req, HttpServletResponse res,
 			Controller controller) throws Exception {
 		// TODO Auto-generated method stub
-		FxsManage fxsManage = controller.getServiceManage().getService(FxsManage.class);
-		UserManage userManage = controller.getServiceManage().getService(UserManage.class);
 		final String name = req.getParameter("name");
 		final String value = req.getParameter("value");
 		JSON json = new JSON();

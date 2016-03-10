@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.zgljl2012.common.database.T10;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.exceptions.VerifyCodeTimeoutException;
+import com.zgljl2012.framework.service.annotation.Impl;
 import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.framework.servlet.VerifyCode;
 import com.zgljl2012.framework.servlet.VerifyCodeValidate;
@@ -22,7 +23,10 @@ import com.zgljl2012.modules.front.user.UserManage;
 public class LoginServlet extends AbstractServlet{
 
 	private static final long serialVersionUID = 1L;
-
+	
+	@Impl
+	UserManage manage;
+	
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse res,
 			Controller controller) throws Exception {
@@ -37,7 +41,6 @@ public class LoginServlet extends AbstractServlet{
 		String username = req.getParameter("username"); // 用户名或邮箱
 		String password = req.getParameter("password");
 		String verifyCode = req.getParameter("verifyCode");
-		UserManage manage = controller.getServiceManage().getService(UserManage.class);
 		try{
 			if(StringHelper.isEmpty(username)) {
 				throw new Exception("用户名不能为空！");

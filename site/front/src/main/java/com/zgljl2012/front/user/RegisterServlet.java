@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.exceptions.VerifyCodeTimeoutException;
+import com.zgljl2012.framework.service.annotation.Impl;
 import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.framework.servlet.VerifyCode;
 import com.zgljl2012.framework.servlet.VerifyCodeValidate;
@@ -20,6 +21,9 @@ import com.zgljl2012.modules.front.user.UserManage;
 @SuppressWarnings("serial")
 @WebServlet(name="register", urlPatterns={"/register"})
 public class RegisterServlet extends AbstractServlet{
+	
+	@Impl
+	UserManage userManage;
 	
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse res,
@@ -37,7 +41,6 @@ public class RegisterServlet extends AbstractServlet{
 		String password = req.getParameter("password");
 		String userType = req.getParameter("userType");
 		String verifyCode = req.getParameter("verifyCode");
-		UserManage userManage = controller.getServiceManage().getService(UserManage.class);
 		try {
 			if(verifyCode==null||verifyCode!=null&&verifyCode.trim().length()==0) {
 				throw new Exception("验证码不能为空！");

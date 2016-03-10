@@ -10,10 +10,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.service.Service;
 import com.zgljl2012.framework.service.ServiceManage;
 import com.zgljl2012.framework.service.annotation.Impl;
 import com.zgljl2012.framework.service.annotation.Impl.Null;
 import com.zgljl2012.framework.simple.service.ServiceManageSimple;
+import com.zgljl2012.framework.test.service.impl.HelloImpl;
 
 /**
  * @author 廖金龙
@@ -22,8 +24,14 @@ import com.zgljl2012.framework.simple.service.ServiceManageSimple;
  */
 public class TestAnnotation {
 
-	@Impl(implName="hello")
+	@Impl
 	Hello hello;
+	
+	@Impl(implName="com.zgljl2012.framework.test.service.impl.HelloImpl")
+	Hello helloWithName;
+	
+	@Impl(implClass=HelloImpl.class) 
+	Hello helloWithClass;
 	
 	Controller controller;
 	ServiceManage serviceManage;
@@ -33,26 +41,42 @@ public class TestAnnotation {
 		// 给controller创建一个Mock对象
 		controller = EasyMock.createMock(Controller.class);
 		serviceManage = new ServiceManageSimple(controller);
-		
 	}
 	
 	@Test
-	public void test() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public void test() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
 		// 依赖注入
-		di();
+		di(this);
+		System.out.println("不带属性："+hello.say());
+		System.out.println("带上implName属性："+helloWithName.say());
+		System.out.println("带上implClass属性："+helloWithClass.say());
+		System.out.println("测试完成.");
+	}
+	
+	@Test
+	public void testDI() 
+			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		serviceManage.DI(this);
+		System.out.println("不带属性："+hello.say());
+		System.out.println("带上implName属性："+helloWithName.say());
+		System.out.println("带上implClass属性："+helloWithClass.say());
 		System.out.println("测试完成.");
 	}
 	
 	
-	private void di() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	@SuppressWarnings("unchecked")
+	private void di(Object obj) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
 		// 获取所有属性
-		Field[] fields = this.getClass().getDeclaredFields();
+		Field[] fields = obj.getClass().getDeclaredFields();
 		boolean isInit = false;
 		if(fields != null) {
 			for(Field field : fields) {
 				// 获取Impl注解
 				Annotation anno = field.getAnnotation(Impl.class);
 				if(anno != null) {
+					field.setAccessible(true);
+					// 获取接口的类类型
+					Class<? extends Service> itfClass = (Class<? extends Service>) field.getType();
 					isInit = false;
 					// 获取注解的值
 					Method[] methods = anno.getClass().getDeclaredMethods();
@@ -63,20 +87,23 @@ public class TestAnnotation {
 							if("implClass".equals(m.getName())) {
 								Class<?> cls = (Class<?>)(m.invoke(anno, null));
 								if(!Null.class.equals(cls)) {
-									System.out.println("1");
 									isInit = true;
+									// 给属性赋值
+									field.set(obj, serviceManage.getService(itfClass, cls));
 								}
 							}
 							// 直接指定实现类的名字
-							else if("implName".equals(m.getName())
-									&&!"".equals(m.getName().trim())) {
-								System.out.println("2");
-								isInit = true;
+							else if("implName".equals(m.getName())) {
+								String s = (String) m.invoke(anno, null);
+								if(!"".equals(s.trim())) {
+									isInit = true;
+									field.set(obj,serviceManage.getService(itfClass, s));
+								}
 							}
 						}
 					}
 					if(!isInit) {
-						System.out.println(3);
+						field.set(obj, serviceManage.getService(itfClass));
 					}
 				}
 			}

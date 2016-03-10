@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.fileupload.FileUpload;
 import com.zgljl2012.framework.fileupload.FileUploadSetter.FILETYPE;
+import com.zgljl2012.framework.service.annotation.Impl;
 import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.modules.front.user.FxsManage;
 
@@ -24,7 +25,10 @@ import com.zgljl2012.modules.front.user.FxsManage;
 @SuppressWarnings("serial")
 @WebServlet(name="uploadHeadImage", urlPatterns={"/uploadHeadImage"})
 public class UploadHeadImage extends AbstractServlet{	
-
+	
+	@Impl
+	FxsManage manage;
+	
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse res,
 			Controller controller) throws Exception {
@@ -45,7 +49,6 @@ public class UploadHeadImage extends AbstractServlet{
 			Controller controller) throws Exception {
 		FileUpload fileUpload = controller.getFileUpload();
 		String fileName = fileUpload.upload(req, FILETYPE.IMAGE);
-		FxsManage manage = controller.getServiceManage().getService(FxsManage.class);
 		manage.updateHeadImage(
 				controller.getSession(req.getSession()).getUserId(), fileName);
 		redirect(res, "/front/more/user/");

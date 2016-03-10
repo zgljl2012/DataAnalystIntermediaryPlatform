@@ -2,6 +2,7 @@ package com.zgljl2012.framework.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +21,15 @@ public abstract class AbstractServlet extends HttpServlet{
 	protected Controller controller;
 	
 	@Override
-	public void init() throws ServletException {
+	public final void init() throws ServletException {
 		controller = (Controller) this.getServletContext().getAttribute("controller");
+		// 进行依赖注入
+		try {
+			controller.getServiceManage().DI(this);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		super.init();
 	}
 	

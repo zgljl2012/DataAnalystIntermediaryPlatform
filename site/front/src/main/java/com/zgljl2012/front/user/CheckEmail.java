@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.service.annotation.Impl;
 import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.modules.front.user.UserManage;
@@ -18,6 +19,9 @@ import com.zgljl2012.modules.front.user.UserManage;
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns={"/checkEmail"}, name="CheckEmail")
 public class CheckEmail extends AbstractServlet{
+	@Impl
+	UserManage manage;
+	
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse res,
 			Controller controller) throws Exception{
@@ -29,7 +33,6 @@ public class CheckEmail extends AbstractServlet{
 	protected void post(HttpServletRequest req, HttpServletResponse res,
 			Controller controller) throws Exception {
 		// TODO Auto-generated method stub
-		UserManage manage = controller.getServiceManage().getService(UserManage.class);
 		String username = req.getParameter("email");
 		boolean is = manage.isEmailExists(username);
 		JSON json = new JSON();

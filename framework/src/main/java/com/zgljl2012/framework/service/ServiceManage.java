@@ -1,5 +1,7 @@
 package com.zgljl2012.framework.service;
 
+import java.lang.reflect.InvocationTargetException;
+
 import com.zgljl2012.framework.controller.Controller;
 
 /**
@@ -32,13 +34,23 @@ public interface ServiceManage {
 	 * @return
 	 */
 	public <T extends Service, Impl extends AbstractService>
-		T getService(Class<T> service, Class<Impl> impl);
+		T getService(Class<T> service, Class<?> impl);
 	
 	/**
 	 * 获取Controller
 	 * @return
 	 */
 	public Controller getController();
+	
+	/**
+	 * 传入对象，将对对象里的有Impl注解的属性进行依赖注入实现类
+	 * @param main
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
+	 */
+	public void DI(Object main) 
+			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException;
 	
 	// 设置实现类的子文件夹名（限定只能使用子文件夹）
 	public void setImplSolder(String solder);
