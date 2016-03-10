@@ -1,6 +1,5 @@
 package com.zgljl2012.framework.database;  
   
-import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,21 +22,7 @@ public class C3P0Util {
     static ComboPooledDataSource cpds=null;
     
     static{
-        cpds = new ComboPooledDataSource();
-        String driverClass = "com.mysql.jdbc.Driver";   
-        String jdbcURL = "jdbc:mysql://localhost:3306/db_01?useUnicode=true&characterEncoding=utf-8&autoReconnect=true";   
-        String user = "root";   
-        String password = "";   
-        try {
-			cpds.setDriverClass(driverClass);
-		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}   
-        cpds.setJdbcUrl(jdbcURL);   
-        cpds.setUser(user);   
-        cpds.setPassword(password);   
-        cpds.setMaxStatements(100); 
+        cpds = new ComboPooledDataSource("mysql");
     }
     /** 
      * 获得数据库连接 
@@ -46,9 +31,9 @@ public class C3P0Util {
     public static Connection getConnection(){  
         try {  
             return cpds.getConnection();  
-        } catch (SQLException e) {  
-            e.printStackTrace();  
-            return null;  
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }  
     }  
       

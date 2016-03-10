@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import com.zgljl2012.framework.database.DatabaseProvider;
 import com.zgljl2012.framework.fileupload.FileUpload;
+import com.zgljl2012.framework.log.AbstractLog;
 import com.zgljl2012.framework.service.ServiceManage;
 import com.zgljl2012.framework.servlet.session.LjlSession;
 import com.zgljl2012.framework.variable.VariableManage;
@@ -72,4 +73,10 @@ public interface Controller {
 	 * @return
 	 */
 	public DatabaseProvider getDatabaseProvider();
+	
+	/**
+	 * 获取日志记录器
+	 * @return
+	 */
+	public AbstractLog getLogger();
 }
