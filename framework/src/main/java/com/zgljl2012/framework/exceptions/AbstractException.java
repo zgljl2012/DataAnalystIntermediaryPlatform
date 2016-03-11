@@ -1,6 +1,5 @@
 package com.zgljl2012.framework.exceptions;
 
-import com.zgljl2012.framework.enums.EnumException;
 
 /** 
  * @author 廖金龙
@@ -12,16 +11,6 @@ public abstract class AbstractException extends Exception{
 	
 	public AbstractException(String msg) {
 		super(msg);
-	}
-	
-	EnumException exception = null;
-	
-	public AbstractException(EnumException ex) {
-		exception = ex;
-	}
-	
-	public EnumException getException() {
-		return exception;
 	}
 	
 	@Override

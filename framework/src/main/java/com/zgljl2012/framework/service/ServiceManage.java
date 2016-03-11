@@ -1,6 +1,5 @@
 package com.zgljl2012.framework.service;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 
 import com.zgljl2012.framework.controller.Controller;
@@ -9,7 +8,7 @@ import com.zgljl2012.framework.controller.Controller;
  * 服务管理器接口，实现动态代理
  * @author Administrator
  */
-public interface ServiceManage extends InvocationHandler{
+public interface ServiceManage {
 	
 	/**
 	 * 获取对应接口的实现类
