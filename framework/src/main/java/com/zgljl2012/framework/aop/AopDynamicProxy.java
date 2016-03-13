@@ -10,22 +10,22 @@ import java.lang.reflect.InvocationHandler;
 public interface AopDynamicProxy extends InvocationHandler{
 	
 	/**
-	 * 获取代理对象
+	 * 获取代理对象，建造者模式，需要先将其他条件设置好
 	 * @param object 委托对象
 	 * @return
 	 */
-	public <T>T getProxyInstance(Object target);
+	public <T>T buildProxyInstance(Object target);
 	
 	/**
 	 * 设置方法执行前前置监听器
 	 * @param beforeListener
 	 */
-	public void setBeforeListener(DynamicProxyBeforeListener beforeListener);
+	public AopDynamicProxy setBeforeListener(DynamicProxyBeforeListener beforeListener);
 	
 	/**
 	 * 设置方法执行后后置监听器
 	 * @param afterListener
 	 */
-	public void setAfterListener(DynamicProxyAfterListener afterListener);
+	public AopDynamicProxy setAfterListener(DynamicProxyAfterListener afterListener);
 	
 }

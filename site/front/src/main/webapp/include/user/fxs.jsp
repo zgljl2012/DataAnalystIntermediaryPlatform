@@ -24,7 +24,7 @@
       	</div>
       	<div class="col-sm-10 ml20">
       		<div class="row mt20">
-      			<div class="col-sm-4">
+      			<div class="col-sm-4" style="width:35%">
       				<span>用&nbsp;&nbsp;户&nbsp;&nbsp;名:</span>
       				<input type="text" name="username" value="<%=ljlSession.getUsername() %>" maxlength="18" disabled/>
       				<a edit onclick="edit('username','编辑','完成', updateUsername)" class="cp">编辑</a>
@@ -36,12 +36,12 @@
       			</div>
       		</div>
       		<div class="row mt25">
-      			<div class="col-sm-4">
+      			<div class="col-sm-4" style="width:35%">
       				<span>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱:</span>
       				<input type="text" name="email" value="" maxlength="18" disabled/>
       				<a onclick="edit('email','编辑','完成', updateEmail)" class="cp">编辑</a>
       			</div>
-      			<div class="col-sm-5">
+      			<div class="col-sm-5" style="width:40%">
       				<span>出生日期:</span>
       				<input date id="bornDate" readonly disabled class="dateTime" type="text" name="bornDate">
       				<a edit onclick="edit('bornDate', '编辑','完成',updateDate)" class="cp">编辑</a>

@@ -2,7 +2,6 @@ package com.zgljl2012.framework.test.aop;
 
 import junit.framework.Assert;
 
-import org.apache.log4j.Logger;
 import org.easymock.EasyMock;
 import org.junit.Test;
 
@@ -28,7 +27,7 @@ public class TestAopFramework {
 	public void testWithoutListener(){
 		AopDynamicProxySimple adp = new AopDynamicProxySimple();
 		Controller controller = EasyMock.createMock(Controller.class);
-		Hello h = adp.getProxyInstance(new HelloImpl(controller));
+		Hello h = adp.buildProxyInstance(new HelloImpl(controller));
 		Assert.assertEquals(h.say(),"Hello");
 		System.out.println("test finished.");
 	}
@@ -38,7 +37,6 @@ public class TestAopFramework {
 	public void testBeforeListener() {
 		AopDynamicProxySimple adp = new AopDynamicProxySimple();
 		Controller controller = EasyMock.createMock(Controller.class);
-		Hello h = adp.getProxyInstance(new HelloImpl(controller));
 		adp.setBeforeListener(new DynamicProxyBeforeListener() {
 
 			@Override
@@ -47,6 +45,8 @@ public class TestAopFramework {
 				log.console(targetName+" "+methodName);
 			}
 		});
+
+		Hello h = adp.buildProxyInstance(new HelloImpl(controller));
 		System.out.println(h.say());
 		System.out.println("test finished.");
 	}
@@ -55,7 +55,6 @@ public class TestAopFramework {
 	public void testAfterListener() {
 		AopDynamicProxySimple adp = new AopDynamicProxySimple();
 		Controller controller = EasyMock.createMock(Controller.class);
-		Hello h = adp.getProxyInstance(new HelloImpl(controller));
 		adp.setAfterListener(new DynamicProxyAfterListener() {
 
 			@Override
@@ -66,6 +65,8 @@ public class TestAopFramework {
 
 			
 		});
+
+		Hello h = adp.buildProxyInstance(new HelloImpl(controller));
 		System.out.println(h.say());
 		System.out.println("test finished.");
 	}
@@ -74,16 +75,15 @@ public class TestAopFramework {
 	public void testBoth() {
 		AopDynamicProxySimple adp = new AopDynamicProxySimple();
 		Controller controller = EasyMock.createMock(Controller.class);
-		Hello h = adp.getProxyInstance(new HelloImpl(controller));
-		adp.setBeforeListener(new DynamicProxyBeforeListener() {
+		Hello h = adp
+				.setBeforeListener(new DynamicProxyBeforeListener() {
 
 			@Override
 			public void execute(String targetName, String methodName,
 					Object[] args) {
 				log.console("before...");
 			}
-		});
-		adp.setAfterListener(new DynamicProxyAfterListener() {
+		}).setAfterListener(new DynamicProxyAfterListener() {
 
 			@Override
 			public void execute(String targetName, String methodName,
@@ -92,7 +92,7 @@ public class TestAopFramework {
 			}
 
 			
-		});
+		}).buildProxyInstance(new HelloImpl(controller));
 		System.out.println(h.say());
 		System.out.println("test finished.");
 	}
@@ -101,28 +101,71 @@ public class TestAopFramework {
 	public void testTwoImpl() {
 		AopDynamicProxySimple adp = new AopDynamicProxySimple();
 		Controller controller = EasyMock.createMock(Controller.class);
-		Hello h = adp.getProxyInstance(new HelloImpl(controller));
-		adp.setBeforeListener(new DynamicProxyBeforeListener() {
+		Hello h = adp.setBeforeListener(new DynamicProxyBeforeListener() {
 
 			@Override
 			public void execute(String targetName, String methodName,
 					Object[] args) {
 				System.out.println("before...");
 			}
-		});
-		adp.setAfterListener(new DynamicProxyAfterListener() {
+		}).setAfterListener(new DynamicProxyAfterListener() {
 
 			@Override
 			public void execute(String targetName, String methodName,
 					Object result, Object[] args) {
 				System.out.println("after...");
 			}
-		});
-		//log.console(h.say());
-		adp = null;
-		adp = new AopDynamicProxySimple();
-		Hello2 h2 = adp.getProxyInstance(new Hello2Impl());
+		}).buildProxyInstance(new HelloImpl(controller));
+		Hello2 h2 = adp.buildProxyInstance(new Hello2Impl(controller));
 		System.out.println(h2.say());
 		System.out.println(h.say());
+	}
+	
+	DynamicProxyBeforeListener beforeListener = new DynamicProxyBeforeListener() {
+
+		@Override
+		public void execute(String targetName, String methodName,
+				Object[] args) {
+			System.out.println("[PROXY-BEFORE]"+"["+targetName+"]"+methodName);
+		}
+	};
+	
+	DynamicProxyAfterListener afterListener = new DynamicProxyAfterListener() {
+
+		@Override
+		public void execute(String targetName, String methodName,
+				Object result, Object[] args) {
+			System.out.println("[PROXY-AFTER]"+"["+targetName+"]"+methodName);
+		}
+	};
+	
+	@Test 
+	public void testMutilMethod() {
+		AopDynamicProxySimple adp = new AopDynamicProxySimple();
+		Controller controller = EasyMock.createMock(Controller.class);
+		EasyMock.expect(controller.getDatabaseProvider()).andReturn(null);
+		EasyMock.replay(controller);
+		Hello2Impl impl = new Hello2Impl(controller);
+		Hello2 h = adp.setAfterListener(afterListener)
+					.setBeforeListener(beforeListener)
+					.buildProxyInstance(impl);
+		h.hello1();
+		h.hello2();
+		h.hello3();
+		
+		Hello2 h2 = adp.setAfterListener(afterListener)
+				.setBeforeListener(beforeListener)
+				.buildProxyInstance(impl);
+		h2.hello1();
+		h2.hello2();
+		h2.hello3();
+		
+		Hello2 h3 = adp.setAfterListener(afterListener)
+				.setBeforeListener(beforeListener)
+				.buildProxyInstance(impl);
+		h3.hello1();
+		h3.hello2();
+		h3.hello3();
+	
 	}
 }

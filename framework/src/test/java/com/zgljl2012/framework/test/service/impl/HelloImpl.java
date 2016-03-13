@@ -16,4 +16,27 @@ public class HelloImpl extends AbstractService implements Hello{
 		// TODO Auto-generated method stub
 		return ("Hello");
 	}
+	
+	@Override
+	public void hello1() {
+		// TODO Auto-generated method stub
+		print("1");
+	}
+
+	@Override
+	public void hello2() {
+		// TODO Auto-generated method stub
+		print("2");
+	}
+
+	@Override
+	public void hello3() {
+		// TODO Auto-generated method stub
+		print("3");
+	}
+	
+	void print(String s) {
+		System.out.println("hello"+s);
+	}
+
 }

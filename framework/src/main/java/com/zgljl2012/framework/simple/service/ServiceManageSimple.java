@@ -8,12 +8,16 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.zgljl2012.framework.aop.AopDynamicProxy;
+import com.zgljl2012.framework.aop.DynamicProxyAfterListener;
+import com.zgljl2012.framework.aop.DynamicProxyBeforeListener;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.service.AbstractService;
 import com.zgljl2012.framework.service.Service;
 import com.zgljl2012.framework.service.ServiceManage;
 import com.zgljl2012.framework.service.annotation.Impl;
 import com.zgljl2012.framework.service.annotation.Impl.Null;
+import com.zgljl2012.framework.simple.aop.AopDynamicProxySimple;
 
 public class ServiceManageSimple implements ServiceManage{
 	
@@ -22,8 +26,31 @@ public class ServiceManageSimple implements ServiceManage{
 	
 	private Controller controller;
 	
+	// 动态代理
+	private AopDynamicProxy adp = new AopDynamicProxySimple();
+	
 	// 存储实现类对象
-	private static Map<String, AbstractService> implMap = new HashMap<>();
+	private static Map<String, Object> implMap = new HashMap<>();
+	
+	// 动态代理前置监听器
+	private	static DynamicProxyBeforeListener beforeListener = new DynamicProxyBeforeListener() {
+
+			@Override
+			public void execute(String targetName, String methodName, Object[] args) {
+				System.out.println("[PROXY-BEFORE]"+"["+targetName+"]"+methodName);
+			}
+			
+		};
+			
+	private static DynamicProxyAfterListener afterListener  = new DynamicProxyAfterListener() {
+		
+				@Override
+				public void execute(String targetName, String methodName,
+						Object result, Object[] args) {
+					System.out.println("[PROXY-AFTER]"+"["+targetName+"]"+methodName);
+				}
+				
+		};
 	
 	public ServiceManageSimple(Controller controller) {
 		this.controller = controller;
@@ -69,8 +96,13 @@ public class ServiceManageSimple implements ServiceManage{
 			Class<?> cls = Class.forName(implName);
 			// 获取需要传入Controller参数的构造函数
 			Constructor<?> con = cls.getConstructor(Controller.class);
-			implMap.put(implName, (AbstractService) con.newInstance(controller));
-			return (T)con.newInstance(controller);
+			// 生成动态代理对象
+			T t = (T)con.newInstance(controller);
+			t = adp.setBeforeListener(beforeListener)
+					.setAfterListener(afterListener)
+					.buildProxyInstance(t);
+			implMap.put(implName, t);
+			return t;
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
