@@ -97,7 +97,7 @@ public class TestAopFramework {
 		System.out.println("test finished.");
 	}
 	
-	@Test
+	//@Test
 	public void testTwoImpl() {
 		AopDynamicProxySimple adp = new AopDynamicProxySimple();
 		Controller controller = EasyMock.createMock(Controller.class);
