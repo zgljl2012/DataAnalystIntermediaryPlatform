@@ -9,9 +9,9 @@
                      个人信息
       </a>
    </li>
-   <li><a href="#jmeter" data-toggle="tab">进行中项目 </a></li>
-   <li><a href="#ejb" data-toggle="tab">已投标项目 </a></li>
-   <li><a href="#ejb" data-toggle="tab">已完成项目 </a></li>
+   <li><a href="#running_project" data-toggle="tab">进行中项目 </a></li>
+   <li><a href="#bidding_project" data-toggle="tab">已投标项目 </a></li>
+   <li><a href="#finished_project" data-toggle="tab">已完成项目 </a></li>
 </ul>
 <div id="myTabContent" class="tab-content">
    <div class="tab-pane fade in active" id="baseInfo">
@@ -90,20 +90,53 @@
 	      	<input placeholder="可填写自由职业" type="text" name="commany" value="" maxlength="60" style="width:70.8%;" disabled/>
 	      	<a edit onclick="edit('commany','编辑','完成', updateCommany)" class="cp">编辑</a>
       	</div>
+      	<div class="row ml30 mt20">
+      		<ul id="experience" class="nav nav-tabs">
+			  <li class="active"><a data-toggle="tab" href="#manage_experience">管理工作经历</a></li>
+			  <li ><a data-toggle="tab" href="#add_experience">增加工作经历</a></li>
+			</ul>
+			<div id="experience_content" class="tab-content">
+				<div class="tab-pane fade in active" id="manage_experience">
+					管理工作经验
+				</div>
+				<div class="tab-pane fade" id="add_experience">
+					<form action="#" method="post">
+					<div class="input-group input-group-md col-md-5 mt20">
+						<span class="input-group-addon">公司名称：</span>
+						<input type="text" name="companyName" placeHolder="请输入公司名称" class="form-control" maxlength="100">
+					</div>
+					<div class="input-group input-group-md col-md-5 mt15">
+						<span class="input-group-addon">开始时间：</span>
+						<input type="text" name="companyStartDate" placeHolder="请输入开始时间" class="form-control">
+					</div>
+					<div class="input-group input-group-md col-md-5 mt15">
+						<span class="input-group-addon">结束时间：</span>
+						<input type="text" name="companyFinishDate" placeHolder="请输入结束时间" class="form-control">
+					</div>
+					<div class="input-group input-group-md col-md-8 mt15">
+						<span class="input-group-addon">职务说明：</span>
+						<textarea name="companyRemark" maxlength="150" placeHolder="请输入您在公司的具体职务和工作情况（限150字）" class="form-control"></textarea>
+					</div>
+					<div class="form-group ml20 mt15">
+			                <input type="submit" class="btn btn-primary mt5" value="确定添加">
+			                <input type="button" class="btn btn-default ml15 mt5" value="重置">
+			        </div>
+					</form>
+				</div>
+			</div>
+      	</div>
       </div>
    </div>
    
    
-   <div class="tab-pane fade" id="ios">
-      <p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple 
-      TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。</p>
+   <div class="tab-pane fade" id="running_project">
+      <p>进行中项目</p>
    </div>
-   <div class="tab-pane fade" id="jmeter">
-      <p>jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。</p>
+   <div class="tab-pane fade" id="bidding_project">
+      <p>投标中项目</p>
    </div>
-   <div class="tab-pane fade" id="ejb">
-      <p>Enterprise Java Beans（EJB）是一个创建高度可扩展性和强大企业级应用程序的开发架构，部署在兼容应用程序服务器（比如 JBOSS、Web Logic 等）的 J2EE 上。
-      </p>
+   <div class="tab-pane fade" id="finished_project">
+      <p>已完成项目</p>
    </div>
 </div>
 	</div></div>
