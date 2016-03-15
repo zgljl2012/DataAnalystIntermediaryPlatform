@@ -5,17 +5,24 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
+
+import org.json.JSONObject;
 
 /**
  *@author 廖金龙
  *@version 2016年2月28日上午12:02:09
  */
-public class JSON {
+public class JSON implements Cloneable{
 	
 	private Map<String, Object> map;
 	
 	public JSON() {
 		map = new HashMap<>();
+	}
+	
+	public JSON(String json) {
+		map = JSON.parser(json).map;
 	}
 	
 	public void put(String key, String value) {
@@ -39,6 +46,13 @@ public class JSON {
 	 * @param value 有get和set方法的对象
 	 */
 	public void put(String key, Object value) {
+		if(value instanceof String) {
+			put(key, (String)value);
+			return;
+		} else if(value instanceof JSON) {
+			put(key, (JSON)value);
+			return;
+		}
 		Class<? extends Object> cls = value.getClass();
 		Field[] fields = cls.getDeclaredFields();
 		JSON json = new JSON();
@@ -77,10 +91,86 @@ public class JSON {
 		this.put(key, json);
 	}
 	
+	/**
+	 * 基于org.json的包写的解析
+	 * @param s
+	 * @return
+	 */
+	public static JSON parser(String s) {
+		JSONObject obj = new JSONObject(s);
+		JSON json = new JSON();
+		for(String k : obj.keySet()) {
+			Object o = obj.get(k);
+			if(o instanceof JSONObject) {
+				json.put(k, parser(o.toString()));
+			} else {
+				json.put(k, o);
+			}
+		}
+		return json;
+	}
+	
+	/**
+	 * 将字符串解析为JSON对象，自己写的解析，暂时只能解析不带花括号和中括号版本的
+	 * 建议别用
+	 * @param s
+	 * @return
+	 */
+	@Deprecated
+	public static JSON parse(String s) throws Exception{
+		JSON json = new JSON();
+		boolean leftYinhao = false; // 是否已经有了左引号
+		Stack<Character> word = new Stack<>(); // 单个单词的栈
+		Stack<String> stack = new Stack<>(); // 整个JSON的栈
+		String k = null, v = null;
+		for(int i = 0; i < s.length(); i++) {
+			char ch = s.charAt(i);
+			if(ch == '{') {
+				stack.push("{");
+			} else if(ch == ',') {
+				String v1 = stack.pop();
+				json.put(stack.pop(), v1);
+			} else if(ch == '}') {
+				String t = stack.pop(); 
+				if(!"{".equals(t)) {
+					
+				}
+			} else if(ch == '\"') {
+				if(leftYinhao) {
+					leftYinhao = false;
+					if(k == null) {
+						k = JSON.getStringFromStack(word);
+					} else {
+						v = JSON.getStringFromStack(word);
+					}
+					if(k!=null && v != null) {
+						stack.push(k);
+						stack.push(v);
+						k = null;
+						v = null;
+					}
+				} else {
+					leftYinhao = true;
+				}
+			} else if(ch == '\r' || ch == ' ' || ch == '\n') {
+				if(leftYinhao) {
+					word.push(ch);
+				}
+			}
+			else {
+				if(leftYinhao) {
+					word.push(ch);
+				}
+			}
+		}
+		return json;
+	}
+	
 	public Object get(String key) {
 		return map.get(key);
 	}
 	
+	@Override
 	public String toString() {
 		String json = "{";
 		int count = 0;
@@ -120,5 +210,30 @@ public class JSON {
 	 */
 	private String margePair(String k, String v) {
 		return addMarks(k)+":"+addMarks(v);
+	}
+	
+	/**
+	 * 将栈里面的字符拼接成字符串
+	 * @param stack
+	 * @return
+	 */
+	private static String getStringFromStack(Stack<Character> stack) {
+		String s = "";
+		while(!stack.isEmpty()) {
+			s = stack.pop() + s;
+		}
+		return s;
+	}
+	
+	/**
+	 * 清空JSON
+	 */
+	private void clear() {
+		this.map.clear();
+	}
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 }
