@@ -1,5 +1,10 @@
 package com.zgljl2012.framework.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -108,6 +113,33 @@ public class JSON implements Cloneable{
 			}
 		}
 		return json;
+	}
+	
+	/**
+	 * 解析文件
+	 * @param file
+	 * @return
+	 * @throws FileNotFoundException 
+	 */
+	public static String parser(File file){
+		try {
+			@SuppressWarnings("resource")
+			InputStream in = new FileInputStream(file);
+			byte[] buffer = new byte[100];
+			StringBuilder sb = new StringBuilder();
+			while(in.available() > 0) {
+				in.read(buffer);
+				sb.append(new String(buffer));
+			}
+			return sb.toString();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	/**

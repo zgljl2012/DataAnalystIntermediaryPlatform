@@ -1,5 +1,7 @@
 package com.zgljl2012.framework.test.util;
 
+import java.io.File;
+
 import org.junit.Test;
 
 import com.zgljl2012.framework.util.JSON;
@@ -55,4 +57,10 @@ public class TestJSON {
 		System.out.println(s);
 	}
 	
+	@Test
+	public void parserFile() {
+		File file = new File("test.json");
+		String s = JSON.parser(file);
+		System.out.println(s);
+	}
 }
