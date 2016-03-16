@@ -100,28 +100,30 @@
 					管理工作经验
 				</div>
 				<div class="tab-pane fade" id="add_experience">
-					<form action="#" method="post">
 					<div class="input-group input-group-md col-md-5 mt20">
-						<span class="input-group-addon">公司名称：</span>
-						<input type="text" name="companyName" placeHolder="请输入公司名称" class="form-control" maxlength="100">
+						<span class="input-group-addon">
+							<span class="red vm">*&nbsp;</span>公司名称：
+						</span>
+						<input type="text" name="companyName" placeHolder="请输入公司名称(不少于5个字)" class="form-control" maxlength="100">
 					</div>
 					<div class="input-group input-group-md col-md-5 mt15">
-						<span class="input-group-addon">开始时间：</span>
-						<input type="text" name="companyStartDate" placeHolder="请输入开始时间" class="form-control">
+						<span class="input-group-addon">
+							<span class="red vm">*&nbsp;</span>开始时间：</span>
+						<input date type="text" name="companyStartDate" placeHolder="请输入开始时间" class="form-control">
 					</div>
 					<div class="input-group input-group-md col-md-5 mt15">
-						<span class="input-group-addon">结束时间：</span>
-						<input type="text" name="companyFinishDate" placeHolder="请输入结束时间" class="form-control">
+						<span class="input-group-addon">&nbsp;&nbsp;&nbsp;结束时间：</span>
+						<input date type="text" name="companyFinishDate" placeHolder="请输入结束时间（如果是当前公司可不填写）" class="form-control">
 					</div>
 					<div class="input-group input-group-md col-md-8 mt15">
-						<span class="input-group-addon">职务说明：</span>
-						<textarea name="companyRemark" maxlength="150" placeHolder="请输入您在公司的具体职务和工作情况（限150字）" class="form-control"></textarea>
+						<span class="input-group-addon">
+							<span class="red vm">*&nbsp;</span>职务说明：</span>
+						<textarea name="companyRemark" maxlength="150" placeHolder="请输入您在公司的具体职务和工作情况（限10-150字）" class="form-control"></textarea>
 					</div>
 					<div class="form-group ml20 mt15">
-			                <input type="submit" class="btn btn-primary mt5" value="确定添加">
-			                <input type="button" class="btn btn-default ml15 mt5" value="重置">
+			                <input type="button" class="btn btn-primary mt5" value="确定添加" onclick="submitCompanyAdd('/front/user/workExperience');">
+			                <input type="button" class="btn btn-default ml15 mt5" value="重置" onClick="resetCompanyAdd()">
 			        </div>
-					</form>
 				</div>
 			</div>
       	</div>

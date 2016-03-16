@@ -9,9 +9,12 @@
  */
 function showDialog(title, content, okCall, cancelCall) {
 	
-	if(content == null) {
+	if(typeof content==='function') {
+		cancelCall=okCall;
+		okCall=content;
 		content = title;
 		title = "温馨提示";
+		
 	}
 	$("#modalTitle").html(title);
 	$("#modalBody").html(content);

@@ -2,6 +2,7 @@ package com.zgljl2012.modules.front.user;
 
 import com.zgljl2012.common.database.T20;
 import com.zgljl2012.framework.service.Service;
+import com.zgljl2012.modules.front.user.query.FxsWorkExperienceQuery;
 import com.zgljl2012.modules.front.user.query.T20Query;
 
 /**
@@ -33,5 +34,12 @@ public interface FxsManage extends Service{
 	 * @throws Exception
 	 */
 	public void updateHeadImage(int uid, String fileName) throws Exception;
+	
+	/**
+	 * 新增分析师工作经历信息
+	 * @param uid
+	 * @param query
+	 */
+	public int insertWorkExperience(int uid, FxsWorkExperienceQuery query);
 	
 }

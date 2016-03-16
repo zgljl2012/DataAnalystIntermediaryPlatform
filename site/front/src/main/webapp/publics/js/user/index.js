@@ -254,3 +254,106 @@ function updateEmployDate() {
 function updateCommany() {
 	return true;
 }
+
+/**
+ * 从业经历增加
+ */
+function submitCompanyAdd(url) {
+	var companyName = $("input[name='companyName']").val();
+	console.log(companyName.trim());
+	if(companyName == null || companyName!=null&&companyName.trim().length==0) {
+		showAlert("请输入公司名称");
+		return false;
+	}
+	if(companyName.trim().length < 5) {
+		showAlert("公司名称不少于5个字");
+		return false;
+	}
+	var companyStartDate = $("input[name='companyStartDate']").val();
+	if(companyStartDate==null||companyStartDate!=null&&companyStartDate.trim()=="") {
+		showAlert("请输入开始日期");
+		return false;
+	}
+	if(!isDate(companyStartDate)) {
+		showAlert("请输入格式正确的日期\n\r日期格式：yyyy-mm-dd\n\r例    如：2008-08-08\n\r");
+		return false;
+	}
+	var companyRemark = $("textarea[name='companyRemark']").val();
+	if(companyRemark == null || companyRemark!=null&&companyRemark.trim().length==0) {
+		showAlert("请输入您在公司的担任的具体职务（10-150字）");
+		return false;
+	}
+	if(companyRemark.length<10||companyRemark.length>200) {
+		showAlert("职务说明的字数在10-150字之间");
+		return false;
+	}
+	var companyFinishDate = $("input[name='companyFinishDate']").val();
+	if(companyFinishDate!=null&&companyFinishDate.trim().length>0) {
+		if(!isDate(companyFinishDate)) {
+			showAlert("请输入格式正确的日期\n\r日期格式：yyyy-mm-dd\n\r例    如：2008-08-08\n\r");
+			return false;
+		}
+	}
+	var fd = new Date(companyFinishDate);
+	var cd = new Date(companyStartDate);
+	if(fd < cd) {
+		showAlert("您的结束时间早于您的开始时间");
+		return false;
+	}
+	var data = {
+		"type":"add",
+		"companyName":companyName,
+		"companyStartDate":companyStartDate,
+		"companyRemark":companyRemark,
+		"companyFinishDate":companyFinishDate
+	};
+	$.ajax({
+		type:"post",
+		url:url,
+		data:data,
+		success:function(data) {
+			console.log(data);
+			data = eval('('+data+')');
+			if(data.success=='true') {
+				showAlert("从业经历添加成功！");
+				$("input[name='companyName']").val("");
+				$("input[name='companyStartDate']").val("");
+				$("input[name='companyFinishDate']").val("");
+				$("textarea[name='companyRemark']").val("");
+			} else {
+				showAlert("从业经历添加失败，请核查您填写的信息是否正确！");
+			}
+		},
+		error:function() {
+			showAlert("网络连接失败，请稍候重试！");
+		}
+	})
+	return false;
+}
+
+/**
+ * 重置添加公司
+ */
+function resetCompanyAdd() {
+	showDialog("您是否确定重新填写所有信息？", function(){
+		$("input[name='companyName']").val("");
+		$("input[name='companyStartDate']").val("");
+		$("input[name='companyFinishDate']").val("");
+		$("textarea[name='companyRemark']").val("");
+	});
+}
+
+function isDate(dateString){
+    if(dateString.trim()=="")return true;
+    var r=dateString.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/); 
+    if(r==null){
+      return false;
+    }
+    var d=new Date(r[1],r[3]-1,r[4]);   
+    var num = (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4]);
+    if(num==0){
+      return false;
+    }
+    return (num!=0);
+}
+  

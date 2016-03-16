@@ -121,7 +121,7 @@ public class JSON implements Cloneable{
 	 * @return
 	 * @throws FileNotFoundException 
 	 */
-	public static String parser(File file){
+	public static JSON parser(File file){
 		try {
 			@SuppressWarnings("resource")
 			InputStream in = new FileInputStream(file);
@@ -131,7 +131,7 @@ public class JSON implements Cloneable{
 				in.read(buffer);
 				sb.append(new String(buffer));
 			}
-			return sb.toString();
+			return JSON.parser(sb.toString());
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

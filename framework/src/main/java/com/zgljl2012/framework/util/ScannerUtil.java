@@ -99,6 +99,8 @@ public class ScannerUtil {
 												packageName.length() + 1, name
 														.length() - 6);
 										try {
+											System.out.println(packageName + '.'
+															+ className);
 											// 添加到classes
 											classes.add(Class
 													.forName(packageName + '.'
@@ -113,7 +115,6 @@ public class ScannerUtil {
 							}
 						}
 					} catch (IOException e) {
-						// log.error("在扫描用户定义视图时从jar包获取文件出错");
 						e.printStackTrace();
 					}
 				}

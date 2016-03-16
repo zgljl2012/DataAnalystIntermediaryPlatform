@@ -11,6 +11,7 @@
 .display_none{display:none;} .display_block{display:block;}
 .fs12{font-size:1.2em;} .fs20{font-size:2em;} .fs15{font-size:1.5em;}
 .cp{cursor:pointer;}
+.vm{vertical-align: middle;}
 .zg-price {
 	color:#ff8a00;
 	font-size: 1.2em;

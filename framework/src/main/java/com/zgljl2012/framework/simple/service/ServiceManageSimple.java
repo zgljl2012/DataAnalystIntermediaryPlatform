@@ -187,4 +187,15 @@ public class ServiceManageSimple implements ServiceManage{
 		}
 		
 	}
+
+	@Override
+	public void setBeforeListener(DynamicProxyBeforeListener beforeListener) {
+		ServiceManageSimple.beforeListener = beforeListener;
+	}
+
+	@Override
+	public void setAfterListener(DynamicProxyAfterListener afterListener) {
+		// TODO Auto-generated method stub
+		ServiceManageSimple.afterListener = afterListener;
+	}
 }

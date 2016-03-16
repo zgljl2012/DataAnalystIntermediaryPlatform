@@ -11,6 +11,7 @@ import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.service.AbstractService;
 import com.zgljl2012.framework.util.StringHelper;
 import com.zgljl2012.modules.front.user.FxsManage;
+import com.zgljl2012.modules.front.user.query.FxsWorkExperienceQuery;
 import com.zgljl2012.modules.front.user.query.T20Query;
 
 /**
@@ -131,5 +132,24 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 			pstmt.setInt(2, uid);
 			pstmt.execute();
 		}
+	}
+
+	@Override
+	public int insertWorkExperience(int uid, FxsWorkExperienceQuery query) {
+		Connection conn = getConnection();
+		String sql = "INSERT INTO T21(F02, F03, F04, F05, F06) VALUES(?,?,?,?,?)";
+		int r = -1;
+		try {
+			r = this.insert(conn, sql, 
+					uid,
+					query.getCompanyName(),
+					query.getStartDate(),
+					query.getFinishedDate(),
+					query.getRemark());
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return r;
 	}
 }

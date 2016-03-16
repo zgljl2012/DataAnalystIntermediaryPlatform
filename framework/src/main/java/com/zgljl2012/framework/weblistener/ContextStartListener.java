@@ -21,7 +21,9 @@ import com.zgljl2012.framework.simple.fileupload.FileUploadSimple;
 import com.zgljl2012.framework.simple.log.LogSimple;
 import com.zgljl2012.framework.simple.service.ServiceManageSimple;
 import com.zgljl2012.framework.simple.servlet.session.LjlSessionSimple;
+import com.zgljl2012.framework.simple.system.SystemInitializeSimple;
 import com.zgljl2012.framework.simple.variable.VariableManageSimple;
+import com.zgljl2012.framework.system.SystemInitialize;
 import com.zgljl2012.framework.variable.VariableManage;
 
 /**
@@ -33,8 +35,9 @@ import com.zgljl2012.framework.variable.VariableManage;
 public class ContextStartListener implements  ServletContextListener{
 
 	public void contextDestroyed(ServletContextEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		// 系统关闭
+		SystemInitialize si = new SystemInitializeSimple();
+		//si.initShutdown("com.zgljl2012", arg0);
 	}
 
 	public void contextInitialized(ServletContextEvent arg0) {
@@ -124,6 +127,9 @@ public class ContextStartListener implements  ServletContextListener{
 			}
 		};
 		arg0.getServletContext().setAttribute("controller", controller);
+		// 开始系统初始化
+		SystemInitialize si = new SystemInitializeSimple();
+		//si.initStartup("com.zgljl2012", arg0);
 	}
 
 }

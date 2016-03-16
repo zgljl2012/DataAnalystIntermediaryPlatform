@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 
 import com.zgljl2012.framework.controller.Controller;
@@ -67,11 +68,11 @@ public abstract class AbstractService implements Service{
 	 * @throws Throwable
 	 */
 	protected int insert(Connection conn, String sql, Object ...args) throws Throwable {
-		PreparedStatement stmt = conn.prepareStatement(sql);
+		PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		for(int i = 0; i < args.length; i++) {
 			stmt.setObject(i+1, args[i]);
 		}
-		stmt.execute();
+		stmt.executeUpdate();
 		ResultSet resultSet = stmt.getGeneratedKeys(); 
 		try
 	    {

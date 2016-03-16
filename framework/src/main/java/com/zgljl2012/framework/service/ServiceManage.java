@@ -54,6 +54,18 @@ public interface ServiceManage {
 	public void DI(Object main) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException;
 	
+	/**
+	 * 设置前置代理监听器
+	 * @param beforeListener
+	 */
+	public void setBeforeListener(DynamicProxyBeforeListener beforeListener);
+	
+	/**
+	 * 设置后置代理监听器
+	 * @param afterListener
+	 */
+	public void setAfterListener(DynamicProxyAfterListener afterListener);
+	
 	// 设置实现类的子文件夹名（限定只能使用子文件夹）
 	public void setImplSolder(String solder);
 	
