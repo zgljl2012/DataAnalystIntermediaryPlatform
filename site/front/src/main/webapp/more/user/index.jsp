@@ -53,7 +53,9 @@
    <%--分析师基础资料修改地址--%>
    var fxsBaseInfoUpdateUrl = "/front/user/fxsUpdate";
    <%--分析师基础资料获取Url--%>
-   var fxsBaseInfoUrl = "/front/user/fxsBaseInfo";
+   var fxsBaseInfoUrl = "user/fxsBaseInfo";
+   <%--分析师从业经历获取Url--%>
+   var fxsWorkExperience = "user/workExperience";
    </script>
 </body>
 </html>

@@ -3,12 +3,15 @@ package com.zgljl2012.front.user.fxs;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zgljl2012.common.database.T21;
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.database.PagingInfo;
 import com.zgljl2012.framework.service.annotation.Impl;
 import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.framework.util.JSON;
@@ -30,9 +33,73 @@ public class FxsWorkExperience extends AbstractServlet{
 	FxsManage fxsManage;
 	
 	@Override
-	protected void get(HttpServletRequest req, HttpServletResponse res,
+	protected void get(final HttpServletRequest req, HttpServletResponse res,
 			Controller controller) throws Exception {
-		
+		int uid = controller.getSession(req.getSession()).getUserId();
+		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		List<T21> list = fxsManage.search(uid, 
+				new FxsWorkExperienceQuery() {
+					
+					@Override
+					public Date getStartDate() {
+						String sDate = req.getParameter("companyStartDate");
+						if(StringHelper.isEmpty(sDate)) {
+							return null;
+						}
+						try {
+							return sdf.parse(sDate);
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						return null;
+					}
+					
+					@Override
+					public String getRemark() {
+						// TODO Auto-generated method stub
+						return req.getParameter("companyRemark");
+					}
+					
+					@Override
+					public Date getFinishedDate() {
+						String sDate = req.getParameter("companyFinishDate");
+						if(StringHelper.isEmpty(sDate)) {
+							return null;
+						}
+						try {
+							return sdf.parse(sDate);
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						return null;
+					}
+					
+					@Override
+					public String getCompanyName() {
+						// TODO Auto-generated method stub
+						return req.getParameter("companyName");
+					}
+				}, new PagingInfo() {
+					
+					@Override
+					public int getPageSize() {
+						// TODO Auto-generated method stub
+						return 5;
+					}
+					
+					@Override
+					public int getCurrentPage() {
+						// TODO Auto-generated method stub
+						return Integer.parseInt(req.getParameter("current"));
+					}
+				});
+		JSON json = new JSON();
+		for(T21 t : list) {
+			json.put(""+t.F01, t);
+		}
+		out(res, json.toString());
 	}
 
 	@Override

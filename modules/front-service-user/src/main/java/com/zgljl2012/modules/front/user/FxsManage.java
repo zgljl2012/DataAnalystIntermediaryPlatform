@@ -1,6 +1,10 @@
 package com.zgljl2012.modules.front.user;
 
+import java.util.List;
+
 import com.zgljl2012.common.database.T20;
+import com.zgljl2012.common.database.T21;
+import com.zgljl2012.framework.database.PagingInfo;
 import com.zgljl2012.framework.service.Service;
 import com.zgljl2012.modules.front.user.query.FxsWorkExperienceQuery;
 import com.zgljl2012.modules.front.user.query.T20Query;
@@ -41,5 +45,14 @@ public interface FxsManage extends Service{
 	 * @param query
 	 */
 	public int insertWorkExperience(int uid, FxsWorkExperienceQuery query);
+	
+	/**
+	 * 分页查询分析师的从业经历
+	 * @param uid
+	 * @param query
+	 * @param pagingInfo
+	 * @return
+	 */
+	public List<T21> search(int uid, FxsWorkExperienceQuery query, PagingInfo pagingInfo);
 	
 }

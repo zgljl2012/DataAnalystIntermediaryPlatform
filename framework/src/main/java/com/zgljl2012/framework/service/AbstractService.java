@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.database.DatabaseProvider;
+import com.zgljl2012.framework.database.PagingInfo;
 
 /** 
  * @author 廖金龙
@@ -101,6 +102,29 @@ public abstract class AbstractService implements Service{
 			stmt.setObject(i+1, args[i]);
 		}
 		return stmt.executeUpdate();
+	}
+	
+	
+	/**
+	 * 分页查询方法
+	 * @param sql
+	 * @param pagingInfo
+	 * @param args
+	 * @return
+	 */
+	public ResultSet selectPaging(Connection conn, String sql, 
+			PagingInfo pagingInfo, Object... args) {
+		return db.selectPaging(conn, sql, pagingInfo, args);
+	}
+	
+	/**
+	 * 输入表名获取总页数
+	 * @param conn
+	 * @param table
+	 * @return
+	 */
+	public int getPageCount(Connection conn, String table) {
+		return db.getPageCount(conn, table);
 	}
 	
 	/**

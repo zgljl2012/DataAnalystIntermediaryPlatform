@@ -5,11 +5,11 @@
 .mr10{margin-right:10px;} .mr5{margin-right:5px;} .mr15{margin-right:15px;} .mr20{margin-right:20px;}
 .mb10{margin-bottom:10px;}.mb5{margin-bottom:5px;}.mb15{margin-bottom:15px;}.mb20{margin-bottom:20px;}
 .tc{text-align:center;}.tl{text-align:left;} .tr{text-align:right;}
-.fs05{font-size:0.5em;}
 .red{color:red;} .gray{color:gray;}
 .green{color:green;}
 .display_none{display:none;} .display_block{display:block;}
-.fs12{font-size:1.2em;} .fs20{font-size:2em;} .fs15{font-size:1.5em;}
+.fs05{font-size:0.5em;} .fs12{font-size:1.2em;} .fs20{font-size:2em;} .fs15{font-size:1.5em;}
+.fs08{font-size:0.8em;}
 .cp{cursor:pointer;}
 .vm{vertical-align: middle;}
 .zg-price {

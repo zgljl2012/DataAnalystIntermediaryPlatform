@@ -3,11 +3,16 @@ package com.zgljl2012.modules.front.user.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.zgljl2012.common.database.T20;
+import com.zgljl2012.common.database.T21;
 import com.zgljl2012.common.database.enums.Gender;
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.database.PagingInfo;
 import com.zgljl2012.framework.service.AbstractService;
 import com.zgljl2012.framework.util.StringHelper;
 import com.zgljl2012.modules.front.user.FxsManage;
@@ -151,5 +156,53 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 			e.printStackTrace();
 		}
 		return r;
+	}
+
+	@Override
+	public List<T21> search(int uid, FxsWorkExperienceQuery query,
+			PagingInfo pagingInfo) {
+		Connection conn = this.getConnection();
+		StringBuilder sql = new 
+				StringBuilder("SELECT F01,F02,F03,F04,F05,F06 FROM T21 WHERE 1=1 AND F02 = ? ");
+		if(!StringHelper.isEmpty(query.getCompanyName())) {
+			sql.append(" AND F03 like ? ");
+		}
+		if(!StringHelper.isEmpty(query.getRemark())) {
+			sql.append(" AND F06 like ? ");		
+		}
+		if(query.getStartDate() != null && query.getFinishedDate() != null) {
+			sql.append(" ANd F04 > ? AND F05 < ? ");
+		}
+		List<Object> args = new ArrayList<>();
+		args.add(uid);
+		if(!StringHelper.isEmpty(query.getCompanyName())) {
+			args.add("%"+query.getCompanyName()+"%");
+		}
+		if(!StringHelper.isEmpty(query.getRemark())) {
+			args.add("%"+query.getRemark()+"%");
+		}
+		if(query.getStartDate() != null && query.getFinishedDate() != null) {
+			args.add(query.getStartDate());
+			args.add(query.getFinishedDate());
+		}
+		List<T21> t21s = new ArrayList<>();
+		ResultSet rs = this.selectPaging(
+				conn, sql.toString(), pagingInfo, args.toArray());
+		try {
+			while(rs.next()) {
+				T21 t21 = new T21();
+				t21.F01 = rs.getInt(1);
+				t21.F02 = rs.getInt(2);
+				t21.F03 = rs.getString(3);
+				t21.F04 = rs.getDate(4);
+				t21.F05 = rs.getDate(5);
+				t21.F06 = rs.getString(6);
+				t21s.add(t21);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return t21s;
 	}
 }

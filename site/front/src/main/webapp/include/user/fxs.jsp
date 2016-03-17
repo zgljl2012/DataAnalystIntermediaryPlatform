@@ -96,8 +96,48 @@
 			  <li ><a data-toggle="tab" href="#add_experience">增加工作经历</a></li>
 			</ul>
 			<div id="experience_content" class="tab-content">
-				<div class="tab-pane fade in active" id="manage_experience">
-					管理工作经验
+				<div class="row tab-pane fade in active" id="manage_experience">
+					<table id="we_table" class="table tc fs08 ml30 mt10" style="width:60%;">
+					    <thead>
+					    	<tr>
+					    		<th>序号</th>
+					    		<td>公司名称</td>
+					    		<td>开始时间</td>
+					    		<td>结束时间</td>
+					    		<td>职务说明</td>
+					    		<td>操作</td>
+					    	</tr>
+					    </thead>
+					    <tbody>
+					    	<tr>
+					    		<th>序号</th>
+					    		<td>公司名称</td>
+					    		<td>开始时间</td>
+					    		<td>结束时间</td>
+					    		<td>职务说明</td>
+					    		<td><a  onclick="deleteItem();" class="cp">删除</a></td>
+					    	</tr>
+					    </tbody>
+					  </table>
+					  <%--分页 --%>
+					  <ul class="pagination fs08 ml30 mt10">
+					    <li>
+					      <a href="#" aria-label="Previous">
+					        <span aria-hidden="true">&laquo;</span>
+					      </a>
+					    </li>
+					    <li><a href="#">1</a></li>
+					    <li><a href="#">2</a></li>
+					    <li><a href="#">3</a></li>
+					    <li><a href="#">4</a></li>
+					    <li><a href="#">5</a></li>
+					    <li>
+					      <a href="#" aria-label="Next">
+					        <span aria-hidden="true">&raquo;</span>
+					      </a>
+					    </li>
+					  </ul>
+					  
 				</div>
 				<div class="tab-pane fade" id="add_experience">
 					<div class="input-group input-group-md col-md-5 mt20">

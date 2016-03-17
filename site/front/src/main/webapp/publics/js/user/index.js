@@ -65,6 +65,56 @@ function initFxs() {
 			showAlert("网络连接出错！请刷新重试！");
 		}
 	});
+	loadWorkExperience(fxsWorkExperience, 1);
+}
+
+/**
+ * 装载工作经历信息
+ * @param url
+ * @param current
+ */
+function loadWorkExperience(url, current) {
+	var data = {};
+	data.current = current;
+	$.ajax({
+		url:url,
+		data:data,
+		success:function(data) {
+			data = eval('('+data+')');
+			var e = $("#we_table").find("tbody");
+			e.html("");
+			var s = "";
+			for(var i in data) {
+				s += "<tr>"
+				s += "<th>" + i +"</th>";
+				var cn = data[i].F03;
+				if(cn.length > 10) cn = data[i].F03.substr(0,7)+"...";
+				s += "<th title=" + data[i].F03 +">"+cn+"</th>";
+				s += "<th>" + data[i].F04 +"</th>";
+				if(!data[i].F05) {
+					data[i].F05="至今";
+				}
+				s += "<th>" + data[i].F05 +"</th>";
+				cn = data[i].F06;
+				if(cn.length>15) cn = data[i].F06.substr(0,12)+"...";
+				s += "<th title=" + data[i].F06 +">"+cn+"</th>";
+				s += "<th><a class='cp' onlick=deleteItem('"+data[i].F01 +"')>删除</th>";
+				s += "</tr>";
+			}
+			e.html(s);
+		},
+		error:function() {
+			showAlert("网络连接出错！请刷新重试！");
+		}
+	});
+}
+
+/**
+ * 删除从业经历
+ * @param id
+ */
+function deleteItem(id) {
+	console.log(id);
 }
 
 /**
