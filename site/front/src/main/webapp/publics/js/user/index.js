@@ -98,7 +98,7 @@ function loadWorkExperience(url, current) {
 				cn = data[i].F06;
 				if(cn.length>15) cn = data[i].F06.substr(0,12)+"...";
 				s += "<th title=" + data[i].F06 +">"+cn+"</th>";
-				s += "<th><a class='cp' onlick=deleteItem('"+data[i].F01 +"')>删除</th>";
+				s += "<th><a class='cp' onclick=deleteItem('"+data[i].F01 +"')>删除</th>";
 				s += "</tr>";
 			}
 			e.html(s);
