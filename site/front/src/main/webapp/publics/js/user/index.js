@@ -29,7 +29,6 @@ function initFxs() {
 		type:"get",
 		url:fxsBaseInfoUrl,
 		success:function(data){
-			console.log(data);
 			data = eval('('+data+')');
 			$("input[name='username']").val(data.t10.F02);
 			$("input[name='realName']").val(data.t20.F02);
@@ -61,12 +60,113 @@ function initFxs() {
 			global.userStatus = data.t10.F08; 
 		},
 		error:function(err) {
-			console.log(err);
 			showAlert("网络连接出错！请刷新重试！");
 		}
 	});
+	global.count = 0;
+	global.pageSize = 0;
+	global.current = 0;
 	loadWorkExperience(fxsWorkExperience, 1);
+	initPagingInfo();
 }
+
+/**
+ * 初始化总页数和每页条数
+ */
+function initPagingInfo() {
+	$.ajax({
+		type:"GET",
+		url:fxsWorkExperienceManage,
+		success:function(data) {
+			data = eval("("+data+")");
+			global.count = data.count;
+			global.pageSize = data.pageSize;
+			// 进行分页
+			paging();
+		},
+		error:function() {
+			showAlert("分页信息获取失败！请刷新重试！");
+		}
+	});
+}
+
+/**********************************************************
+ * 获取分页信息
+ */
+function paging() {
+	var pageCount = getPageCount();
+	var s = "<li><a onclick=loadWorkExperience('"+fxsWorkExperience+"',1)"+" aria-label=Previous title='首页'>"
+		+"<span aria-hidden=true>&laquo;</span></a></li>";
+	var left=[];
+	var right=[];
+	var isMiddle = false;
+	for(var i=0; i < pageCount;i++) left.push(i+1);
+	if(pageCount>5) {
+		var all =getPageCount();
+		if(global.current<=3){
+			left=[1,2,3];
+			right=[all-1, all];
+		} else if(global.current>=all-2){
+			left=[1,2];
+			right=[all-2, all-1, all];
+		} else {
+			isMiddle = true;
+			left=[global.current-1, global.current, global.current+1];
+			right = [];
+		}
+	}
+	if(isMiddle) {
+		s += "<li><a onclick=prev() title='上一页'>...</a></li>"
+	}
+	for(var i=0;i<left.length;i++) {
+		s += "<li><a onclick=loadWorkExperience('"+fxsWorkExperience+"',"+left[i]
+			+") >"+left[i]+"</a></li>";
+	}
+	if(!isMiddle&&left.length >= 3) {
+		s += "<li><a title='下一页' onclick=loadWorkExperience('"+fxsWorkExperience+"',"+
+			"4)>...</a></li>"
+	} else if(!isMiddle) {
+		s += "<li><a title='下一页' onclick=loadWorkExperience('"+fxsWorkExperience+"',"+
+		 (getPageCount()-3)+")>...</a></li>"
+	}
+	for(var i=0;i<right.length;i++) {
+		s += "<li><a onclick=loadWorkExperience('"+fxsWorkExperience+"',"+right[i]
+			+") >"+right[i]+"</a></li>";
+	}
+	if(isMiddle) {
+		s += "<li><a onclick=next() title='下一页'>...</a></li>"
+	}
+	s += "<li><a onclick=loadWorkExperience('"+fxsWorkExperience+"',"+getPageCount()+") aria-label=Next title='尾页'>" +
+		"<span aria-hidden=true>&raquo;</span></a></li>";
+	var e = $("#paging");
+	e.html(s);
+}
+
+function prev(i) {
+	if(i == null) i=1;
+	if(global.current > 1) {
+		loadWorkExperience(fxsWorkExperience, global.current-i);
+	}
+}
+
+function next(i) {
+	if(i==null) i=1;
+	if(global.current < getPageCount()) {
+		loadWorkExperience(fxsWorkExperience, global.current+i);
+	}
+}
+
+function getPageCount() {
+	var pageCount = global.count % global.pageSize; 
+	if(pageCount > 0) {
+		pageCount = (global.count - pageCount)/global.pageSize + 1;
+	} else {
+		pageCount = (global.count - pageCount)/global.pageSize;
+	}
+	return pageCount;
+}
+
+/******************************************************/
 
 /**
  * 装载工作经历信息
@@ -84,9 +184,11 @@ function loadWorkExperience(url, current) {
 			var e = $("#we_table").find("tbody");
 			e.html("");
 			var s = "";
+			var j=(current-1)*global.pageSize;
 			for(var i in data) {
+				j++;
 				s += "<tr>"
-				s += "<th>" + i +"</th>";
+				s += "<th>" + j +"</th>";
 				var cn = data[i].F03;
 				if(cn.length > 10) cn = data[i].F03.substr(0,7)+"...";
 				s += "<th title=" + data[i].F03 +">"+cn+"</th>";
@@ -102,6 +204,8 @@ function loadWorkExperience(url, current) {
 				s += "</tr>";
 			}
 			e.html(s);
+			global.current = current;
+			paging();
 		},
 		error:function() {
 			showAlert("网络连接出错！请刷新重试！");
@@ -310,7 +414,6 @@ function updateCommany() {
  */
 function submitCompanyAdd(url) {
 	var companyName = $("input[name='companyName']").val();
-	console.log(companyName.trim());
 	if(companyName == null || companyName!=null&&companyName.trim().length==0) {
 		showAlert("请输入公司名称");
 		return false;
@@ -362,7 +465,6 @@ function submitCompanyAdd(url) {
 		url:url,
 		data:data,
 		success:function(data) {
-			console.log(data);
 			data = eval('('+data+')');
 			if(data.success=='true') {
 				showAlert("从业经历添加成功！");

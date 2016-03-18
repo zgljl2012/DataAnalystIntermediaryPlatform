@@ -55,4 +55,9 @@ public interface FxsManage extends Service{
 	 */
 	public List<T21> search(int uid, FxsWorkExperienceQuery query, PagingInfo pagingInfo);
 	
+	/**
+	 * 获取从业经历的条数
+	 * @return
+	 */
+	public int getCountWorkExperience(int uid);
 }

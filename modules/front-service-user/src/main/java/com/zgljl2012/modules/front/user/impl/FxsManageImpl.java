@@ -205,4 +205,20 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 		}
 		return t21s;
 	}
+
+	@Override
+	public int getCountWorkExperience(int uid) {
+		String sql = "SELECT COUNT(*) FROM T21 WHERE F02="+uid;
+		Connection conn = getConnection();
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }

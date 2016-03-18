@@ -56,6 +56,8 @@
    var fxsBaseInfoUrl = "user/fxsBaseInfo";
    <%--分析师从业经历获取Url--%>
    var fxsWorkExperience = "user/workExperience";
+   <%--分析师从业经历管理URL，获取分页信息和删除经历--%>
+   var fxsWorkExperienceManage = "user/workExperienceManage"
    </script>
 </body>
 </html>

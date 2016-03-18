@@ -120,17 +120,12 @@
 					    </tbody>
 					  </table>
 					  <%--分页 --%>
-					  <ul class="pagination fs08 ml30 mt10">
+					  <ul class="pagination fs08 ml30 mt10 cp" id="paging">
 					    <li>
 					      <a href="#" aria-label="Previous">
 					        <span aria-hidden="true">&laquo;</span>
 					      </a>
 					    </li>
-					    <li><a href="#">1</a></li>
-					    <li><a href="#">2</a></li>
-					    <li><a href="#">3</a></li>
-					    <li><a href="#">4</a></li>
-					    <li><a href="#">5</a></li>
 					    <li>
 					      <a href="#" aria-label="Next">
 					        <span aria-hidden="true">&raquo;</span>

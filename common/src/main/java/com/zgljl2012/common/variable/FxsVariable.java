@@ -8,9 +8,12 @@ import com.zgljl2012.framework.variable.VariableClass;
  * @version 2016年3月14日下午9:36:21
  * 
  */
-public enum FxsVariable implements VariableBean{
+@VariableClass(key="FXS", name="分析师变量")
+public enum FxsVariable implements VariableBean {
 
 	BUSINESS_HISTORY_MAXSIZE("工作经历最长条数", ""+10),
+	
+	WORK_EXPERIENCE_PAGE_SIZE("工作经历每页条数", ""+5),
 	
 	;
 	private String key = "";

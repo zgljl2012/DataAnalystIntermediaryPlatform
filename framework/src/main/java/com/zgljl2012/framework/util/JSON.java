@@ -15,6 +15,8 @@ import java.util.Stack;
 
 import org.json.JSONObject;
 
+import com.zgljl2012.framework.database.AbstractEntity;
+
 /**
  *@author 廖金龙
  *@version 2016年2月28日上午12:02:09
@@ -50,11 +52,6 @@ public class JSON implements Cloneable{
 		map.put(key, json);
 	}
 	
-	/**
-	 * 存储对象
-	 * @param key
-	 * @param value 有get和set方法的对象
-	 */
 	public void put(String key, Object value) {
 		if(value instanceof String) {
 			put(key, (String)value);
@@ -63,6 +60,15 @@ public class JSON implements Cloneable{
 			put(key, (JSON)value);
 			return;
 		}
+		map.put(key, value);
+	}
+	
+	/**
+	 * 存储对象
+	 * @param key
+	 * @param value 有get和set方法的对象
+	 */
+	public void put(String key, AbstractEntity value) {
 		Class<? extends Object> cls = value.getClass();
 		Field[] fields = cls.getDeclaredFields();
 		JSON json = new JSON();

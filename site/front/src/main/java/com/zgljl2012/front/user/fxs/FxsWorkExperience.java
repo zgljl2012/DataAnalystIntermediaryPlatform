@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.zgljl2012.common.database.T21;
+import com.zgljl2012.common.variable.FxsVariable;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.database.PagingInfo;
 import com.zgljl2012.framework.service.annotation.Impl;
@@ -37,6 +38,9 @@ public class FxsWorkExperience extends AbstractServlet{
 			Controller controller) throws Exception {
 		int uid = controller.getSession(req.getSession()).getUserId();
 		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		final int pageSize = Integer.parseInt(
+				controller.getVariableManage().getValue(
+						FxsVariable.WORK_EXPERIENCE_PAGE_SIZE));
 		List<T21> list = fxsManage.search(uid, 
 				new FxsWorkExperienceQuery() {
 					
@@ -86,7 +90,7 @@ public class FxsWorkExperience extends AbstractServlet{
 					@Override
 					public int getPageSize() {
 						// TODO Auto-generated method stub
-						return 5;
+						return pageSize;
 					}
 					
 					@Override
