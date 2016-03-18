@@ -94,8 +94,10 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 			}
 			pstmt.execute();
 			conn.commit();
+			this.close(conn);
 		} catch(Exception e) {
 			conn.rollback();
+			this.close(conn);
 			throw e;
 		}
 	}
@@ -117,8 +119,10 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 				t.setF07(rs.getString(6));
 				t.setF08(rs.getString(7));
 				t.setF09(rs.getString(8));
+				this.close(conn);
 				return t;
 			} else {
+				this.close(conn);
 				throw new Exception("没有找到该用户！");
 			}
 		}
@@ -151,8 +155,9 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 					query.getStartDate(),
 					query.getFinishedDate(),
 					query.getRemark());
+			this.close(conn);
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
+			this.close(conn);
 			e.printStackTrace();
 		}
 		return r;
@@ -199,8 +204,9 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 				t21.F06 = rs.getString(6);
 				t21s.add(t21);
 			}
+			this.close(conn);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			this.close(conn);
 			e.printStackTrace();
 		}
 		return t21s;
@@ -214,9 +220,12 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			if(rs.next()) {
-				return rs.getInt(1);
+				int c = rs.getInt(1);
+				this.close(conn);
+				return c;
 			}
 		} catch (SQLException e) {
+			this.close(conn);
 			e.printStackTrace();
 		}
 		return 0;

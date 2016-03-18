@@ -13,7 +13,7 @@
    <li><a href="#bidding_project" data-toggle="tab">已投标项目 </a></li>
    <li><a href="#finished_project" data-toggle="tab">已完成项目 </a></li>
 </ul>
-<div id="myTabContent" class="tab-content">
+<div id="fxsInfo" class="tab-content">
    <div class="tab-pane fade in active" id="baseInfo">
       <div class="row mt20">
       	<div class="col-sm-1 tc">

@@ -12,6 +12,15 @@
 .fs08{font-size:0.8em;}
 .cp{cursor:pointer;}
 .vm{vertical-align: middle;}
+#fxsInfo  input[type='text']{
+	-moz-border-radius: 1px 1px;
+   -webkit-border-radius: 1px 1px;
+   border-radius: 1px 1px;
+}
+
+#fxsInfo input[type='text']:disabled {
+	background:#f1f1f1;
+}
 .zg-price {
 	color:#ff8a00;
 	font-size: 1.2em;
