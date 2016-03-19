@@ -1,6 +1,8 @@
 package com.zgljl2012.framework.test.util;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 import junit.framework.Assert;
@@ -79,5 +81,11 @@ public class TestJSONParser {
 		File file = new File("src/test/java/test.json");
 		JSON j = JSON.parser(file);
 		System.out.println(j);
+	}
+	
+	@Test
+	public void jsonList() {
+		List<Object> list = new ArrayList<>();
+		list.add("");
 	}
 }

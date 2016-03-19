@@ -7,6 +7,9 @@
         <dependent-module archiveName="front-service-user-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/front-service-user/front-service-user">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="front-service-analyst-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/front-service-analyst/front-service-analyst">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="framework-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/framework/framework">
             <dependency-type>uses</dependency-type>
         </dependent-module>

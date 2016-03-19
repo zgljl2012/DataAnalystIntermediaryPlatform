@@ -45,7 +45,8 @@ public class JSON implements Cloneable{
 	}
 	
 	public void put(String key, List<Object> list) {
-		 
+		 JSONObject json = new JSONObject();
+		 json.put(key, list);
 	}
 	
 	public void put(String key, JSON json) {

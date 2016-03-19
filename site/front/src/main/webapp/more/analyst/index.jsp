@@ -17,8 +17,8 @@
     
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
-<script src="publics/js/ie-emulation-modes-warning.js"></script>
-    
+<!-- <script src="publics/js/ie-emulation-modes-warning.js"></script> -->
+
 <%--筛选条件框 --%>
 <link rel="stylesheet" type="text/css" href="publics/css/shaixuan/list.css"/>
 <link rel="stylesheet" type="text/css" href="publics/css/shaixuan/manhuaDate.1.0.css"/>
@@ -27,6 +27,7 @@
 <link rel="stylesheet" type="text/css" href="publics/css/zg-common.css">
  
 <script type="text/javascript" src="publics/js/shaixuan/jquery-1.5.1.js"></script>
+<script src="publics/js/plugis/template/jquery.tmpl.min.js"></script>
 <script type="text/javascript" src="publics/js/shaixuan/ui.tab.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -39,20 +40,6 @@ $(document).ready(function(){
 		contentList:"#demo1 .ui-tab-container .ui-tab-content2"
 	});		
 });	
-</script>
-<script type="text/javascript">
-$(function (){
-	$("input.mh_date").datejs({					       
-		Event : "click",//可选				       
-		Left : 0,//弹出时间停靠的左边位置
-		Top : -16,//弹出时间停靠的顶部边位置
-		fuhao : "-",//日期连接符默认为-
-		isTime : false,//是否开启时间值默认为false
-		beginY : 2010,//年份的开始默认为1949
-		endY :2015//年份的结束默认为2049
-	});
-	
-});
 </script>
 <script type="text/javascript">
 $(document).ready(function(e) {
@@ -164,7 +151,9 @@ $(document).ready(function(){
     	<div class="panel-heading">所有项目</div>
     	<div class="panel-body">
     		
-			<table class="table table-hover">
+			<table class="table table-hover" id="tmplTable">
+				<script id="tmplData" type="text/x-jquery-tmpl">
+				{{each(i, d) data}}
 				<tr>
 					<td>
 						<span><a href="#"><img src="" alt="图像"></a></span>
@@ -181,13 +170,20 @@ $(document).ready(function(){
 						</div>
 					</td>
 				</tr>
-				<tr><td>2</td><td>2</td></tr>
-				<tr><td>3</td><td>2</td></tr>
+				{{/each}}
+				</script>
 			</table>
 		</div>
 		</div>
 	</div>    
     <!--底部导航栏-->
    <%@include file="/include/footer.jsp" %>
+   <%--对话框 --%>
+   <%@include file="/include/dialog.jsp" %>
+   <script>
+   var analystServlet = "analyst";
+   
+   </script>
+   <script src="publics/js/analyst/analyst.js"></script>
 </body>
 </html>

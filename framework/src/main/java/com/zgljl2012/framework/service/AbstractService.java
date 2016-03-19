@@ -44,6 +44,16 @@ public abstract class AbstractService implements Service{
 		db.close(conn);
 	}
 	
+	protected ResultSet select(Connection conn, String sql, Object... args) throws SQLException {
+		// TODO Auto-generated method stub
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		for(int i = 0; i < args.length; i++) {
+			stmt.setObject(i+1, args[i]);
+		}
+		ResultSet rs = stmt.executeQuery();
+		return rs;
+	}
+	
 	/**
 	 * 执行sql语句
 	 * @param conn

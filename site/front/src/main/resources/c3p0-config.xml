@@ -22,10 +22,6 @@
         <property name="maxStatements">0</property>  
         <!-- 当连接池耗尽时，一次获得连接数 -->
         <property name="acquireIncrement">5</property>
-        <!-- 当连接池连接耗尽时，客户端getConnection(),所等待的时间-->  
-		<property name="idleConnectionTestPeriod" value="120" />  
-		<!-- 当连接失效时，获得连接的次数，0为无限次（重连）-->  
-		<property name="acquireRetryAttempts" value="30" />
     </named-config>  
       
       
