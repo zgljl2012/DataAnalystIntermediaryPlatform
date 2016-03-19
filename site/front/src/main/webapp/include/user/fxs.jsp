@@ -16,55 +16,72 @@
 <div id="fxsInfo" class="tab-content">
    <div class="tab-pane fade in active" id="baseInfo">
       <div class="row mt20">
-      	<div class="col-sm-1 tc">
-      		<img src="publics/images/noface.gif" width="100" height="100" class="display_block" name="headImg"/>
-      		<div class="form-group tc ml10">
+      	<div class="col-sm-2 tc">
+      		<img src="publics/images/noface.gif" width="150" height="150" class="display_block cp" name="headImg" title='点击更改图像' onclick="changeHeadImage()"/>
+      		<div class="form-group">
                 <input onclick="changeHeadImage()" type="button" class="btn btn-primary fs05 mt5" value="上传图像">
             </div>
       	</div>
-      	<div class="col-sm-10 ml20">
+      	<div class="col-sm-10">
       		<div class="row mt20">
-      			<div class="col-sm-4" style="width:35%">
+      			<div class="col-sm-5">
       				<span>用&nbsp;&nbsp;户&nbsp;&nbsp;名:</span>
-      				<input type="text" name="username" value="<%=ljlSession.getUsername() %>" maxlength="18" disabled/>
+      				<input class="m-input-form-control" type="text" name="username" value="<%=ljlSession.getUsername() %>" maxlength="18" disabled/>
       				<a edit onclick="edit('username','编辑','完成', updateUsername)" class="cp">编辑</a>
       			</div>
       			<div class="col-sm-5">
       				<span>真实姓名:</span>
-      				<input type="text" name="realName" value="" maxlength="18" disabled/>
+      				<input class="m-input-form-control" type="text" name="realName" value="" maxlength="18" disabled/>
       				<a edit onclick="edit('realName','编辑','完成', updateRealname)" class="cp">编辑</a>
       			</div>
       		</div>
       		<div class="row mt25">
-      			<div class="col-sm-4" style="width:35%">
+      			<div class="col-sm-5">
       				<span>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱:</span>
-      				<input type="text" name="email" value="" maxlength="18" disabled/>
+      				<input class="m-input-form-control" type="text" name="email" value="" maxlength="18" disabled/>
       				<a onclick="edit('email','编辑','完成', updateEmail)" class="cp">编辑</a>
       			</div>
-      			<div class="col-sm-5" style="width:40%">
+      			<div class="col-sm-5">
       				<span>出生日期:</span>
-      				<input date id="bornDate" readonly disabled class="dateTime" type="text" name="bornDate">
+      				<input class="m-input-form-control" date id="bornDate" readonly disabled class="dateTime" type="text" name="bornDate">
       				<a edit onclick="edit('bornDate', '编辑','完成',updateDate)" class="cp">编辑</a>
       			</div>
-      			<div class="col-sm-3">
+      		</div>
+      		<div class="row mt20">
+      			<div class="col-sm-5 fl">
       				<span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</span>
-      				<select name="gender" disabled>
+      				<select class="m-input-form-control" name="gender" disabled>
       					<option value="BM">保密</option>
       					<option value="NAN">男</option>
       					<option value="NV">女</option>
       				</select>
       				<a edit onclick="edit('gender','编辑','完成', updateGender)" class="cp">编辑</a>
       			</div>
+      			<div class="col-sm-5 fl">
+      				<span>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历:</span>
+      				<select name="degree" class="m-input-form-control" disabled placeholder="学历">
+      					<option value="DZ">大专</option>
+      					<option value="BK">本科</option>
+      					<option value="SS">硕士</option>
+      					<option value="BS">博士</option>
+      					<option value="BSH">博士后</option>
+      					<option value="QT">其它</option>
+      				</select>
+      				<a edit onclick="edit('degree','编辑','完成', updateDegree)" class="cp">编辑</a>
+      			</div>
       		</div>
       		<div class="row mt20">
-      			<div class="col-sm-9">
+      			<div class="col-sm-10">
 	      			<span>毕业院校:</span>
-	      			<input type="text" name="school" value="" maxlength="40" style="width:70.8%;" disabled/>
+	      			<input class="m-input-form-control" type="text" name="school" value="" maxlength="40" style="width:78.9%" disabled/>
 	      			<a edit onclick="edit('school','编辑','完成', updateSchool)" class="cp">编辑</a>
       			</div>
-      			<div class="col-sm-3">
+      		</div>
+      		
+      		<div class="row mt20">
+      			<div class="col-sm-5 fl">
       				<span>毕业时间:</span>
-      				<input date readonly disabled class="dateTime" type="text" name="employDate" style="width:37%;">
+      				<input class="m-input-form-control" date readonly disabled class="dateTime" type="text" name="employDate">
       				<a edit onclick="edit('employDate', '编辑','完成',updateEmployDate)" class="cp">编辑</a>
       			</div>
       		</div>
@@ -77,7 +94,7 @@
       		<a edit onclick="edit('personalIntroduce', '编辑','完成',updatePersonalIntroduce)" class="cp">编辑</a>
       	</div>
       	<div class="row ml30 mt10">
-      		<textarea disabled name="personalIntroduce" style="width:50%;height:150px;" placeholder="请您对自己作一个简单的介绍，100字左右" maxlength=250></textarea>
+      		<textarea class="m-input-form-control"  disabled name="personalIntroduce" style="width:50%;height:150px;" placeholder="请您对自己作一个简单的介绍，100字左右" maxlength=250></textarea>
       	</div>
       </div>
       <hr>
@@ -87,7 +104,7 @@
       	</div>
       	<div class="row ml30 mt10">
       		<span class="gray">当前公司:</span>
-	      	<input placeholder="可填写自由职业" type="text" name="commany" value="" maxlength="60" style="width:70.8%;" disabled/>
+	      	<input class="m-input-form-control"  placeholder="可填写自由职业" type="text" name="commany" value="" maxlength="60" style="width:70.8%;" disabled/>
 	      	<a edit onclick="edit('commany','编辑','完成', updateCommany)" class="cp">编辑</a>
       	</div>
       	<div class="row ml30 mt20">

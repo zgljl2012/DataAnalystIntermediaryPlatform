@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zgljl2012.common.database.enums.Degree;
 import com.zgljl2012.common.database.enums.Gender;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.service.annotation.Impl;
@@ -136,6 +137,12 @@ public class FxsUpdate extends AbstractServlet{
 				public String getHeadImgLink() {
 					// TODO Auto-generated method stub
 					if("headImgLink".equals(name)) return value;
+					return null;
+				}
+
+				@Override
+				public Degree getDegree() {
+					if("degree".equals(name)) return Degree.parse(value);
 					return null;
 				}
 				

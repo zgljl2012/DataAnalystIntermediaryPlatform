@@ -2,6 +2,7 @@ package com.zgljl2012.modules.front.user.query;
 
 import java.util.Date;
 
+import com.zgljl2012.common.database.enums.Degree;
 import com.zgljl2012.common.database.enums.Gender;
 
 /**
@@ -58,4 +59,10 @@ public interface T20Query {
 	 * @return
 	 */
 	public String getHeadImgLink();
+	
+	/**
+	 * 学历
+	 * @return
+	 */
+	public Degree getDegree();
 }

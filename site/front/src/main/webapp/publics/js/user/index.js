@@ -38,6 +38,7 @@ function initFxs() {
 			$("textarea[name='personalIntroduce'").val(data.t20.F05);
 			$("input[name='employDate']").val(data.t20.F06);
 			$("input[name='commany']").val(data.t20.F08);
+			$("select[name='degree']").val(data.t20.F10);
 			// 设置头像
 			var url = "/front/uploadHeadImage?filePath=" + data.t20.F09;
 			if(data.t20.F09 != null) {
@@ -56,6 +57,7 @@ function initFxs() {
 			global.map["personalIntroduce"] = $("textarea[name='personalIntroduce'").val()||"";
 			global.map["employDate"] = $("input[name='employDate']").val()||"";
 			global.map["commany"] = $("input[name='commany']").val()||"";
+			global.map["degree"] = $("select[name='degree']").val() ||"";
 			// 设置用户状态
 			global.userStatus = data.t10.F08; 
 		},
@@ -238,7 +240,7 @@ function changeHeadImage() {
  */
 function edit(name, a_hint1, a_hint2, callback) {
 	var e = $("input[name="+name+"]");
-	if(name=="gender") {
+	if(name=="gender"||name=="degree") {
 		e = $("select[name="+name+"]")
 	}
 	var a = e.nextAll("a[edit]");
@@ -290,7 +292,7 @@ function edit(name, a_hint1, a_hint2, callback) {
  */
 function cancel(name, a_hint1) {
 	var e = $("input[name="+name+"]");
-	if(name=="gender") {
+	if(name=="gender"||name=="degree") {
 		e = $("select[name="+name+"]")
 	}
 	var a = e.nextAll("a[edit]");
@@ -377,6 +379,10 @@ function updateDate() {
  * 毕业院校
  */
 function updateSchool() {
+	return true;
+}
+
+function updateDegree() {
 	return true;
 }
 

@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.zgljl2012.common.database.T20;
 import com.zgljl2012.common.database.T21;
+import com.zgljl2012.common.database.enums.Degree;
 import com.zgljl2012.common.database.enums.Gender;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.database.PagingInfo;
@@ -61,6 +62,9 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 			if(query.getHeadImgLink() != null) {
 				sql.append(", F09=?");
 			}
+			if(query.getDegree() != null) {
+				sql.append(", F10=?");
+			}
 		}
 		sql.append(" WHERE F01 = "+uid);
 		try(PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
@@ -91,6 +95,9 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 				if(query.getHeadImgLink() != null) {
 					pstmt.setString(i++, query.getHeadImgLink());
 				}
+				if(query.getDegree() != null) {
+					pstmt.setString(i++, query.getDegree().name());
+				}
 			}
 			pstmt.execute();
 			conn.commit();
@@ -105,7 +112,7 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 	@Override
 	public T20 getT20(int uid) throws Exception {
 		Connection conn = getConnection();
-		String sql = "SELECT F02,F03,F04,F05,F06,F07,F08,F09 FROM T20 WHERE F01 = "+uid;
+		String sql = "SELECT F02,F03,F04,F05,F06,F07,F08,F09,F10 FROM T20 WHERE F01 = "+uid;
 		try(Statement stmt = conn.createStatement()) {
 			ResultSet rs = stmt.executeQuery(sql);
 			if(rs.next()) {
@@ -119,6 +126,7 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 				t.setF07(rs.getString(6));
 				t.setF08(rs.getString(7));
 				t.setF09(rs.getString(8));
+				t.setF10(Degree.parse(rs.getString(9)));
 				this.close(conn);
 				return t;
 			} else {

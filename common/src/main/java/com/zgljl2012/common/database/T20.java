@@ -2,6 +2,7 @@ package com.zgljl2012.common.database;
 
 import java.util.Date;
 
+import com.zgljl2012.common.database.enums.Degree;
 import com.zgljl2012.common.database.enums.Gender;
 import com.zgljl2012.framework.database.AbstractEntity;
 
@@ -57,6 +58,19 @@ public class T20 extends AbstractEntity {
 	 */
 	public String F09;
 	
+	/**
+	 * 学历
+	 */
+	public Degree F10;
+	
+	public Degree getF10() {
+		return F10;
+	}
+
+	public void setF10(Degree f10) {
+		F10 = f10;
+	}
+
 	public int getF01() {
 		return F01;
 	}
