@@ -60,4 +60,11 @@ public interface FxsManage extends Service{
 	 * @return
 	 */
 	public int getCountWorkExperience(int uid);
+	
+	/**
+	 * 删除工作经历
+	 * @param uid 用户ID
+	 * @param id 工作经历ID
+	 */
+	public void deleteWorkExperienceItem(int id) throws Exception;
 }

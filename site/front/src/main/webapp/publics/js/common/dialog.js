@@ -8,18 +8,18 @@
  * @param cancelCall
  */
 function showDialog(title, content, okCall, cancelCall) {
-	
 	if(typeof content==='function') {
 		cancelCall=okCall;
 		okCall=content;
 		content = title;
 		title = "温馨提示";
-		
 	}
 	$("#modalTitle").html(title);
 	$("#modalBody").html(content);
 	$("#modalOk").addClass("ml20");
-	$("#modalOk").click(okCall);
+	$("#modalOk").click(function(){
+		okCall.apply([],[]);
+	});
 	$("#modalCancel").show();
 	$("#modalCancel").click(cancelCall);
 	$("#modalDialog").modal("show");
@@ -30,10 +30,10 @@ function showAlert(title, content, okCall) {
 		content = title;
 		title = "温馨提示";
 	}
-	$("#modalTitle").html(title);
-	$("#modalBody").html(content);
-	$("#modalOk").removeClass("ml20");
-	$("#modalOk").click(okCall);
-	$("#modalDialog").modal("show");
-	$("#modalCancel").hide();
+	$("#modalAlertTitle").html(title);
+	$("#modalAlertBody").html(content);
+	$("#modalAlertOk").removeClass("ml20");
+	$("#modalAlertOk").click(okCall);
+	$("#modalAlertDialog").modal("show");
+	$("#modalAlertCancel").hide();
 }

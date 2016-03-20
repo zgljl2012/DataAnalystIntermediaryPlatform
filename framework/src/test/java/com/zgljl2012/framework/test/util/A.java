@@ -1,11 +1,14 @@
 package com.zgljl2012.framework.test.util;
 
+import com.zgljl2012.framework.database.AbstractEntity;
+
 /**
  * @author 廖金龙
  * @version 2016年2月29日下午11:59:32
  * 
  */
-public class A {
+@SuppressWarnings("serial")
+public class A extends AbstractEntity{
 	int a;
 	String b;
 	public int getA() {

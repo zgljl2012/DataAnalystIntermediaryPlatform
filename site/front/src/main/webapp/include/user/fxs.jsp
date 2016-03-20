@@ -17,7 +17,7 @@
    <div class="tab-pane fade in active" id="baseInfo">
       <div class="row mt20">
       	<div class="col-sm-2 tc">
-      		<img src="publics/images/noface.gif" width="150" height="150" class="display_block cp" name="headImg" title='点击更改图像' onclick="changeHeadImage()"/>
+      		<img src="publics/images/noface.gif" width="150" height="150" class="display_block cp border_eee" name="headImg" title='点击更改图像' onclick="changeHeadImage()"/>
       		<div class="form-group">
                 <input onclick="changeHeadImage()" type="button" class="btn btn-primary fs05 mt5" value="上传图像">
             </div>
@@ -89,40 +89,40 @@
       </div>
       <hr>
       <div class="row">
-      	<div class="row ml20">
+      	<div class="row tc">
       		<span class="fs15 ml10 gray">个人简介</span>
       		<a edit onclick="edit('personalIntroduce', '编辑','完成',updatePersonalIntroduce)" class="cp">编辑</a>
       	</div>
-      	<div class="row ml30 mt10">
-      		<textarea class="m-input-form-control"  disabled name="personalIntroduce" style="width:50%;height:150px;" placeholder="请您对自己作一个简单的介绍，100字左右" maxlength=250></textarea>
+      	<div class="row mt10 tc">
+      		<textarea class="m-input-form-control"  disabled name="personalIntroduce" style="width:75%;height:180px;" placeholder="请您对自己作一个简单的介绍，100字左右" maxlength=250></textarea>
       	</div>
       </div>
       <hr>
       <div class="row">
-      	<div class="row ml20">
+      	<div class="row tc">
       		<span class="fs15 ml10 gray">从业经历</span>
       	</div>
-      	<div class="row ml30 mt10">
+      	<div class="row mt10 tc">
       		<span class="gray">当前公司:</span>
 	      	<input class="m-input-form-control"  placeholder="可填写自由职业" type="text" name="commany" value="" maxlength="60" style="width:70.8%;" disabled/>
 	      	<a edit onclick="edit('commany','编辑','完成', updateCommany)" class="cp">编辑</a>
       	</div>
-      	<div class="row ml30 mt20">
+      	<div class="row ml50 mt20 tc col-sm-10">
       		<ul id="experience" class="nav nav-tabs">
-			  <li class="active"><a data-toggle="tab" href="#manage_experience">管理工作经历</a></li>
+			  <li class="active"><a data-toggle="tab" href="#manage_experience" onclick="initWorkExperience()">管理工作经历</a></li>
 			  <li ><a data-toggle="tab" href="#add_experience">增加工作经历</a></li>
 			</ul>
 			<div id="experience_content" class="tab-content">
 				<div class="row tab-pane fade in active" id="manage_experience">
-					<table id="we_table" class="table tc fs08 ml30 mt10" style="width:60%;">
+					<table id="we_table" class="table tc fs08 ml30 mt10">
 					    <thead>
-					    	<tr>
+					    	<tr class="tl">
 					    		<th>序号</th>
-					    		<td>公司名称</td>
-					    		<td>开始时间</td>
-					    		<td>结束时间</td>
-					    		<td>职务说明</td>
-					    		<td>操作</td>
+					    		<th>公司名称</th>
+					    		<th>开始时间</th>
+					    		<th>结束时间</th>
+					    		<th>职务说明</th>
+					    		<th>操作</th>
 					    	</tr>
 					    </thead>
 					    <tbody>
@@ -151,7 +151,7 @@
 					  </ul>
 					  
 				</div>
-				<div class="tab-pane fade" id="add_experience">
+				<div class="tab-pane fade tc" id="add_experience">
 					<div class="input-group input-group-md col-md-5 mt20">
 						<span class="input-group-addon">
 							<span class="red vm">*&nbsp;</span>公司名称：

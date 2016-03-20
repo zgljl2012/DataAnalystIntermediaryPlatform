@@ -86,6 +86,10 @@ public class TestJSONParser {
 	@Test
 	public void jsonList() {
 		List<Object> list = new ArrayList<>();
-		list.add("");
+		list.add("1");
+		list.add("2");
+		JSONObject json = new JSONObject();
+		json.put("list", list);
+		System.out.println(json.toString());
 	}
 }

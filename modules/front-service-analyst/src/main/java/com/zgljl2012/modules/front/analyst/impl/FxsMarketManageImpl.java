@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.zgljl2012.common.database.T10;
 import com.zgljl2012.common.database.T20;
@@ -34,7 +35,8 @@ public class FxsMarketManageImpl extends AbstractService implements FxsMarketMan
 	@Override
 	public JSON search(FxsInfoQuery query, PagingInfo pagingInfo) {
 		StringBuilder sql = new StringBuilder("SELECT * FROM T10 AS t1 "
-				+ "LEFT JOIN T20 AS t2 ON t1.F01 = t2.F01 WHERE t1.F05 = 'FXS' ");
+				+ "LEFT JOIN T20 AS t2 ON t1.F01 = t2.F01 WHERE t1.F05 = 'FXS' "
+				+ "AND t2.F05 IS NOT NULL AND t2.F06 IS NOT NULL AND t2.F10 IS NOT NULL");
 		ArrayList<Object> args = new ArrayList<>();
 		if(query != null) {
 			if(query.getDegree() != null) {
@@ -55,7 +57,7 @@ public class FxsMarketManageImpl extends AbstractService implements FxsMarketMan
 						args.toArray());
 		JSON result = new JSON();
 		try {
-			int i=0;
+			List<JSON> list = new ArrayList<>();
 			while(rs.next()) {
 				T10 t10 = new T10();
 				int j = 1;
@@ -82,10 +84,18 @@ public class FxsMarketManageImpl extends AbstractService implements FxsMarketMan
 				JSON json = new JSON();
 				json.put("t10", t10);
 				json.put("t20", t20);
-				i++;
-				result.put(""+i, json);
+				JSON jtmp = (JSON) json.get("t20");
+				// 进行学历的中文转化
+				if(t20.getF10() != null) {
+					jtmp.put("F10", t20.getF10().getChineseName());
+				}
+				
+				json.put("t20", jtmp);
+				
+				list.add(json);
 			}
 			this.close(conn);
+			result.put("data", list);
 			return result;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -96,7 +106,8 @@ public class FxsMarketManageImpl extends AbstractService implements FxsMarketMan
 
 	@Override
 	public int fxsCount(FxsInfoQuery query) {
-		StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM T20");
+		StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM T20 WHERE 1=1 "
+				+ "AND F05 IS NOT NULL AND F06 IS NOT NULL AND F10 IS NOT NULL");
 		ArrayList<Object> args = new ArrayList<>();
 		if(query != null) {
 			if(query.getDegree() != null) {

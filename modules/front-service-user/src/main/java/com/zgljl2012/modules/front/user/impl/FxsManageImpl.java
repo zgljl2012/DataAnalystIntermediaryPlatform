@@ -238,4 +238,17 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 		}
 		return 0;
 	}
+
+	@Override
+	public void deleteWorkExperienceItem(int id) throws Exception {
+		Connection conn = this.getConnection();
+		String sql = "DELETE FROM T21 WHERE F01 = ?";
+		Object[] args = new Object[]{id};
+		try{
+			this.execute(conn, sql, args);
+		} catch(SQLException e) {
+			this.close(conn);
+			throw e;
+		}
+	}
 }

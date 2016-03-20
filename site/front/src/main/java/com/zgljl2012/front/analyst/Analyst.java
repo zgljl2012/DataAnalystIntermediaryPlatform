@@ -80,11 +80,11 @@ public class Analyst extends AbstractServlet{
 				}
 		});
 		int c = fxsMarketManage.fxsCount(query);
-		JSON j = new JSON();
-		j.put("count", ""+c);
-		if(json != null)
-			j.put("data", json);
-		out(res, j.toString());
+		if(json == null) {
+			json = new JSON();
+		}
+		json.put("count", ""+c);
+		out(res, json);
 	}
 
 }

@@ -68,9 +68,20 @@ function initFxs() {
 	global.count = 0;
 	global.pageSize = 0;
 	global.current = 0;
+	initWorkExperience();
+}
+
+/**
+ * 初始化工作经历
+ */
+function initWorkExperience() {
 	loadWorkExperience(fxsWorkExperience, 1);
 	initPagingInfo();
 }
+
+/**********************************************************
+ * 获取分页信息
+ */
 
 /**
  * 初始化总页数和每页条数
@@ -92,11 +103,15 @@ function initPagingInfo() {
 	});
 }
 
-/**********************************************************
- * 获取分页信息
- */
 function paging() {
 	var pageCount = getPageCount();
+	
+	if(pageCount ==0) {
+		$("#paging").hide();
+	} else {
+		$("#paging").show();
+	}
+	
 	var s = "<li><a onclick=loadWorkExperience('"+fxsWorkExperience+"',1)"+" aria-label=Previous title='首页'>"
 		+"<span aria-hidden=true>&laquo;</span></a></li>";
 	var left=[];
@@ -124,10 +139,10 @@ function paging() {
 		s += "<li><a onclick=loadWorkExperience('"+fxsWorkExperience+"',"+left[i]
 			+") >"+left[i]+"</a></li>";
 	}
-	if(!isMiddle&&left.length >= 3) {
+	if(!isMiddle&&left.length >= 3&&pageCount>5) {
 		s += "<li><a title='下一页' onclick=loadWorkExperience('"+fxsWorkExperience+"',"+
 			"4)>...</a></li>"
-	} else if(!isMiddle) {
+	} else if(!isMiddle&&left.length >= 2&&pageCount>5) {
 		s += "<li><a title='下一页' onclick=loadWorkExperience('"+fxsWorkExperience+"',"+
 		 (getPageCount()-3)+")>...</a></li>"
 	}
@@ -220,7 +235,26 @@ function loadWorkExperience(url, current) {
  * @param id
  */
 function deleteItem(id) {
-	console.log(id);
+	showDialog("您确定要删除这条从业经历吗？",
+			function() {
+		$.ajax({
+			url:fxsWorkExperienceManage,
+			type:"post",
+			data:{type:"delete", id:id},
+			success:function(data) {
+				data = eval("("+data+")");
+				if(data.success == "true") {
+					showAlert("从业经历删除成功！");
+					initWorkExperience();
+				} else {
+					showAlert("抱歉，删除从业经历出错，请稍候重试！")
+				}
+			},
+			error:function() {
+				showAlert("网络连接出错，请刷新重试！");
+			}
+		});
+	});
 }
 
 /**
@@ -437,6 +471,13 @@ function submitCompanyAdd(url) {
 		showAlert("请输入格式正确的日期\n\r日期格式：yyyy-mm-dd\n\r例    如：2008-08-08\n\r");
 		return false;
 	}
+	var tmp1 = new Date(companyStartDate);
+	var tmp2 = new Date();
+	if(tmp1 > tmp2) {
+		showAlert("您的工作开始时间大于当前时间");
+		return false;
+	}
+	
 	var companyRemark = $("textarea[name='companyRemark']").val();
 	if(companyRemark == null || companyRemark!=null&&companyRemark.trim().length==0) {
 		showAlert("请输入您在公司的担任的具体职务（10-150字）");

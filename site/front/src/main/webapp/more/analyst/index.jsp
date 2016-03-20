@@ -27,7 +27,7 @@
 <link rel="stylesheet" type="text/css" href="publics/css/zg-common.css">
  
 <script type="text/javascript" src="publics/js/shaixuan/jquery-1.5.1.js"></script>
-<script src="publics/js/plugis/template/jquery.tmpl.min.js"></script>
+<script src="publics/js/plugins/template/jquery.tmpl.min.js"></script>
 <script type="text/javascript" src="publics/js/shaixuan/ui.tab.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -134,7 +134,7 @@ $(document).ready(function(){
     </div>
     </div>
     
-    <div class="hasBeenSelected clearfix"><span id="time-num"><font>208</font>个分析师</span>
+    <div class="hasBeenSelected clearfix"><span id="time-num">共<font id="number">208</font>名分析师</span>
           <div style="float:right;" class="eliminateCriteria">【清空】 </div>
           <dl>
             <dt>已选条件：</dt>
@@ -150,26 +150,26 @@ $(document).ready(function(){
     	<div class="panel panel-default">
     	<div class="panel-heading">所有项目</div>
     	<div class="panel-body">
-    		
-			<table class="table table-hover" id="tmplTable">
+			<table class="table table-hover col-sm-12" id="tmplTable">
 				<script id="tmplData" type="text/x-jquery-tmpl">
 				{{each(i, d) data}}
-				<tr>
-					<td>
-						<span><a href="#"><img src="" alt="图像"></a></span>
+				{{if d.t20.F02!=null&&d.t20.F06!=null }}
+				<tr class="fl row col-sm-12">
+					<td class="col-sm-2">
+						<span><a><img src="{{= d.t20.F09 }}" alt="图像" width=100 height=100></a></span>
 					</td>
-					<td>
-						<div>
-							<span>分析师姓名</span>
-							<span>10年从业经历</span>
-							<span>5星</span>
+					<td class="col-sm-10">
+						<div class="row mt10">
+							<span class="fs15 orange col-sm-2">{{= d.t20.F02 }}</span>
+							<span class="fs08 lightblue col-sm-8 mt10">{{= d.t20.F06 }}年从业经历</span>
 						</div>
-						<div>
-							<span>个人简介。。。。</span>
-							<span>已完成项目：20个</span>
+						<div class="row mt20">
+							<span title='{{= d.t20.F05 }}' class="gray col-sm-8 fl">{{= d.t20._F05 }}</span>
+							<span class="col-sm-4">学历：{{= d.t20.F10 }}</span>
 						</div>
 					</td>
 				</tr>
+				{{/if}}
 				{{/each}}
 				</script>
 			</table>

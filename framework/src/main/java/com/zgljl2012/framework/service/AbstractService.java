@@ -44,6 +44,14 @@ public abstract class AbstractService implements Service{
 		db.close(conn);
 	}
 	
+	/**
+	 * 查询
+	 * @param conn
+	 * @param sql
+	 * @param args
+	 * @return
+	 * @throws SQLException
+	 */
 	protected ResultSet select(Connection conn, String sql, Object... args) throws SQLException {
 		// TODO Auto-generated method stub
 		PreparedStatement stmt = conn.prepareStatement(sql);
@@ -68,10 +76,11 @@ public abstract class AbstractService implements Service{
 			stmt.setObject(i+1, args[i]);
 		}
 		stmt.execute();
+		stmt.close();
 	}
 	
 	/**
-	 * sql的插入语句，会返回主键（得是int自增型）
+	 * 增加
 	 * @param conn
 	 * @param sql
 	 * @param args
@@ -99,7 +108,7 @@ public abstract class AbstractService implements Service{
 	}
 	
 	/**
-	 * sql的更新语句，会返回主键（得是int型）
+	 * 修改
 	 * @param conn
 	 * @param sql
 	 * @param args

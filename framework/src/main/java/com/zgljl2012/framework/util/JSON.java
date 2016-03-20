@@ -18,8 +18,9 @@ import org.json.JSONObject;
 import com.zgljl2012.framework.database.AbstractEntity;
 
 /**
- *@author 廖金龙
- *@version 2016年2月28日上午12:02:09
+ * @author 廖金龙
+ * @version 2016年2月28日上午12:02:09
+ *
  */
 public class JSON implements Cloneable{
 	
@@ -33,6 +34,13 @@ public class JSON implements Cloneable{
 		map = JSON.parser(json).map;
 	}
 	
+	class JSONArray {
+		String array;
+		public JSONArray(String s) {
+			this.array = s;
+		}
+	}
+	
 	public void put(String key, String value) {
 		value = value.replace("\"", "\\\"");	// 处理双引号
 		value = value.replace("\r", "\\r");		// 处理换行符
@@ -40,14 +48,43 @@ public class JSON implements Cloneable{
 		map.put(key, value);
 	}
 	
-	public void put(String key, String[] values) {
-		
+	
+	/**
+	 * 存储AbstractEntity对象列表 
+	 * @param key
+	 * @param list
+	 */
+	public void put(String key, List<? extends Object> list) {
+		if(list == null || list.size() == 0) {
+			return;
+		}
+		StringBuilder s = new StringBuilder("[");
+		String type = "";
+		if(list.get(0).getClass().equals(JSON.class)) {
+			type = "json";
+		} else if(AbstractEntity.class.isAssignableFrom(list.get(0).getClass())) {
+			type = "abstractEntity";
+		} else {
+			return;
+		}
+		for(int i=0;i<list.size();i++) {
+			if("json".equals(type)) {
+				s.append(list.get(i).toString());
+			} else if("abstractEntity".equals(type)) {
+				AbstractEntity e = (AbstractEntity) list.get(i);
+				JSON json = new JSON();
+				json.put(key, e);
+				s.append(JSON.parser(json.toString()).get(key).toString());
+			}
+			if(i < list.size()-1) {
+				s.append(",");
+			}
+		}
+		s.append("]");
+		map.put(key, new JSONArray(s.toString()));
 	}
 	
-	public void put(String key, List<Object> list) {
-		 JSONObject json = new JSONObject();
-		 json.put(key, list);
-	}
+	
 	
 	public void put(String key, JSON json) {
 		map.put(key, json);
@@ -230,6 +267,11 @@ public class JSON implements Cloneable{
 				if(count != length-1) {
 					json += ",";
 				}
+			} else if(entry.getValue().getClass().equals(JSONArray.class)) {
+				json += addMarks(entry.getKey())+":" + ((JSONArray)entry.getValue()).array;
+				if(count != length-1) {
+					json += ",";
+				}
 			}
 			count++;
 		}
@@ -272,7 +314,7 @@ public class JSON implements Cloneable{
 	/**
 	 * 清空JSON
 	 */
-	private void clear() {
+	public void clear() {
 		this.map.clear();
 	}
 	

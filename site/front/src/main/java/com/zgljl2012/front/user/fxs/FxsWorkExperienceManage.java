@@ -43,8 +43,19 @@ public class FxsWorkExperienceManage extends AbstractServlet{
 	@Override
 	protected void post(HttpServletRequest req, HttpServletResponse res,
 			Controller controller) throws Exception {
-		// TODO Auto-generated method stub
-		
+		String type = req.getParameter("type");
+		JSON json = new JSON();
+		if("delete".equals(type)) {
+			String id = req.getParameter("id");
+			try{
+				fxsManage.deleteWorkExperienceItem(Integer.parseInt(id));
+			} catch(Exception e) {
+				controller.getLogger().error(e.getMessage());
+				json.put("success", "false");
+			}
+			json.put("success", "true");
+		}
+		out(res, json.toString());
 	}
 
 }

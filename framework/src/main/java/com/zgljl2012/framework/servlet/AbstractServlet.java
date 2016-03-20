@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.util.JSON;
 
 /**
  *@author 廖金龙
@@ -103,5 +104,16 @@ public abstract class AbstractServlet extends HttpServlet{
 	protected void out(HttpServletResponse res, String s) throws IOException {
 		PrintWriter out = res.getWriter();
 		out.println(s);
+	}
+	
+	/**
+	 * 输出JSON给客户端
+	 * @param res
+	 * @param s
+	 * @throws IOException
+	 */
+	protected void out(HttpServletResponse res, JSON s) throws IOException {
+		PrintWriter out = res.getWriter();
+		out.println(s.toString());
 	}
 }
