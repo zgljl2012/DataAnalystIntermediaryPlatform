@@ -60,13 +60,16 @@ public class Analyst extends AbstractServlet{
 				return null;
 			}
 		};
-		
+		final String pageSize = controller.getVariableManage().
+				getValue(FxsVariable.ANALYST_LIST_SIZE);
 		JSON json = fxsMarketManage.search(query, new PagingInfo() {
 				
 				@Override
 				public int getPageSize() {
-					String s = controller.getVariableManage().
-							getValue(FxsVariable.ANALYST_LIST_SIZE);
+					String s = pageSize;
+					if(StringHelper.isEmpty(s)) {
+						s = "15";
+					}
 					return Integer.parseInt(s);
 				}
 				
@@ -84,6 +87,7 @@ public class Analyst extends AbstractServlet{
 			json = new JSON();
 		}
 		json.put("count", ""+c);
+		json.put("pageSize", ""+pageSize);
 		out(res, json);
 	}
 

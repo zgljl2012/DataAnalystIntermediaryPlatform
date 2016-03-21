@@ -15,7 +15,7 @@ public enum FxsVariable implements VariableBean {
 	
 	WORK_EXPERIENCE_PAGE_SIZE("工作经历每页条数", ""+5),
 	
-	ANALYST_LIST_SIZE("分析师市场界面每页显示的分析师信息条数", ""+15)
+	ANALYST_LIST_SIZE("分析师市场界面每页显示的分析师信息条数", ""+5)
 	
 	;
 	private String key = "";

@@ -97,4 +97,83 @@ public class DatabaseProviderSimple implements DatabaseProvider {
 		return 0;
 	}
 
+	/**
+	 * 查询
+	 * @param conn
+	 * @param sql
+	 * @param args
+	 * @return
+	 * @throws SQLException
+	 */
+	public ResultSet select(Connection conn, String sql, Object... args) throws SQLException {
+		// TODO Auto-generated method stub
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		for(int i = 0; i < args.length; i++) {
+			stmt.setObject(i+1, args[i]);
+		}
+		ResultSet rs = stmt.executeQuery();
+		return rs;
+	}
+	
+	/**
+	 * 执行sql语句
+	 * @param conn
+	 * @param sql
+	 * @param args
+	 * @throws SQLException
+	 */
+	public void execute(Connection conn, String sql, Object ...args) throws SQLException {
+		// TODO Auto-generated method stub
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		for(int i = 0; i < args.length; i++) {
+			stmt.setObject(i+1, args[i]);
+		}
+		stmt.execute();
+		stmt.close();
+	}
+	
+	/**
+	 * 增加
+	 * @param conn
+	 * @param sql
+	 * @param args
+	 * @return
+	 * @throws Throwable
+	 */
+	public int insert(Connection conn, String sql, Object ...args) throws Throwable {
+		PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		for(int i = 0; i < args.length; i++) {
+			stmt.setObject(i+1, args[i]);
+		}
+		stmt.executeUpdate();
+		ResultSet resultSet = stmt.getGeneratedKeys(); 
+		try
+	    {
+	        if (resultSet.next()) {
+	          return resultSet.getInt(1);
+	        }
+	        return 0;
+	    }
+	    catch (Throwable localThrowable5)
+	    {
+	        throw localThrowable5;
+	    }
+	}
+	
+	/**
+	 * 修改
+	 * @param conn
+	 * @param sql
+	 * @param args
+	 * @return
+	 * @throws SQLException
+	 */
+	public int update(Connection conn, String sql, Object ...args) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		for(int i = 0; i < args.length; i++) {
+			stmt.setObject(i+1, args[i]);
+		}
+		return stmt.executeUpdate();
+	}
+
 }

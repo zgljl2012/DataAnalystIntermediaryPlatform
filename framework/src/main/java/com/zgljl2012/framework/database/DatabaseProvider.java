@@ -9,7 +9,7 @@ import java.sql.Statement;
  * @author Administrator
  *
  */
-public interface DatabaseProvider {
+public interface DatabaseProvider extends DatabaseOperate{
 	
 	public Connection getConnection();
 	

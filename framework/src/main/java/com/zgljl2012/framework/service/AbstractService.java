@@ -1,13 +1,12 @@
 package com.zgljl2012.framework.service;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.database.DatabaseOperate;
 import com.zgljl2012.framework.database.DatabaseProvider;
 import com.zgljl2012.framework.database.PagingInfo;
 
@@ -16,7 +15,7 @@ import com.zgljl2012.framework.database.PagingInfo;
  * @version 创建时间：2016年2月18日 下午4:07:22 
  * 抽象业务模块类
  */
-public abstract class AbstractService implements Service{
+public abstract class AbstractService implements Service, DatabaseOperate{
 	
 	// 控制器
 	protected Controller controller;
@@ -52,14 +51,8 @@ public abstract class AbstractService implements Service{
 	 * @return
 	 * @throws SQLException
 	 */
-	protected ResultSet select(Connection conn, String sql, Object... args) throws SQLException {
-		// TODO Auto-generated method stub
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		for(int i = 0; i < args.length; i++) {
-			stmt.setObject(i+1, args[i]);
-		}
-		ResultSet rs = stmt.executeQuery();
-		return rs;
+	public ResultSet select(Connection conn, String sql, Object... args) throws SQLException {
+		return db.select(conn, sql, args);
 	}
 	
 	/**
@@ -69,14 +62,8 @@ public abstract class AbstractService implements Service{
 	 * @param args
 	 * @throws SQLException
 	 */
-	protected void execute(Connection conn, String sql, Object ...args) throws SQLException {
-		// TODO Auto-generated method stub
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		for(int i = 0; i < args.length; i++) {
-			stmt.setObject(i+1, args[i]);
-		}
-		stmt.execute();
-		stmt.close();
+	public void execute(Connection conn, String sql, Object ...args) throws SQLException {
+		this.db.execute(conn, sql, args);
 	}
 	
 	/**
@@ -87,24 +74,8 @@ public abstract class AbstractService implements Service{
 	 * @return
 	 * @throws Throwable
 	 */
-	protected int insert(Connection conn, String sql, Object ...args) throws Throwable {
-		PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-		for(int i = 0; i < args.length; i++) {
-			stmt.setObject(i+1, args[i]);
-		}
-		stmt.executeUpdate();
-		ResultSet resultSet = stmt.getGeneratedKeys(); 
-		try
-	    {
-	        if (resultSet.next()) {
-	          return resultSet.getInt(1);
-	        }
-	        return 0;
-	    }
-	    catch (Throwable localThrowable5)
-	    {
-	        throw localThrowable5;
-	    }
+	public int insert(Connection conn, String sql, Object ...args) throws Throwable {
+		return db.insert(conn, sql, args);
 	}
 	
 	/**
@@ -115,12 +86,8 @@ public abstract class AbstractService implements Service{
 	 * @return
 	 * @throws SQLException
 	 */
-	protected int update(Connection conn, String sql, Object ...args) throws SQLException {
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		for(int i = 0; i < args.length; i++) {
-			stmt.setObject(i+1, args[i]);
-		}
-		return stmt.executeUpdate();
+	public int update(Connection conn, String sql, Object ...args) throws SQLException {
+		return db.update(conn, sql, args);
 	}
 	
 	

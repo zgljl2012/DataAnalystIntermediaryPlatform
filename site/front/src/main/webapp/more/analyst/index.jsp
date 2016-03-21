@@ -150,6 +150,22 @@ $(document).ready(function(){
     	<div class="panel panel-default">
     	<div class="panel-heading">所有项目</div>
     	<div class="panel-body">
+    		<%-- 分页 --%>
+			<div class="row col-sm-12 fl">
+			<ul class="pagination fs08 ml30 mt10 cp" name="paging">
+				<li>
+					<a href="#" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+			</div>
+			<%-- 分页结束 --%>
 			<table class="table table-hover col-sm-12" id="tmplTable">
 				<script id="tmplData" type="text/x-jquery-tmpl">
 				{{each(i, d) data}}
@@ -160,7 +176,7 @@ $(document).ready(function(){
 					</td>
 					<td class="col-sm-10">
 						<div class="row mt10">
-							<span class="fs15 orange col-sm-2">{{= d.t20.F02 }}</span>
+							<span class="fs15 orange col-sm-3">{{= d.t20.F02 }}</span>
 							<span class="fs08 lightblue col-sm-8 mt10">{{= d.t20.F06 }}年从业经历</span>
 						</div>
 						<div class="row mt20">
@@ -173,6 +189,22 @@ $(document).ready(function(){
 				{{/each}}
 				</script>
 			</table>
+			<%-- 分页 --%>
+			<div class="row col-sm-12 fl">
+			<ul class="pagination fs08 ml30 mt10 cp" name="paging">
+				<li>
+					<a href="#" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+			</div>
+			<%-- 分页结束 --%>
 		</div>
 		</div>
 	</div>    
