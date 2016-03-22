@@ -19,51 +19,9 @@
 <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
 <!-- <script src="publics/js/ie-emulation-modes-warning.js"></script> -->
 
-<%--筛选条件框 --%>
-<link rel="stylesheet" type="text/css" href="publics/css/shaixuan/list.css"/>
-<link rel="stylesheet" type="text/css" href="publics/css/shaixuan/manhuaDate.1.0.css"/>
-
-<%--列表 --%>
 <link rel="stylesheet" type="text/css" href="publics/css/zg-common.css">
- 
-<script type="text/javascript" src="publics/js/shaixuan/jquery-1.5.1.js"></script>
+<script src="publics/js/jquery.min.js"></script>
 <script src="publics/js/plugins/template/jquery.tmpl.min.js"></script>
-<script type="text/javascript" src="publics/js/shaixuan/ui.tab.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-	var tab = new $.fn.tab({
-		tabList:"#demo1 .ui-tab-container .ui-tab-list li",
-		contentList:"#demo1 .ui-tab-container .ui-tab-content"
-	});
-	var tab = new $.fn.tab({
-		tabList:"#demo1 .ui-tab-container .ui-tab-list2 li",
-		contentList:"#demo1 .ui-tab-container .ui-tab-content2"
-	});		
-});	
-</script>
-<script type="text/javascript">
-$(document).ready(function(e) {
-    $("#selectList").find(".more").toggle(function(){
-	$(this).addClass("more_bg");
-	$(".more-none").show()
-    },function(){
-	$(this).removeClass("more_bg");
-	$(".more-none").hide()
-	});
-});
-$(document).ready(function(){
-	var taboy_box=$(".lefttable-list");
-	taboy_box.children("tbody").find("tr:gt(2)").hide(); 
-	$(".leftbox-morea").toggle(function(){
-	$(this).parent().prev().find("tr").show();
-	$(this).addClass("more-i")
-	},function(){
-	$(this).removeClass("more-i");
-	$(this).parent().prev().children("tbody").find("tr:gt(2)").hide(); 
-	}
-	);
-});
-</script>
 <%
 	headerPage="FXSSC";
 %>
@@ -77,73 +35,75 @@ $(document).ready(function(){
     	<div class="panel-heading">筛选条件</div>
     	<div class="panel-body">
   		<div class="row">
-    		<div style="padding:0px 30px 10px 10px;">
-		    <div class="screen-term">
-		      <div class="selectNumberScreen">
-		        <div id="selectList" class="screenBox screenBackground">
-		          <dl class="listIndex" attr="薪酬范围">
+    		<div class="pl20">
+		      <div>
+		        <div id="selectList" class="screenBox">
+		          <dl>
 		            <dt>学历要求</dt>
 		            <dd>
-		              <label><a href="javascript:;" values2="" values1="" attrval="不限">不限</a></label>
+		              <label><a href="javascript:;">不限</a></label>
 		              <label>
-		                <input name="radio2" type="radio" value="" />
-		                <a href="javascript:;" values2="99" values1="1" attrval="1-99">本科以上</a></label>
+		                <input name="degree" type="radio" value="BK" />
+		                <a hint href="javascript:;">本科以上</a></label>
 		              <label>
-		                <input name="radio2" type="radio" value="" />
-		                <a href="javascript:;" values2="300" values1="100" attrval="100-300">硕士以上 </a></label>
+		                <input name="degree" type="radio" value="SS" />
+		                <a hint href="javascript:;" >硕士以上 </a></label>
 		              <label>
-		                <input name="radio2" type="radio" value="" />
-		                <a href="javascript:;" values2="600" values1="300" attrval="300-600">博士以上</a></label>
+		                <input name="degree" type="radio" value="BS" />
+		                <a hint href="javascript:;" >博士以上</a></label>
 		            </dd>
 		          </dl>
-		          <dl class=" listIndex" attr="terminal_os_s">
+		          <dl>
 		            <dt>从业年限</dt>
 		            <dd>
-		              <label><a href="javascript:;" values2="" values1="" attrval="不限">不限</a> </label>
+		              <label><a href="javascript:;" >不限</a> </label>
 		              <label>
-		                <input name="checkbox2" type="checkbox" value="" autocomplete="off"/>
-		                <a href="javascript:;" values2="" values1="" attrval="android"> 一年以上</a> </label>
+		                <input name="workTime" type="radio" value="1" autocomplete="off"/>
+		                <a hint href="javascript:;"> 一年以上</a> </label>
 		              <label>
-		                <input name="checkbox2" type="checkbox" value="" autocomplete="off"/>
-		                <a href="javascript:;" values2="" values1="" attrval="symbian">三年以上</a></label>
+		                <input name="workTime" type="radio" value="2" autocomplete="off"/>
+		                <a hint href="javascript:;">三年以上</a></label>
 		              <label>
-		                <input name="checkbox2" type="checkbox" value="" autocomplete="off"/>
-		                <a href="javascript:;" values2="" values1="" attrval="百度易平台">五年以上</a></label>
+		                <input name="workTime" type="radio" value="5" autocomplete="off"/>
+		                <a hint href="javascript:;">五年以上</a></label>
 		              <label>
-		                <input name="checkbox2" type="checkbox" value="" autocomplete="off"/>
-		                <a href="javascript:;" values2="" values1="" attrval="百度易平台">十年以上</a></label>
+		                <input name="workTime" type="radio" value="10" autocomplete="off"/>
+		                <a hint href="javascript:;">十年以上</a></label>
 		            </dd>
 		          </dl>
-		          <dl class="listIndex" attr="terminal_brand_s">
+		          <dl>
 		            <dt>分数要求</dt>
 		            <dd>
-		              <label><a href="javascript:;" values2="" values1="" attrval="不限">不限</a></label>
+		              <label><a href="javascript:;" >不限</a></label>
 		              <label>
-		                <input name="checkbox2" type="checkbox" value="" autocomplete="off"/>
-		                <a href="javascript:;" values2="" values1="" attrval="小米">1分以上</a></label>
+		                <input name="grade" type="radio" value="1" autocomplete="off"/>
+		                <a hint href="javascript:;" >1分以上</a></label>
 		              <label>
-		                <input name="checkbox2" type="checkbox" value="" autocomplete="off"/>
-		                <a href="javascript:;" values2="" values1="" attrval="华为">3分以上</a> </label>
+		                <input name="grade" type="radio" value="2" autocomplete="off"/>
+		                <a hint href="javascript:;" >2分以上</a> </label>
 		              <label>
-		                <input name="checkbox2" type="checkbox" value="" autocomplete="off"/>
-		                <a href="javascript:;" values2="" values1="" attrval="lenovo">4分以上</a> </label>
+		                <input name="grade" type="radio" value="3" autocomplete="off"/>
+		                <a hint href="javascript:;" >3分以上</a> </label>
+		              <label>
+		                <input name="grade" type="radio" value="4" autocomplete="off"/>
+		                <a hint href="javascript:;" >4分以上</a> </label>
+		              <label>
+		                <input name="grade" type="radio" value="5" autocomplete="off"/>
+		                <a hint href="javascript:;" >5分以上</a> </label>
 		               </dd> 
 		          </dl>
 		        </div>
-      </div>   
     </div>
     </div>
     
-    <div class="hasBeenSelected clearfix"><span id="time-num">共<font id="number">208</font>名分析师</span>
+    <div class="hasBeenSelected clearfix"><span style="position:absolute;left:10px;top:10px;">共<font id="number" style="color:#fa7003;">208</font>名分析师</span>
           <div style="float:right;" class="eliminateCriteria">【清空】 </div>
           <dl>
             <dt>已选条件：</dt>
-            <dd style="DISPLAY: none" class=clearDd>
-              <div class=clearList></div>
+            <dd id="hasSelected" class="selectedInfor"></dd>
           </dl>
      </div>
-     <script type="text/javascript" src="publics/js/shaixuan/shaixuan.js"></script> 
-  	 </div></div></div></div>
+     </div></div></div></div>
     
     <%--企业项目列表 --%>
 	<div class="container">
@@ -217,5 +177,6 @@ $(document).ready(function(){
    
    </script>
    <script src="publics/js/analyst/analyst.js"></script>
+   <script src="publics/js/common/filter.js"></script>
 </body>
 </html>

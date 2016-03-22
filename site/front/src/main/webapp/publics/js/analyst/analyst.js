@@ -1,6 +1,10 @@
 
 var global = {};
 $(function(){
+	
+	// 初始化搜索条件框
+	$.filter.init($("#selectList"), $("#hasSelected"));
+	
 	global.current = 1;
 	pullData(analystServlet, global.current);
 });
@@ -19,7 +23,6 @@ function pullData(url, current) {
 		type:"post",
 		success:function(data) {
 			data = eval('('+data+')');
-			console.log(data);
 			$("#number").html(data.count);
 			global.current = current;
 			global.count = data.count;
