@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import com.zgljl2012.framework.controller.Controller;
-import com.zgljl2012.framework.servlet.session.LjlSession;
 
 /**
  *@author 廖金龙

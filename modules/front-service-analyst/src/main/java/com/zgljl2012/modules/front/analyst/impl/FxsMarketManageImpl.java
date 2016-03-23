@@ -40,11 +40,11 @@ public class FxsMarketManageImpl extends AbstractService implements FxsMarketMan
 		ArrayList<Object> args = new ArrayList<>();
 		if(query != null) {
 			if(query.getDegree() != null) {
-				sql.append(" AND t2.F10 = ?");
+				sql.append(" AND t2.F10 = ? ");
 				args.add(query.getDegree().name());
 			}
 			if(query.getWorkTime() > -1) {
-				sql.append("AND YEAR(CURRENT_DATE()) - YEAR(t2.F06) >= ?");
+				sql.append(" AND YEAR(CURRENT_DATE()) - YEAR(t2.F06) >= ?");
 				args.add(query.getWorkTime());
 			}
 			if(query.getGrade() > -1) {
@@ -111,11 +111,11 @@ public class FxsMarketManageImpl extends AbstractService implements FxsMarketMan
 		ArrayList<Object> args = new ArrayList<>();
 		if(query != null) {
 			if(query.getDegree() != null) {
-				sql.append(" AND F10 = ?");
+				sql.append(" AND F10 = ? ");
 				args.add(query.getDegree().name());
 			}
 			if(query.getWorkTime() > -1) {
-				sql.append("AND YEAR(CURRENT_DATE()) - YEAR(F06) >= ?");
+				sql.append(" AND YEAR(CURRENT_DATE()) - YEAR(F06) >= ?");
 				args.add(query.getWorkTime());
 			}
 			if(query.getGrade() > -1) {

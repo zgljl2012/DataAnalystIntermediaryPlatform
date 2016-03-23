@@ -6,8 +6,6 @@ import java.util.Set;
 
 import javax.servlet.ServletContextEvent;
 
-import org.easymock.EasyMock;
-
 import com.zgljl2012.framework.system.SystemInitialize;
 import com.zgljl2012.framework.system.SystemShutdownListener;
 import com.zgljl2012.framework.system.SystemStartupListener;

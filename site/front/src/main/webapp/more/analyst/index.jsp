@@ -41,7 +41,7 @@
 		          <dl>
 		            <dt>学历要求</dt>
 		            <dd>
-		              <label><a href="javascript:;">不限</a></label>
+		              <label><a hint href="javascript:;">不限</a></label>
 		              <label>
 		                <input name="degree" type="radio" value="BK" />
 		                <a hint href="javascript:;">本科以上</a></label>
@@ -56,7 +56,7 @@
 		          <dl>
 		            <dt>从业年限</dt>
 		            <dd>
-		              <label><a href="javascript:;" >不限</a> </label>
+		              <label><a hint href="javascript:;">不限</a> </label>
 		              <label>
 		                <input name="workTime" type="radio" value="1" autocomplete="off"/>
 		                <a hint href="javascript:;"> 一年以上</a> </label>
@@ -74,7 +74,7 @@
 		          <dl>
 		            <dt>分数要求</dt>
 		            <dd>
-		              <label><a href="javascript:;" >不限</a></label>
+		              <label><a hint href="javascript:;" >不限</a></label>
 		              <label>
 		                <input name="grade" type="radio" value="1" autocomplete="off"/>
 		                <a hint href="javascript:;" >1分以上</a></label>
@@ -103,6 +103,7 @@
             <dd id="hasSelected" class="selectedInfor"></dd>
           </dl>
      </div>
+     
      </div></div></div></div>
     
     <%--企业项目列表 --%>
@@ -165,6 +166,9 @@
 			</ul>
 			</div>
 			<%-- 分页结束 --%>
+			<div id="noDataHint">
+		     	<span>暂无数据</span>
+		     </div>
 		</div>
 		</div>
 	</div>    

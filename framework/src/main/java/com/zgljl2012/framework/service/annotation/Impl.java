@@ -32,7 +32,6 @@ public @interface Impl {
 			super(controller);
 			// TODO Auto-generated constructor stub
 		}
-		
 	}
 	
 	/**

@@ -128,6 +128,7 @@ public class ServiceManageSimple implements ServiceManage{
 		return null;
 	}
 
+	@SuppressWarnings("hiding")
 	@Override
 	public <T extends Service, Impl extends AbstractService>T 
 		getService(Class<T> service, Class<?> impl) {

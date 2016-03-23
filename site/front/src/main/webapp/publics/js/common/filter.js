@@ -12,7 +12,7 @@
 	 * 	<dl>
 	 * 	<dt></dt>
 	 *    <dd>
-	 *       <label></label>
+	 *       <label><a hint></a></label>
 	 *	     <label>
 	 *	        <input name="degree" type="radio/checkbox" value="" />
 	 *	        <a hint href="javascript:;">本科以上</a></label>
@@ -31,11 +31,23 @@
 	}
 	$.filter.data = {};
 	$.filter.selected = {};
-	var filter = function(root, show) {
+	var filter = function(root, show, callback) {
 		var as = root.find("a[hint]");
 		if(as != null) {
 			as.click(function(){
 				var prev = $(this).prev();
+				if(prev.length == 0) {
+					var a = $(this).parent().parent().find("input");
+					a.prop("checked", false);
+					var aname = a.prop("name");
+					delete $.filter.selected[aname];
+					delete $.filter.data[aname];
+					updateSelected($.filter.selected);
+					if(callback) {
+						callback.apply(null,[$.filter.data]);
+					}
+					return;
+				}
 				prev.prop("checked",true);
 				$.filter.data[prev.prop("name")] = prev.prop("value");
 				if(show != null) {
@@ -45,6 +57,9 @@
 						$.filter.selected[prev.prop("name")] += $(this).html();
 					}
 					updateSelected($.filter.selected);
+					if(callback) {
+						callback.apply(null,[$.filter.data]);
+					}
 				}
 			});
 		}

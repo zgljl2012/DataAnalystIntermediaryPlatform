@@ -9,6 +9,9 @@ import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.database.DatabaseOperate;
 import com.zgljl2012.framework.database.DatabaseProvider;
 import com.zgljl2012.framework.database.PagingInfo;
+import com.zgljl2012.framework.database.executor.InsertExecutor;
+import com.zgljl2012.framework.database.executor.SelectExecutor;
+import com.zgljl2012.framework.database.executor.UpdateExecutor;
 
 /** 
  * @author 廖金龙
@@ -126,4 +129,23 @@ public abstract class AbstractService implements Service, DatabaseOperate{
 		// TODO Auto-generated method stub
 		return this.controller;
 	}
+	
+	@Override
+	public void select(Connection conn, String sql,
+			SelectExecutor executor, Object... args) throws SQLException {
+		this.db.select(conn, sql, executor, args);
+	}
+
+	@Override
+	public void insert(Connection conn, String sql,
+			InsertExecutor executor, Object... args) throws Throwable {
+		this.db.insert(conn, sql, executor, args);
+	}
+
+	@Override
+	public void update(Connection conn, String sql,
+			UpdateExecutor executor, Object... args) throws SQLException {
+		this.db.update(conn, sql, executor, args);
+	}
+	
 }

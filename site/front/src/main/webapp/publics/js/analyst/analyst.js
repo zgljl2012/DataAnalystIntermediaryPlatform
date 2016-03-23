@@ -1,21 +1,30 @@
 
 var global = {};
 $(function(){
-	
+	$("#noDataHint").hide();
 	// 初始化搜索条件框
-	$.filter.init($("#selectList"), $("#hasSelected"));
+	$.filter.init($("#selectList"), $("#hasSelected"), function(data){
+		global.current = 1;
+		pullData(analystServlet, global.current, data);
+	});
 	
 	global.current = 1;
 	pullData(analystServlet, global.current);
 });
+
+function pullDataByPage(url, current) {
+	pullData(url, current, $.filter.data);
+}
 
 /**
  * 获取分析师数据
  * @param url
  * @param current
  */
-function pullData(url, current) {
-	var data = {};
+function pullData(url, current, data) {
+	if(data == null) {
+		data = {};
+	}
 	data.current = current;
 	$.ajax({
 		url:url,
@@ -65,7 +74,7 @@ function loadTable(data) {
 			}
 		}
 	}
-	if(!global.tmplItem) {
+	if(!global.tmplItem||!global.tmplItem.nodes||global.tmplItem.nodes.length==0) {
 		var tmpl = $("#tmplData").tmpl(data).appendTo("#tmplTable");
 		global.tmplItem = $.tmplItem(tmpl);
 	} else {
@@ -92,11 +101,13 @@ function paging() {
 	var e = $("ul[name='paging']");
 	if(pageCount ==0) {
 		e.hide();
+		$("#noDataHint").show();
 	} else {
 		e.show();
+		$("#noDataHint").hide();
 	}
 	
-	var s = "<li><a onclick=pullData('"+analystServlet+"',1)"+" aria-label=Previous title='首页'>"
+	var s = "<li><a onclick=pullDataByPage('"+analystServlet+"',1)"+" aria-label=Previous title='首页'>"
 		+"<span aria-hidden=true>&laquo;</span></a></li>";
 	var left=[];
 	var right=[];
@@ -120,24 +131,24 @@ function paging() {
 		s += "<li><a onclick=prev() title='上一页'>...</a></li>"
 	}
 	for(var i=0;i<left.length;i++) {
-		s += "<li><a onclick=pullData('"+analystServlet+"',"+left[i]
+		s += "<li><a onclick=pullDataByPage('"+analystServlet+"',"+left[i]
 			+") >"+left[i]+"</a></li>";
 	}
 	if(!isMiddle&&left.length >= 3&&pageCount>5) {
-		s += "<li><a title='下一页' onclick=pullData('"+analystServlet+"',"+
+		s += "<li><a title='下一页' onclick=pullDataByPage('"+analystServlet+"',"+
 			"4)>...</a></li>"
 	} else if(!isMiddle&&left.length >= 2&&pageCount>5) {
-		s += "<li><a title='下一页' onclick=pullData('"+analystServlet+"',"+
+		s += "<li><a title='下一页' onclick=pullDataByPage('"+analystServlet+"',"+
 		 (getPageCount()-3)+")>...</a></li>"
 	}
 	for(var i=0;i<right.length;i++) {
-		s += "<li><a onclick=pullData('"+analystServlet+"',"+right[i]
+		s += "<li><a onclick=pullDataByPage('"+analystServlet+"',"+right[i]
 			+") >"+right[i]+"</a></li>";
 	}
 	if(isMiddle) {
 		s += "<li><a onclick=next() title='下一页'>...</a></li>"
 	}
-	s += "<li><a onclick=pullData('"+analystServlet+"',"+getPageCount()+") aria-label=Next title='尾页'>" +
+	s += "<li><a onclick=pullDataByPage('"+analystServlet+"',"+getPageCount()+") aria-label=Next title='尾页'>" +
 		"<span aria-hidden=true>&raquo;</span></a></li>";
 	e.html(s);
 }
@@ -145,14 +156,14 @@ function paging() {
 function prev(i) {
 	if(i == null) i=1;
 	if(global.current > 1) {
-		pullData(analystServlet, global.current-i);
+		pullDataByPage(analystServlet, global.current-i);
 	}
 }
 
 function next(i) {
 	if(i==null) i=1;
 	if(global.current < getPageCount()) {
-		pullData(analystServlet, global.current+i);
+		pullDataByPage(analystServlet, global.current+i);
 	}
 }
 
