@@ -91,7 +91,10 @@ public class DatabaseProviderSimple implements DatabaseProvider {
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			if(rs.next()) {
-				return rs.getInt(1);
+				int count = rs.getInt(1);
+				rs.close();
+				st.close();
+				return count;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -153,7 +156,10 @@ public class DatabaseProviderSimple implements DatabaseProvider {
 		try
 	    {
 	        if (resultSet.next()) {
-	          return resultSet.getInt(1);
+	        	int id = resultSet.getInt(1);
+	        	resultSet.close();
+	        	stmt.close();
+	        	return id;
 	        }
 	        return 0;
 	    }
@@ -176,7 +182,9 @@ public class DatabaseProviderSimple implements DatabaseProvider {
 		for(int i = 0; i < args.length; i++) {
 			stmt.setObject(i+1, args[i]);
 		}
-		return stmt.executeUpdate();
+		int count = stmt.executeUpdate();
+		stmt.close();
+		return count;
 	}
 
 	@Override

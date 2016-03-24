@@ -15,6 +15,7 @@ import com.zgljl2012.common.database.enums.T10_F05;
 import com.zgljl2012.common.database.enums.T10_F08;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.database.PagingInfo;
+import com.zgljl2012.framework.database.executor.SelectExecutor;
 import com.zgljl2012.framework.service.AbstractService;
 import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.modules.front.analyst.FxsMarketManage;
@@ -94,6 +95,8 @@ public class FxsMarketManageImpl extends AbstractService implements FxsMarketMan
 				
 				list.add(json);
 			}
+			rs.close();
+			rs.getStatement().close();
 			this.close(conn);
 			result.put("data", list);
 			return result;
@@ -130,6 +133,7 @@ public class FxsMarketManageImpl extends AbstractService implements FxsMarketMan
 				r = rs.getInt(1);
 			}
 			rs.close();
+			rs.getStatement().close();
 			conn.close();
 			return r;
 		} catch (SQLException e) {
@@ -137,6 +141,71 @@ public class FxsMarketManageImpl extends AbstractService implements FxsMarketMan
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	@Override
+	public JSON getFxs(int id) {
+		String sql = "SELECT t1.*, t2.* FROM T10 as t1 LEFT JOIN "
+				+ "T20 as t2 ON t1.F01 = t2.F01 "
+				+ "WHERE t1.F06 = 'F' AND t1.F01 = ?";
+		final JSON json = new JSON();
+		Connection conn = getConnection();
+		try {
+			this.select(conn, sql, new SelectExecutor() {
+				@Override
+				public void execute(ResultSet rs) {
+					try {
+						while(rs.next()) {
+							T10 t10 = new T10();
+							int j = 1;
+							t10.setF01(rs.getInt(j++));
+							t10.setF02(rs.getString(j++));
+							t10.setF03(rs.getString(j++));
+							t10.setF04(rs.getString(j++));
+							t10.setF05(T10_F05.parse(rs.getString(j++)));
+							t10.setF06(Bool.parse(rs.getString(j++)));
+							t10.setF07(rs.getTimestamp(j++));
+							t10.setF08(T10_F08.parse(rs.getString(j++)));
+							T20 t20 = new T20();
+							t20.setF01(rs.getInt(j++));
+							t20.setF02(rs.getString(j++));
+							t20.setF03(Gender.parse(rs.getString(j++)));
+							t20.setF04(rs.getDate(j++));
+							t20.setF05(rs.getString(j++));
+							t20.setF06(rs.getDate(j++));
+							t20.setF07(rs.getString(j++));
+							t20.setF08(rs.getString(j++));
+							t20.setF09(rs.getString(j++));
+							t20.setF10(Degree.parse(rs.getString(j++)));
+							
+							json.put("t10", t10);
+							json.put("t20", t20);
+							JSON jtmp = (JSON) json.get("t20");
+							// 进行学历的中文转化
+							if(t20.getF10() != null) {
+								jtmp.put("F10", t20.getF10().getChineseName());
+							}
+							
+							json.put("t20", jtmp);
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}, id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return json;
 	}
 
 }

@@ -21,6 +21,13 @@ public interface FxsMarketManage extends Service{
 	public JSON search(FxsInfoQuery query, PagingInfo pagingInfo);
 	
 	/**
+	 * 根据T10 ID查找一个分析师的所有相关信息，并封装成
+	 * @param id
+	 * @return
+	 */
+	public JSON getFxs(int id);
+	
+	/**
 	 * 获取分析师总数
 	 * @return
 	 */

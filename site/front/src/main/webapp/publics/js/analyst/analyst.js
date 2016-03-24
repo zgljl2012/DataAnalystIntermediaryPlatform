@@ -7,13 +7,22 @@ $(function(){
 		global.current = 1;
 		pullData(analystServlet, global.current, data);
 	});
-	
+	$("#clearAll").click(function(){
+		clear();
+	});
 	global.current = 1;
 	pullData(analystServlet, global.current);
 });
 
 function pullDataByPage(url, current) {
 	pullData(url, current, $.filter.data);
+}
+
+/**
+ * 清空所有条件
+ */
+function clear() {
+	$.filter.clear();
 }
 
 /**
@@ -51,6 +60,11 @@ function pullData(url, current, data) {
  */
 function loadTable(data) {
 	for(var i in data.data) {
+		if(data.data[i].t10) {
+			if(data.data[i].t10.F01) {
+				data.data[i].t10.F01 = "/front/analyst/"+data.data[i].t10.F01;
+			}
+		}
 		// 图像链接
 		if(data.data[i].t20) {
 			if(data.data[i].t20.F09){
@@ -68,8 +82,8 @@ function loadTable(data) {
 		// 个人简介
 		if(data.data[i].t20) {
 			if(data.data[i].t20.F05) {
-				if(data.data[i].t20.F05.length > 20) {
-					data.data[i].t20._F05 = data.data[i].t20.F05.substr(0,18)+"……";
+				if(data.data[i].t20.F05.length > 28) {
+					data.data[i].t20._F05 = data.data[i].t20.F05.substr(0,26)+"……";
 				}
 			}
 		}

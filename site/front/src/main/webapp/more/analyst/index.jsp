@@ -44,13 +44,13 @@
 		              <label><a hint href="javascript:;">不限</a></label>
 		              <label>
 		                <input name="degree" type="radio" value="BK" />
-		                <a hint href="javascript:;">本科以上</a></label>
+		                <a hint href="javascript:;">本科</a></label>
 		              <label>
 		                <input name="degree" type="radio" value="SS" />
-		                <a hint href="javascript:;" >硕士以上 </a></label>
+		                <a hint href="javascript:;" >硕士 </a></label>
 		              <label>
 		                <input name="degree" type="radio" value="BS" />
-		                <a hint href="javascript:;" >博士以上</a></label>
+		                <a hint href="javascript:;" >博士</a></label>
 		            </dd>
 		          </dl>
 		          <dl>
@@ -59,16 +59,16 @@
 		              <label><a hint href="javascript:;">不限</a> </label>
 		              <label>
 		                <input name="workTime" type="radio" value="1" autocomplete="off"/>
-		                <a hint href="javascript:;"> 一年以上</a> </label>
+		                <a hint href="javascript:;"> 一年</a> </label>
 		              <label>
 		                <input name="workTime" type="radio" value="2" autocomplete="off"/>
-		                <a hint href="javascript:;">三年以上</a></label>
+		                <a hint href="javascript:;">三年</a></label>
 		              <label>
 		                <input name="workTime" type="radio" value="5" autocomplete="off"/>
-		                <a hint href="javascript:;">五年以上</a></label>
+		                <a hint href="javascript:;">五年</a></label>
 		              <label>
 		                <input name="workTime" type="radio" value="10" autocomplete="off"/>
-		                <a hint href="javascript:;">十年以上</a></label>
+		            	<a hint href="javascript:;">十年</a></label>
 		            </dd>
 		          </dl>
 		          <dl>
@@ -77,19 +77,19 @@
 		              <label><a hint href="javascript:;" >不限</a></label>
 		              <label>
 		                <input name="grade" type="radio" value="1" autocomplete="off"/>
-		                <a hint href="javascript:;" >1分以上</a></label>
+		                <a hint href="javascript:;" >1分</a></label>
 		              <label>
 		                <input name="grade" type="radio" value="2" autocomplete="off"/>
-		                <a hint href="javascript:;" >2分以上</a> </label>
+		                <a hint href="javascript:;" >2分</a> </label>
 		              <label>
 		                <input name="grade" type="radio" value="3" autocomplete="off"/>
-		                <a hint href="javascript:;" >3分以上</a> </label>
+		                <a hint href="javascript:;" >3分</a> </label>
 		              <label>
 		                <input name="grade" type="radio" value="4" autocomplete="off"/>
-		                <a hint href="javascript:;" >4分以上</a> </label>
+		                <a hint href="javascript:;" >4分</a> </label>
 		              <label>
 		                <input name="grade" type="radio" value="5" autocomplete="off"/>
-		                <a hint href="javascript:;" >5分以上</a> </label>
+		                <a hint href="javascript:;" >5分</a> </label>
 		               </dd> 
 		          </dl>
 		        </div>
@@ -97,7 +97,7 @@
     </div>
     
     <div class="hasBeenSelected clearfix"><span style="position:absolute;left:10px;top:10px;">共<font id="number" style="color:#fa7003;">208</font>名分析师</span>
-          <div style="float:right;" class="eliminateCriteria">【清空】 </div>
+          <div style="float:right;" class="eliminateCriteria" id="clearAll">【清空】 </div>
           <dl>
             <dt>已选条件：</dt>
             <dd id="hasSelected" class="selectedInfor"></dd>
@@ -133,7 +133,7 @@
 				{{if d.t20.F02!=null&&d.t20.F06!=null }}
 				<tr class="fl row col-sm-12">
 					<td class="col-sm-2">
-						<span><a><img src="{{= d.t20.F09 }}" alt="图像" width=100 height=100></a></span>
+						<span><a href='{{= d.t10.F01 }}' ><img src="{{= d.t20.F09 }}" alt="图像" width=100 height=100></a></span>
 					</td>
 					<td class="col-sm-10">
 						<div class="row mt10">
@@ -141,8 +141,8 @@
 							<span class="fs08 lightblue col-sm-8 mt10">{{= d.t20.F06 }}年从业经历</span>
 						</div>
 						<div class="row mt20">
-							<span title='{{= d.t20.F05 }}' class="gray col-sm-8 fl">{{= d.t20._F05 }}</span>
-							<span class="col-sm-4">学历：{{= d.t20.F10 }}</span>
+							<span title='{{= d.t20.F05 }}' class="gray col-sm-10 fl">{{= d.t20._F05 }}</span>
+							<span class="col-sm-2">学历：{{= d.t20.F10 }}</span>
 						</div>
 					</td>
 				</tr>
@@ -178,7 +178,6 @@
    <%@include file="/include/dialog.jsp" %>
    <script>
    var analystServlet = "analyst";
-   
    </script>
    <script src="publics/js/analyst/analyst.js"></script>
    <script src="publics/js/common/filter.js"></script>

@@ -101,6 +101,7 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 			}
 			pstmt.execute();
 			conn.commit();
+			pstmt.close();
 			this.close(conn);
 		} catch(Exception e) {
 			conn.rollback();
@@ -127,6 +128,8 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 				t.setF08(rs.getString(7));
 				t.setF09(rs.getString(8));
 				t.setF10(Degree.parse(rs.getString(9)));
+				rs.close();
+				stmt.close();
 				this.close(conn);
 				return t;
 			} else {
@@ -148,6 +151,7 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 			pstmt.setString(1, fileName);
 			pstmt.setInt(2, uid);
 			pstmt.execute();
+			pstmt.close();
 		}
 	}
 
@@ -212,6 +216,8 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 				t21.F06 = rs.getString(6);
 				t21s.add(t21);
 			}
+			rs.close();
+			rs.getStatement().close();
 			this.close(conn);
 		} catch (SQLException e) {
 			this.close(conn);
@@ -229,6 +235,8 @@ public class FxsManageImpl extends AbstractService implements FxsManage{
 			ResultSet rs = st.executeQuery(sql);
 			if(rs.next()) {
 				int c = rs.getInt(1);
+				rs.close();
+				st.close();
 				this.close(conn);
 				return c;
 			}

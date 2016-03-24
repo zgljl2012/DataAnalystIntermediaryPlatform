@@ -23,7 +23,6 @@ public interface DatabaseOperate {
 	 * @return
 	 * @throws SQLException
 	 */
-	@Deprecated
 	public ResultSet select(Connection conn, String sql, Object... args) throws SQLException;
 	
 	
@@ -45,7 +44,6 @@ public interface DatabaseOperate {
 	 * @return
 	 * @throws Throwable
 	 */
-	@Deprecated
 	public int insert(Connection conn, String sql, Object ...args) throws Throwable;
 	
 	/**
@@ -56,7 +54,6 @@ public interface DatabaseOperate {
 	 * @return
 	 * @throws SQLException
 	 */
-	@Deprecated
 	public int update(Connection conn, String sql, Object ...args) throws SQLException;
 	
 	/*******************************************************************

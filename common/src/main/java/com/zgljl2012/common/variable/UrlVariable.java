@@ -5,35 +5,29 @@ import com.zgljl2012.framework.variable.VariableClass;
 
 /**
  * @author 廖金龙
- * @version 2016年3月14日下午9:36:21
+ * @version 2016年3月24日下午10:38:29
  * 
  */
-@VariableClass(key="FXS", name="分析师变量")
-public enum FxsVariable implements VariableBean {
-
-	BUSINESS_HISTORY_MAXSIZE("工作经历最长条数", ""+10),
-	
-	WORK_EXPERIENCE_PAGE_SIZE("工作经历每页条数", ""+5),
-	
-	ANALYST_LIST_SIZE("分析师市场界面每页显示的分析师信息条数", ""+10)
-	
+@VariableClass(key="URL", name="URL变量")
+public enum UrlVariable implements VariableBean{
+	FXS_PERSONAL_ITEM("分析师个人主页展示页面", "more/analyst/personal.jsp")
 	;
 	private String key = "";
 	private String name= "";
 	private String value = "";
 	private String description = "";
 	
-	private FxsVariable(String name, String value) {
+	private UrlVariable(String name, String value) {
 		this.name = name;
 		this.value = value;
-		key = FxsVariable.class.getAnnotation(VariableClass.class).key();
+		key = this.getClass().getAnnotation(VariableClass.class).key();
 		key += ".";
 		key += name().toUpperCase();
 	}
 	
-	private FxsVariable(String name) {
+	private UrlVariable(String name) {
 		this.name = name;
-		key = FxsVariable.class.getAnnotation(VariableClass.class).key();
+		key = this.getClass().getAnnotation(VariableClass.class).key();
 		key += ".";
 		key += name().toUpperCase();
 	}
@@ -57,5 +51,4 @@ public enum FxsVariable implements VariableBean {
 		// TODO Auto-generated method stub
 		return value;
 	}
-
 }

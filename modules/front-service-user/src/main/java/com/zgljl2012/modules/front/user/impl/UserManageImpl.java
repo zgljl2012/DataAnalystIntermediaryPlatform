@@ -44,6 +44,8 @@ public class UserManageImpl extends AbstractService implements UserManage{
 			if(rs.next()) {
 				int uid = rs.getInt(1);
 				T10_F08 f08 = T10_F08.parse(rs.getString(2));
+				rs.close();
+				pstmt.close();
 				if(T10_F08.HMD.equals(f08)) {
 					throw new Exception("抱歉，当前用户已被加入黑名单，不允许登录");
 				}
@@ -101,12 +103,16 @@ public class UserManageImpl extends AbstractService implements UserManage{
 					PreparedStatement stmt = conn.prepareStatement(t20);
 					stmt.setInt(1, key);
 					stmt.execute();
+					stmt.close();
 				} else {
 					PreparedStatement stmt = conn.prepareStatement(t30);
 					stmt.setInt(1, key);
 					stmt.execute();
+					stmt.close();
 				}
 				conn.commit();
+				rs.close();
+				pstmt.close();
 				return key; // 返回自增的ID
 			}
 			return -1; // 注册失败
@@ -127,6 +133,8 @@ public class UserManageImpl extends AbstractService implements UserManage{
 				t.F02 = rs.getString(2); // 邮箱
 				t.F03 = rs.getString(3); // 验证码（4位）
 				t.F04 = rs.getTimestamp(4);// 时间戳
+				rs.close();
+				pstmt.close();
 				return t;
 			}
 		}
@@ -151,6 +159,7 @@ public class UserManageImpl extends AbstractService implements UserManage{
 			pstmt.setTimestamp(4, this.getNowTimestamp());
 			// 执行
 			pstmt.execute();
+			pstmt.close();
 		}
 	}
 
@@ -169,6 +178,8 @@ public class UserManageImpl extends AbstractService implements UserManage{
 				t.F06 = Bool.parse(rs.getString(6)); // 删除标识
 				t.F07 = rs.getTimestamp(7); // 时间戳
 				t.F08 = T10_F08.parse(rs.getString(8)); // 用户状态
+				rs.close();
+				pstmt.close();
 				return t;
 			}
 			return null;
@@ -183,6 +194,8 @@ public class UserManageImpl extends AbstractService implements UserManage{
 		Statement st = conn.createStatement();
 		ResultSet rs = st.executeQuery("SELECT * FROM T10 WHERE F01 = "+uid+"");
 		if(!rs.next()) {
+			rs.close();
+			st.close();
 			throw new Exception("没有找到该用户！");
 		}
 		update(getConnection(), sql, uid);
@@ -194,6 +207,8 @@ public class UserManageImpl extends AbstractService implements UserManage{
 		Statement st = conn.createStatement();
 		ResultSet rs = st.executeQuery("SELECT * FROM T10 WHERE F02 = '"+username+"'");
 		if(rs.next()) {
+			rs.close();
+			st.close();
 			return true;
 		}
 		return false;
@@ -205,6 +220,8 @@ public class UserManageImpl extends AbstractService implements UserManage{
 		Statement st = conn.createStatement();
 		ResultSet rs = st.executeQuery("SELECT * FROM T10 WHERE F03 = '"+email+"'");
 		if(rs.next()) {
+			rs.close();
+			st.close();
 			return true;
 		}
 		return false;
@@ -229,6 +246,9 @@ public class UserManageImpl extends AbstractService implements UserManage{
 				t.F07 = rs.getTimestamp(4);
 				t.F08 = T10_F08.parse(rs.getString(5));
 				if(T10_F08.HMD.equals(t.F08)) {
+					rs.close();
+					stmt.close();
+					conn.close();
 					throw new Exception("此用户已被加入黑名单");
 				}
 				return t;
@@ -252,6 +272,8 @@ public class UserManageImpl extends AbstractService implements UserManage{
 			pstmt.setString(1, username);
 			pstmt.setInt(2, uid);
 			int count = pstmt.executeUpdate();
+			pstmt.close();
+			conn.close();
 			if(count == 0) {
 				throw new Exception("没有找到该用户！");
 			}

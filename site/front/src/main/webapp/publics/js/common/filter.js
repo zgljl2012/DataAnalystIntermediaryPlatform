@@ -31,8 +31,10 @@
 	}
 	$.filter.data = {};
 	$.filter.selected = {};
+	
 	var filter = function(root, show, callback) {
 		var as = root.find("a[hint]");
+		$.filter.callback = callback;
 		if(as != null) {
 			as.click(function(){
 				var prev = $(this).prev();
@@ -77,7 +79,21 @@
 				root.find("input[name="+name+"]").prop("checked", false);
 				delete $.filter.selected[name];
 				updateSelected($.filter.selected);
+				if($.filter.callback) {
+					$.filter.callback.apply(null,[$.filter.data]);
+				}
 			});
+		};
+		
+		$.filter.clear = function() {
+			$.filter.data = {};
+			$.filter.selected = {};
+			updateSelected($.filter.selected);
+			var all = root.find("input");
+			all.prop("checked", false);
+			if($.filter.callback) {
+				$.filter.callback.apply(null,[$.filter.data]);
+			}
 		};
 		
 		return filter;
