@@ -11,11 +11,23 @@ $(function(){
 		clear();
 	});
 	global.current = 1;
+	if(!global.href) {
+		global.href = window.location.href;
+	}
+	showLoading();
 	pullData(analystServlet, global.current);
 });
 
 function pullDataByPage(url, current) {
 	pullData(url, current, $.filter.data);
+}
+
+function showLoading() {
+	$("#loading").show();
+}
+
+function hideLoading() {
+	$("#loading").hide();
 }
 
 /**
@@ -45,6 +57,7 @@ function pullData(url, current, data) {
 			global.current = current;
 			global.count = data.count;
 			global.pageSize = data.pageSize;
+			hideLoading();
 			loadTable(data);
 			paging();
 		},
@@ -121,7 +134,7 @@ function paging() {
 		$("#noDataHint").hide();
 	}
 	
-	var s = "<li><a onclick=pullDataByPage('"+analystServlet+"',1)"+" aria-label=Previous title='首页'>"
+	var s = "<li><a href='"+global.href+"#one"+"' onclick=pullDataByPage('"+analystServlet+"',1)"+" aria-label=Previous title='首页'>"
 		+"<span aria-hidden=true>&laquo;</span></a></li>";
 	var left=[];
 	var right=[];
@@ -142,27 +155,27 @@ function paging() {
 		}
 	}
 	if(isMiddle) {
-		s += "<li><a onclick=prev() title='上一页'>...</a></li>"
+		s += "<li><a href='"+global.href+"#one"+"' onclick=prev() title='上一页'>...</a></li>"
 	}
 	for(var i=0;i<left.length;i++) {
-		s += "<li><a onclick=pullDataByPage('"+analystServlet+"',"+left[i]
+		s += "<li><a href='"+global.href+"#one"+"' onclick=pullDataByPage('"+analystServlet+"',"+left[i]
 			+") >"+left[i]+"</a></li>";
 	}
 	if(!isMiddle&&left.length >= 3&&pageCount>5) {
-		s += "<li><a title='下一页' onclick=pullDataByPage('"+analystServlet+"',"+
+		s += "<li><a href='"+global.href+"#one"+"' title='下一页' onclick=pullDataByPage('"+analystServlet+"',"+
 			"4)>...</a></li>"
 	} else if(!isMiddle&&left.length >= 2&&pageCount>5) {
-		s += "<li><a title='下一页' onclick=pullDataByPage('"+analystServlet+"',"+
+		s += "<li><a href='"+global.href+"#one"+"' title='下一页' onclick=pullDataByPage('"+analystServlet+"',"+
 		 (getPageCount()-3)+")>...</a></li>"
 	}
 	for(var i=0;i<right.length;i++) {
-		s += "<li><a onclick=pullDataByPage('"+analystServlet+"',"+right[i]
+		s += "<li><a href='"+global.href+"#one"+"' onclick=pullDataByPage('"+analystServlet+"',"+right[i]
 			+") >"+right[i]+"</a></li>";
 	}
 	if(isMiddle) {
-		s += "<li><a onclick=next() title='下一页'>...</a></li>"
+		s += "<li><a href="+global.href+"#one"+" onclick=next() title='下一页'>...</a></li>"
 	}
-	s += "<li><a onclick=pullDataByPage('"+analystServlet+"',"+getPageCount()+") aria-label=Next title='尾页'>" +
+	s += "<li><a href="+global.href+"#one"+" onclick=pullDataByPage('"+analystServlet+"',"+getPageCount()+") aria-label=Next title='尾页'>" +
 		"<span aria-hidden=true>&raquo;</span></a></li>";
 	e.html(s);
 }

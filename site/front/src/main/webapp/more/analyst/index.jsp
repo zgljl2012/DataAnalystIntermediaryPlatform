@@ -111,6 +111,12 @@
     	<div class="panel panel-default">
     	<div class="panel-heading">所有项目</div>
     	<div class="panel-body">
+    		<a name="one"></a>
+    		<%-- 暂无数据 --%>
+			<div id="noDataHint" class="row tc orange fs15 mt10">暂无数据</div>
+			<div id="loading" class="row tc">
+				<img src="publics/images/loadingBig.gif"></img>
+			</div>
     		<%-- 分页 --%>
 			<div class="row col-sm-12 fl">
 			<ul class="pagination fs08 ml30 mt10 cp" name="paging">
@@ -132,18 +138,20 @@
 				{{each(i, d) data}}
 				{{if d.t20.F02!=null&&d.t20.F06!=null }}
 				<tr class="fl row col-sm-12">
-					<td class="col-sm-2">
-						<span><a href='{{= d.t10.F01 }}' ><img src="{{= d.t20.F09 }}" alt="图像" width=100 height=100></a></span>
+					<td class="col-sm-1">
+						<a href='{{= d.t10.F01 }}' ><span><img src="{{= d.t20.F09 }}" alt="图像" width=110 height=105></span></a>
 					</td>
-					<td class="col-sm-10">
-						<div class="row mt10">
+					<td class="col-sm-10 fl">
+						<a href='{{= d.t10.F01 }}' class="col-sm-10 fl">
+						<div class="row mt10 col-sm-10 fl">
 							<span class="fs15 orange col-sm-3">{{= d.t20.F02 }}</span>
 							<span class="fs08 lightblue col-sm-8 mt10">{{= d.t20.F06 }}年从业经历</span>
 						</div>
-						<div class="row mt20">
-							<span title='{{= d.t20.F05 }}' class="gray col-sm-10 fl">{{= d.t20._F05 }}</span>
-							<span class="col-sm-2">学历：{{= d.t20.F10 }}</span>
+						<div class="row mt20 col-sm-10">
+							<span title='{{= d.t20.F05 }}' class="gray col-sm-9 fl">{{= d.t20._F05 }}</span>
+							<span class="col-sm-3">学历：{{= d.t20.F10 }}</span>
 						</div>
+						</a>
 					</td>
 				</tr>
 				{{/if}}
@@ -165,10 +173,7 @@
 				</li>
 			</ul>
 			</div>
-			<%-- 分页结束 --%>
-			<div id="noDataHint">
-		     	<span>暂无数据</span>
-		     </div>
+			
 		</div>
 		</div>
 	</div>    

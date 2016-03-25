@@ -40,4 +40,43 @@ public class StringHelper
 		}
     	return false;
     }
+    
+    /**
+     * 给名字带上星号
+     * @param realName
+     * @return
+     */
+    public static String asteriskRealName(String realName) {
+    	if(isEmpty(realName)) {
+    		return null;
+    	}
+    	String r = realName;
+    	if(r.length() == 1) {
+    		r = "***";
+    	} else {
+    		r = r.charAt(0)+"**";
+    	}
+    	return r;
+    }
+    
+    /**
+     * 给邮箱加上星号
+     * @param email
+     * @return
+     */
+    public static String asteriskEmail(String email) {
+    	if(isEmpty(email)) {
+    		return null;
+    	}
+    	String r = email;
+    	String domain = email.substring(email.indexOf("@"));
+    	if(r.length() - domain.length() <= 5) {
+    		r = r.charAt(0) + "****"+domain;
+    	} else {
+    		r = r.substring(0,2)+"******" + 
+    				r.substring(r.length()-domain.length()-2, 
+    						email.indexOf("@")) + domain;
+    	}
+    	return r;
+    }
 }
