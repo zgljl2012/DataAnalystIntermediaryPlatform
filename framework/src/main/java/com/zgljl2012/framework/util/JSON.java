@@ -42,6 +42,9 @@ public class JSON implements Cloneable{
 	}
 	
 	public void put(String key, String value) {
+		if(value == null) {
+			return;
+		}
 		value = value.replace("\"", "\\\"");	// 处理双引号
 		value = value.replace("\r", "\\r");		// 处理换行符
 		value = value.replace("\n", "\\n");		// 处理回车

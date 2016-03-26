@@ -13,7 +13,7 @@
           </ul>
           <ul class="fr col-md-3 nav navbar-nav">
           <%if(ljlSession!=null&&ljlSession.isLogined()) {%>
-          	<li <%=headerPage.equals("USER_CENTER")?"class='active'":""%>><a href="more/user/index.jsp" title="<%=ljlSession.getUsername() %>">用户中心</a></li>
+          	<li <%=headerPage.equals("USER_CENTER")?"class='active'":""%>><a href="user" title="<%=ljlSession.getUsername() %>">用户中心</a></li>
             <li><a>|</a></li>
             <li><a href="/front/logout">退出</a></li>
           <%} else { %>

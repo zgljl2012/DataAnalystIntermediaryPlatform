@@ -67,7 +67,7 @@ public class LoginServlet extends AbstractServlet{
 			ls.setUsername(t.F02);
 			ls.setUserType(t.F05.name());
 			// 跳转到用户中心
-			redirect(res, "/front/more/user/index.jsp");
+			redirect(res, "/front/user");
 		} catch (VerifyCodeTimeoutException e) { // 验证码超时
 			e.printStackTrace();
 			req.setAttribute("username", username);

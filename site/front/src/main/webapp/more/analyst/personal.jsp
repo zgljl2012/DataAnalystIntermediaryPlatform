@@ -39,7 +39,7 @@
    <div class="tab-pane fade in active" id="baseInfo">
       <div class="row mt20">
       	<div class="col-sm-2">
-      		<img src="publics/images/noface.gif" width="150" height="150" class="display_block cp border_eee" name="headImg"/>
+      		<img src="publics/images/noface.gif" width="150" height="150" class="display_block border_eee" name="headImg"/>
       	</div>
       	<div class="col-sm-10">
       		<div class="row mt20">

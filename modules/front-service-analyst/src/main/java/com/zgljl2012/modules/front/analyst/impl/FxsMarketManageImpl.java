@@ -18,6 +18,7 @@ import com.zgljl2012.framework.database.PagingInfo;
 import com.zgljl2012.framework.database.executor.SelectExecutor;
 import com.zgljl2012.framework.service.AbstractService;
 import com.zgljl2012.framework.util.JSON;
+import com.zgljl2012.framework.util.StringHelper;
 import com.zgljl2012.modules.front.analyst.FxsMarketManage;
 import com.zgljl2012.modules.front.analyst.query.FxsInfoQuery;
 
@@ -89,6 +90,9 @@ public class FxsMarketManageImpl extends AbstractService implements FxsMarketMan
 				// 进行学历的中文转化
 				if(t20.getF10() != null) {
 					jtmp.put("F10", t20.getF10().getChineseName());
+				}
+				if(t20.getF02() != null) {
+					jtmp.put("F02", StringHelper.asteriskRealName(t20.getF02()));
 				}
 				
 				json.put("t20", jtmp);
