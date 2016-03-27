@@ -18,12 +18,13 @@
 		<div id="qyInfo" class="tab-content">
 			<div class="tab-pane fade in active" id="baseInfo">
 		    	<div class="container">
+		    		<input name="status" class="display_none" value='${data.get("status")}'/>
 		    		<div class="row tc mt20 vm">
 		    			<div class="col-sm-5 tr vm">
 		    				<span class="fs12" style="line-height:1.9999;">&nbsp;用户名&nbsp;：&nbsp;</span>
 		    			</div>
 		    			<div class="col-sm-5 vm tl">
-		    				<input name="username" type="text" placeholder="用户名" class="m-input-form-control" value=${ data.get("username")}>
+		    				<input name="username" type="text" disabled placeholder="用户名" class="m-input-form-control" value=${ data.get("username")}>
 		    				<a edit onclick="edit('username','编辑','完成', updateUsername)" class="cp">编辑</a>
 		    			</div>
 		    		</div>
@@ -32,8 +33,8 @@
 		    				<span class="fs12" style="line-height:1.9999;">&nbsp;邮&nbsp;&nbsp;箱&nbsp;：&nbsp;</span>
 		    			</div>
 		    			<div class="col-sm-5 vm tl">
-		    				<input name="email" type="text" placeholder="邮箱" class="m-input-form-control" value='${data.get("email")}'>
-		    				<a edit onclick="edit('email','编辑','完成', updateEmail)" class="cp">编辑</a>
+		    				<input name="email" type="text" placeholder="邮箱" disabled class="m-input-form-control" value='${data.get("email")}'>
+		    				<a edit onclick="edit('email','编辑','完成', updateEmail)"   class="cp">编辑</a>
 		    			</div>
 		    		</div>
 		    		<div class="row tc mt20">
@@ -41,7 +42,8 @@
 		    				<span class="fs12" style="line-height:1.9999;">企业名称：</span>
 		    			</div>
 		    			<div class="col-sm-5 vm tl">
-		    				<input name="companyName" type="text" placeholder="企业名称" class="m-input-form-control" value='${data.get("companyName") }'>
+		    				<input name="companyName" type="text" disabled placeholder="企业名称" class="m-input-form-control" value='${data.get("companyName") }'>
+		    				<a edit onclick="edit('companyName','编辑','完成', updateCompanyName)" class="cp">编辑</a>
 		    			</div>
 		    		</div>
 		    		<div class="row">

@@ -299,8 +299,8 @@ function edit(name, a_hint1, a_hint2, callback) {
 					data:{name:name, value:e.val()},
 					success:function(data) {
 						data = eval('('+data+')');
-						showAlert(data.description);
 						if(data.status == 1) {
+							showAlert(data.description);
 							global.map[name] = e.val();
 							e.attr("disabled","disabled");
 							a.html(a_hint1);
@@ -308,6 +308,13 @@ function edit(name, a_hint1, a_hint2, callback) {
 							if(a.nextAll("a[cancel]").length) {
 								a.nextAll("a[cancel]").remove();
 							}
+						} else {
+							if(data.description) {
+								showAlert(data.description);
+							} else {
+								showAlert("修改失败！");
+							}
+							cancel(name, a_hint1);
 						}
 					},
 					error:function(err) {

@@ -42,7 +42,7 @@ public abstract class AbstractServlet extends HttpServlet{
 			get(req, resp, controller);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
 	

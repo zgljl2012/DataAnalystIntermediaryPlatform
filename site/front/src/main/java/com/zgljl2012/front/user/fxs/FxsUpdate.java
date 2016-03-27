@@ -150,8 +150,7 @@ public class FxsUpdate extends AbstractServlet{
 			json.put("status", "1"); // 修改成功
 			json.put("description", "修改成功！");
 			out.println(json.toString());
-		}
-		catch(Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 			json.put("status", "0"); // 修改失败
 			json.put("description", e.getMessage());

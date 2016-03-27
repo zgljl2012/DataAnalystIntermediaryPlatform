@@ -8,7 +8,7 @@ $(function() {
 	initItem("companyName");
 	initItem("business");
 	initItem("remark");
-	console.log(global);
+	initItem("status");
 });
 
 function initItem(name) {
@@ -25,9 +25,6 @@ function initItem(name) {
  */
 function edit(name, a_hint1, a_hint2, callback) {
 	var e = $("input[name="+name+"]");
-	if(name=="gender"||name=="degree") {
-		e = $("select[name="+name+"]")
-	}
 	var a = e.nextAll("a[edit]");
 	if(name=="personalIntroduce") {
 		e = $("textarea[name="+name+"]");
@@ -46,12 +43,12 @@ function edit(name, a_hint1, a_hint2, callback) {
 				// 使用ajax传回后台更新
 				$.ajax({
 					type:"post",
-					url:fxsBaseInfoUpdateUrl,
+					url:qyUpdateInfoUrl,
 					data:{name:name, value:e.val()},
 					success:function(data) {
 						data = eval('('+data+')');
-						showAlert(data.description);
-						if(data.status == 1) {
+						showAlert(data.msg);
+						if(data.success == "true") {
 							global.map[name] = e.val();
 							e.attr("disabled","disabled");
 							a.html(a_hint1);
@@ -71,15 +68,12 @@ function edit(name, a_hint1, a_hint2, callback) {
 }
 
 /**
- * 分析师取消按钮
+ * 企业取消按钮
  * @param name
  * @param a_hint1
  */
 function cancel(name, a_hint1) {
 	var e = $("input[name="+name+"]");
-	if(name=="gender"||name=="degree") {
-		e = $("select[name="+name+"]")
-	}
 	var a = e.nextAll("a[edit]");
 	if(name=="personalIntroduce") {
 		e = $("textarea[name="+name+"]");
@@ -100,10 +94,28 @@ function cancel(name, a_hint1) {
 }
 
 function updateUsername() {
-	return false;
+	var username = $("input[name='username']").val();
+	if(username == "") {
+		showAlert("请输入用户名");
+		return false;
+	} else {
+		if(!regUsername.test(username)) {
+			showAlert("用户名不符合规则，使用字母、数字、下划线，6-18位且以字母开头");
+			return false;
+		}
+	}
+	return true;
 }
 
 function updateEmail() {
+	if(global.map.status == "WJH") {
+		showAlert("当前邮箱处于未激活状态，不允许修改，请您尽快激活邮箱");
+		return false;
+	}
+	return true;
+}
+
+function updateCompanyName() {
 	return false;
 }
 

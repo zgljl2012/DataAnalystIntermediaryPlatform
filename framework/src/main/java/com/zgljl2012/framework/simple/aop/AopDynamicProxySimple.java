@@ -41,13 +41,9 @@ public class AopDynamicProxySimple implements AopDynamicProxy{
 				this.beforeListener.execute(targetName, methodName, args);
 			}
 			Object result = null;
-			try {
-				result = (Object)method.invoke(target, args);
-				if(this.afterListener != null) {
-					this.afterListener.execute(targetName, methodName, result, args);
-				}
-			} catch(Exception e) {
-				e.printStackTrace();
+			result = (Object)method.invoke(target, args);
+			if(this.afterListener != null) {
+				this.afterListener.execute(targetName, methodName, result, args);
 			}
 			return result;
 		}
