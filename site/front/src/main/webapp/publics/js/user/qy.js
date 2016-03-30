@@ -3,16 +3,16 @@ var global = {};
 $(function() {
 	global.map={};
 	// 初始化数据
-	initItem("username");
-	initItem("email");
-	initItem("companyName");
-	initItem("business");
-	initItem("remark");
-	initItem("status");
+	initItem("username","input");
+	initItem("email","input");
+	initItem("companyName","input");
+	initItem("business","textarea");
+	initItem("remark","textarea");
+	initItem("status","input");
 });
 
-function initItem(name) {
-	var value = $("input[name="+name+"]").val();
+function initItem(name, tag) {
+	var value = $(tag+"[name="+name+"]").val();
 	global.map[name] = value;
 }
 
@@ -26,9 +26,9 @@ function initItem(name) {
 function edit(name, a_hint1, a_hint2, callback) {
 	var e = $("input[name="+name+"]");
 	var a = e.nextAll("a[edit]");
-	if(name=="personalIntroduce") {
+	if(name=="business"||name=="remark") {
 		e = $("textarea[name="+name+"]");
-		a = e.parent().prev().children("a[edit]");
+		a = e.parent().children("a[edit]");
 	}
 	if(a.html() == a_hint1) {
 		e.removeAttr("disabled");
@@ -75,9 +75,11 @@ function edit(name, a_hint1, a_hint2, callback) {
 function cancel(name, a_hint1) {
 	var e = $("input[name="+name+"]");
 	var a = e.nextAll("a[edit]");
-	if(name=="personalIntroduce") {
+	if(name=="business"||name=="remark") {
 		e = $("textarea[name="+name+"]");
-		a = e.parent().prev().children("a[edit]");
+		console.log(e);
+		a = e.parent().children("a[edit]");
+		console.log(a)
 	}
 	if(global.map != null) {
 		if(global.map[name] != null) {
@@ -116,6 +118,33 @@ function updateEmail() {
 }
 
 function updateCompanyName() {
-	return false;
+	var companyName = $("input[name='companyName']").val();
+	if(companyName == "") {
+		showAlert("请输入公司名称");
+		return false;
+	}
+	if(companyName.length < 5||companyName.length > 50) {
+		showAlert("公司名称的长度在5-50之间");
+		return false;
+	}
+	return true;
+}
+
+function updateBusiness() {
+	var business = $("textarea[name=business]").val();
+	if(business.length < 10 || business.length > 200) {
+		showAlert("公司业务说明在10个字到200个字之间");
+		return false;
+	}
+	return true;
+}
+
+function updateRemark() {
+	var remark = $("textarea[name=remark]").val();
+	if(remark.length > 200) {
+		showAlert("公司业务说明在0-200个字之间");
+		return false;
+	}
+	return true;
 }
 

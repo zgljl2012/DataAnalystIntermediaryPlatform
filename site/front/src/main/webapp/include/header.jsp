@@ -13,7 +13,19 @@
           </ul>
           <ul class="fr col-md-3 nav navbar-nav">
           <%if(ljlSession!=null&&ljlSession.isLogined()) {%>
-          	<li <%=headerPage.equals("USER_CENTER")?"class='active'":""%>><a href="user" title="<%=ljlSession.getUsername() %>">用户中心</a></li>
+          	<li <%=headerPage.equals("USER_CENTER")?"class='active'":""%>>
+          		 <a href="user" title="<%=ljlSession.getUsername() %>" class="dropdown-toggle cp" 
+          		 type="button" id="dropdownMenu1"
+          		 data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+				    	用户中心
+				    <span class="caret"></span>
+				  </a>
+				  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+				    <li><a href="user" title="<%=ljlSession.getUsername() %>">基础资料</a></li>
+				    <li><a href="user/resetPwd">修改密码</a></li>
+				  </ul>
+				
+          	</li>
             <li><a>|</a></li>
             <li><a href="/front/logout">退出</a></li>
           <%} else { %>

@@ -89,4 +89,12 @@ public interface UserManage extends Service {
 	 */
 	public void updateUsername(int uid, String username) throws Exception;
 	
+	/**
+	 * 修改密码
+	 * @param uid
+	 * @param pwd
+	 * @throws Exception
+	 */
+	public void updatePassword(int uid, String pwd) throws Exception;
+	
 }

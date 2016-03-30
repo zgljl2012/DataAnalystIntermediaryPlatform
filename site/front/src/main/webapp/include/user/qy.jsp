@@ -51,8 +51,10 @@
 		    		</div>
 		    		<div class="row tc mt10">
 		    			<div class="col-sm-12">
-		    				<span class="fs12">主营业务</span><br>
-		    				<textarea class="mt10" placeholder="请输入您公司的主营业务" 
+		    				<span class="fs12">主营业务</span>
+		    				<a edit onclick="edit('business','编辑','完成', updateBusiness)" class="cp">编辑</a>
+		    				<br>
+		    				<textarea disabled name="business" class="mt10" placeholder="请输入您公司的主营业务" 
 		    				class="form-control" rows="6" cols="60"
 		    				>${data.get("business") }</textarea>
 		    			</div>
@@ -62,8 +64,10 @@
 		    		</div>
 		    		<div class="row tc mt10">
 		    			<div class="col-sm-12">
-		    				<span class="fs12">备注说明</span><br>
-		    				<textarea class="mt10" placeholder="备注说明" 
+		    				<span class="fs12">备注说明</span>
+		    				<a edit onclick="edit('remark','编辑','完成', updateRemark)" class="cp">编辑</a>
+		    				<br>
+		    				<textarea disabled name="remark" class="mt10" placeholder="备注说明" 
 		    				class="form-control" rows="7" cols="90"
 		    				>${data.get("remark") }</textarea>
 		    			</div>

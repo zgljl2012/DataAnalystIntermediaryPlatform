@@ -278,5 +278,12 @@ public class UserManageImpl extends AbstractService implements UserManage{
 				throw new Exception("没有找到该用户！");
 			}
 		}
+	}
+
+	@Override
+	public void updatePassword(int uid, String pwd) throws Exception {
+		Connection conn = this.getConnection();
+		this.update(conn, "UPDATE T10 SET F04 = ? WHERE F01 = ?", null, pwd,uid);
+		conn.close();
 	}	
 }

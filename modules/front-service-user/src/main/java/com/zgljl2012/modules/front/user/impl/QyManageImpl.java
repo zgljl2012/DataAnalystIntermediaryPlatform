@@ -3,11 +3,14 @@ package com.zgljl2012.modules.front.user.impl;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.database.executor.SelectExecutor;
+import com.zgljl2012.framework.database.executor.UpdateExecutor;
 import com.zgljl2012.framework.service.AbstractService;
 import com.zgljl2012.framework.util.JSON;
+import com.zgljl2012.framework.util.StringHelper;
 import com.zgljl2012.modules.front.user.QyManage;
 import com.zgljl2012.modules.front.user.query.QyUpdateQuery;
 
@@ -67,8 +70,31 @@ public class QyManageImpl extends AbstractService implements QyManage{
 		if(!rs.next()) {
 			throw new Exception("没有找到该用户！");
 		}
+		StringBuilder sb = new StringBuilder("UPDATE T30 SET F01=F01");
+		ArrayList<Object> args = new ArrayList<>();
+		if(!StringHelper.isEmpty(query.getCompanyName())) {
+			sb.append(", F02 = ? ");
+			args.add(query.getCompanyName());
+		}
+		if(!StringHelper.isEmpty(query.getBusiness())) {
+			sb.append(", F03 = ? ");
+			args.add(query.getBusiness());
+		}
+		if(!StringHelper.isEmpty(query.getRemark())) {
+			sb.append(", F04 = ?");
+			args.add(query.getRemark());
+		}
+		sb.append("WHERE F01 = ?");
+		args.add(uid);
+		this.update(conn, sb.toString(), new UpdateExecutor() {
+			
+			@Override
+			public void execute(int rows) {
+				
+			}
+		}, args.toArray());
 		
-		
+		conn.close();
 	}
 
 }
