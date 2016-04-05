@@ -43,6 +43,8 @@
    <%@include file="/include/footer.jsp" %>
    <%--对话框 --%>
    <%@include file="/include/dialog.jsp" %>
+   <%--引入Require框架 --%>
+   <script src="/front/publics/js/plugins/require/require.min.js"></script>
    <%if("FXS".equals(userType)) { %>
     	<script src="/front/publics/js/user/index.js"></script>
     <%} else { %>

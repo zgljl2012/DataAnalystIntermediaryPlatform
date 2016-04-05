@@ -1,5 +1,6 @@
 package com.zgljl2012.common.database;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import com.zgljl2012.common.database.enums.Bool;
@@ -64,17 +65,17 @@ public class T40 extends AbstractEntity{
 	public Date F10;
 	
 	/**
-	 * 完成时间
+	 * 项目完成时间
 	 */
 	public Date F11;
 	
 	/**
-	 * 完成期限（天数）
+	 * 项目要求完成时间（天数）
 	 */
-	public int F12;
+	public Date F12;
 	
 	/**
-	 * 说明
+	 * 项目描述
 	 */
 	public String F13;
 	
@@ -87,4 +88,14 @@ public class T40 extends AbstractEntity{
 	 * 中标用户ID
 	 */
 	public int F15;
+	
+	/**
+	 * 中标时间
+	 */
+	public Timestamp F16;
+	
+	/**
+	 * 招标天数
+	 */
+	public int F17;
 }

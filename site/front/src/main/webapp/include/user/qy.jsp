@@ -75,7 +75,7 @@
 		    	</div>
 		    </div>
 			<div class="tab-pane fade" id="add_project">
-		    	<p>新增项目</p>
+		    	<%@include file="/include/project/newProject.jsp" %>
 		    </div>
 			<div class="tab-pane fade" id="running_project">
 		    	<p>进行中项目</p>
