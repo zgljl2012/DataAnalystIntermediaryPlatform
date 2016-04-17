@@ -211,10 +211,11 @@ public class DatabaseProviderSimple implements DatabaseProvider {
 	}
 
 	@Override
-	public void insert(Connection conn, String sql, InsertExecutor executor,
+	public int insert(Connection conn, String sql, InsertExecutor executor,
 			Object... args) throws Throwable {
-		PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet resultSet = null; 
+		int id = -1;
 		try {
 			for(int i = 0; i < args.length; i++) {
 				stmt.setObject(i+1, args[i]);
@@ -222,7 +223,7 @@ public class DatabaseProviderSimple implements DatabaseProvider {
 			stmt.executeUpdate();
 			resultSet = stmt.getGeneratedKeys();
 	        if (resultSet.next()) {
-	        	int id = resultSet.getInt(1);
+	        	id = resultSet.getInt(1);
 	        	if(executor != null) {
 	        		executor.execute(id);
 	        	}
@@ -235,6 +236,7 @@ public class DatabaseProviderSimple implements DatabaseProvider {
 	    	}
 	    	stmt.close();
 	    }
+		return id;
 	}
 
 	@Override

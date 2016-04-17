@@ -106,10 +106,10 @@
      
      </div></div></div></div>
     
-    <%--企业项目列表 --%>
+    <%--企业分析师列表 --%>
 	<div class="container">
     	<div class="panel panel-default">
-    	<div class="panel-heading">所有项目</div>
+    	<div class="panel-heading">所有分析师</div>
     	<div class="panel-body">
     		<a name="one"></a>
     		<%-- 暂无数据 --%>

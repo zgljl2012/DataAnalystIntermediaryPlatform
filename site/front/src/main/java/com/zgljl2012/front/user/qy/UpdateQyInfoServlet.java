@@ -25,6 +25,7 @@ public class UpdateQyInfoServlet extends AbstractServlet{
 	@Impl
 	QyManage qyManage;
 	
+	
 	@Impl
 	UserManage userManage;
 	

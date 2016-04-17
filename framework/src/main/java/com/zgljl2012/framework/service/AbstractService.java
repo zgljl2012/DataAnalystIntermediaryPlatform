@@ -137,9 +137,9 @@ public abstract class AbstractService implements Service, DatabaseOperate{
 	}
 
 	@Override
-	public void insert(Connection conn, String sql,
+	public int insert(Connection conn, String sql,
 			InsertExecutor executor, Object... args) throws Throwable {
-		this.db.insert(conn, sql, executor, args);
+		return this.db.insert(conn, sql, executor, args);
 	}
 
 	@Override

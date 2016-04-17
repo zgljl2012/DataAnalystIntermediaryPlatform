@@ -10,10 +10,20 @@
 		      </a>
 		   </li>
 		   <li><a href="#add_project" data-toggle="tab">新增项目 </a></li>
-		   <li><a href="#running_project" data-toggle="tab">进行中项目 </a></li>
-		   <li><a href="#bidding_project" data-toggle="tab">已发布项目 </a></li>
-		   <li><a href="#stayed_project" data-toggle="tab">待处理项目 </a></li>
-		   <li><a href="#finished_project" data-toggle="tab">已完成项目 </a></li>
+		   <li role="presentation" class="dropdown">
+		    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+		      项目管理 <span class="caret"></span>
+		    </a>
+		    <ul class="dropdown-menu">
+		      <li><a href="#dsh_project" data-toggle="tab">待审核项目 </a></li>
+		      <li><a href="#running_project" data-toggle="tab">进行中项目 </a></li>
+			   <li><a href="#bidding_project" data-toggle="tab">已发布项目 </a></li>
+			   <li><a href="#stayed_project" data-toggle="tab">待处理项目 </a></li>
+			   <li><a href="#finished_project" data-toggle="tab">已完成项目 </a></li>
+		    </ul>
+		  </li>
+		   
+		  
 		</ul>
 		<div id="qyInfo" class="tab-content">
 			<div class="tab-pane fade in active" id="baseInfo">
@@ -76,6 +86,9 @@
 		    </div>
 			<div class="tab-pane fade" id="add_project">
 		    	<%@include file="/include/project/newProject.jsp" %>
+		    </div>
+		    <div class="tab-pane fade" id="dsh_project">
+		    	<%@include file="/include/project/dshProject.jsp" %>
 		    </div>
 			<div class="tab-pane fade" id="running_project">
 		    	<p>进行中项目</p>

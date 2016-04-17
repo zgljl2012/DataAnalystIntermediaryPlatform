@@ -1,4 +1,6 @@
     <%@page language="java" contentType="text/html; charset=utf-8" %>
+    <%--引入requireJS框架 --%>
+    <script src="publics/js/plugins/require/require.min.js" data-main="publics/js/main.js"></script>
     <nav class="navbar navbar-fixed-top navbar-inverse">
       <div class="container">
       <div class="row" >

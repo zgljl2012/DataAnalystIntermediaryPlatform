@@ -79,7 +79,7 @@ public interface DatabaseOperate {
 	 * @return
 	 * @throws Throwable
 	 */
-	public void insert(Connection conn, String sql, 
+	public int insert(Connection conn, String sql, 
 			InsertExecutor executor, Object ...args) throws Throwable;
 	
 	/**

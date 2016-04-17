@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.exceptions.PostException;
 import com.zgljl2012.framework.util.JSON;
 
 /**
@@ -51,7 +52,14 @@ public abstract class AbstractServlet extends HttpServlet{
 			throws ServletException, IOException {
 		try {
 			post(req, resp, controller);
-		} catch (Exception e) {
+		} catch(PostException e) {
+			e.printStackTrace();
+			JSON json = new JSON();
+			json.put("status", "error");
+			json.put("description", e.getMessage());
+			out(resp, json);
+		}
+		catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

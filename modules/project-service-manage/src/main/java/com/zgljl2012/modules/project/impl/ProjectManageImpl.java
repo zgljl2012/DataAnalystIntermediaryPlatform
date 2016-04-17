@@ -1,0 +1,135 @@
+package com.zgljl2012.modules.project.impl;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import com.zgljl2012.common.database.T40;
+import com.zgljl2012.common.database.enums.Bool;
+import com.zgljl2012.common.database.enums.T40_F05;
+import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.database.executor.SelectExecutor;
+import com.zgljl2012.framework.service.AbstractService;
+import com.zgljl2012.framework.util.JSON;
+import com.zgljl2012.framework.util.StringHelper;
+import com.zgljl2012.modules.project.ProjectManage;
+import com.zgljl2012.modules.project.query.ProjectBaseInfoQuery;
+
+/**
+ * @author 廖金龙
+ * @version 2016年4月14日下午9:30:04
+ * 
+ */
+public class ProjectManageImpl extends AbstractService implements ProjectManage{
+
+	public ProjectManageImpl(Controller controller) {
+		super(controller);
+	}
+
+	@Override
+	public void addProject(int uid, ProjectBaseInfoQuery query) throws Exception {
+		String sql = "INSERT INTO T40(F02,F03,F04,F05,F06,F12,F13,F14,F17) "
+				+ "VALUES(?,?,?,?,?,?,?,?,?)";
+		List<Object> args = new ArrayList<>();
+		if(StringHelper.isEmpty(query.getProjectName())){
+			throw new Exception("企业名称不能为空");
+		}
+		args.add(query.getProjectName()); // F02
+		args.add(query.getWillPrice()); // F03
+		args.add(uid); // F04
+		args.add(T40_F05.DSH.name()); // F05
+		args.add(new Date()); // F06
+		if(query.getFinishDate() == null) {
+			throw new Exception("期望完成时间不能为空");
+		}
+		args.add(query.getFinishDate()); // F12
+		if(StringHelper.isEmpty(query.getDescription())) {
+			throw new Exception("项目描述不能为空");
+		}
+		args.add(query.getDescription()); // F13
+		args.add(Bool.F.name()); // F14
+		args.add(query.getBidDays()); // F17
+		for(int i=0;i<args.size();i++) {
+			System.out.println(args.get(i));
+		}
+		Connection conn = this.getConnection();
+		try {
+			this.insert(conn, sql, null, args.toArray());
+			
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		conn.close();
+	}
+
+	@Override
+	public void updateProject(int pid, ProjectBaseInfoQuery query) {
+		
+	}
+
+	@Override
+	public JSON projectList(int uid, T40_F05 status) throws Exception {
+		String sql = "SELECT * FROM T40 WHERE 1=1 ";
+		ArrayList<Object> list = new ArrayList<>();
+		if (status != null) {
+			sql += " AND F05 = ? ";
+			list.add(status.name());
+		}
+		if( uid > 0 ) {
+			sql += " AND F04 = ?";
+			list.add(uid);
+		}
+		Object[] args = list.toArray();
+		final JSON result = new JSON();
+		Connection conn = this.getConnection();
+		try {
+			this.select(conn, sql, new SelectExecutor(){
+	
+				@Override
+				public void execute(ResultSet rs) {
+					try {
+						List<JSON> list = new ArrayList<JSON>();
+						while(rs.next()) {
+							T40 t = new T40();
+							t.setF01(rs.getInt(1));
+							t.setF02(rs.getString(2));
+							t.setF03(rs.getFloat(3));
+							t.setF04(rs.getInt(4));
+							t.setF05(T40_F05.parse(rs.getString(5)));
+							t.setF06(rs.getDate(6));
+							t.setF07(rs.getDate(7));
+							t.setF08(rs.getInt(8));
+							t.setF09(rs.getString(9));
+							t.setF10(rs.getDate(10));
+							t.setF11(rs.getDate(11));
+							t.setF12(rs.getDate(12));
+							t.setF13(rs.getString(13));
+							t.setF14(Bool.parse(rs.getString(14)));
+							t.setF15(rs.getInt(15));
+							t.setF16(rs.getTimestamp(16));
+							t.setF17(rs.getInt(17));
+							JSON t40 = new JSON();
+							t40.put("t40", t);
+							list.add(t40);
+						}
+						result.put("data", list);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+			}, args);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally{
+			conn.close();
+		}
+		return result;
+	}
+
+}
