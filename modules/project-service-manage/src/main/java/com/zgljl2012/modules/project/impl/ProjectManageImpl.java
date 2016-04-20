@@ -11,12 +11,14 @@ import com.zgljl2012.common.database.T40;
 import com.zgljl2012.common.database.enums.Bool;
 import com.zgljl2012.common.database.enums.T40_F05;
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.database.PagingInfo;
 import com.zgljl2012.framework.database.executor.SelectExecutor;
 import com.zgljl2012.framework.service.AbstractService;
 import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.framework.util.StringHelper;
 import com.zgljl2012.modules.project.ProjectManage;
 import com.zgljl2012.modules.project.query.ProjectBaseInfoQuery;
+import com.zgljl2012.modules.project.query.ProjectStatusPaggingQuery;
 
 /**
  * @author 廖金龙
@@ -71,29 +73,114 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 	}
 
 	@Override
-	public JSON projectList(int uid, T40_F05 status) throws Exception {
+	public JSON projectList(int uid, final ProjectStatusPaggingQuery query) throws Exception {
 		String sql = "SELECT * FROM T40 WHERE 1=1 ";
-		ArrayList<Object> list = new ArrayList<>();
-		if (status != null) {
+		ArrayList<Object> listArgs = new ArrayList<>();
+		if (query.getStatus() != null) {
 			sql += " AND F05 = ? ";
-			list.add(status.name());
+			listArgs.add(query.getStatus().name());
 		}
 		if( uid > 0 ) {
 			sql += " AND F04 = ?";
-			list.add(uid);
+			listArgs.add(uid);
 		}
-		Object[] args = list.toArray();
+		Object[] args = listArgs.toArray();
 		final JSON result = new JSON();
 		Connection conn = this.getConnection();
 		try {
-			this.select(conn, sql, new SelectExecutor(){
-	
+			ResultSet rs = this.selectPaging(conn, sql, new PagingInfo(){
+
+				@Override
+				public int getCurrentPage() {
+					// TODO Auto-generated method stub
+					return query.current();
+				}
+
+				@Override
+				public int getPageSize() {
+					// TODO Auto-generated method stub
+					return query.pageSize();
+				}
+				
+			}, args);
+			List<JSON> list = new ArrayList<JSON>();
+			while(rs.next()) {
+				T40 t = new T40();
+				t.setF01(rs.getInt(1));
+				t.setF02(rs.getString(2));
+				t.setF03(rs.getFloat(3));
+				t.setF04(rs.getInt(4));
+				t.setF05(T40_F05.parse(rs.getString(5)));
+				t.setF06(rs.getDate(6));
+				t.setF07(rs.getDate(7));
+				t.setF08(rs.getInt(8));
+				t.setF09(rs.getString(9));
+				t.setF10(rs.getDate(10));
+				t.setF11(rs.getDate(11));
+				t.setF12(rs.getDate(12));
+				t.setF13(rs.getString(13));
+				t.setF14(Bool.parse(rs.getString(14)));
+				t.setF15(rs.getInt(15));
+				t.setF16(rs.getTimestamp(16));
+				t.setF17(rs.getInt(17));
+				JSON t40 = new JSON();
+				t40.put("t40", t);
+				list.add(t40);
+			}
+			rs.close();
+			rs.getStatement().close();
+			result.put("data", list);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally{
+			conn.close();
+		}
+		return result;
+	}
+
+	@Override
+	public int getProjectSize(int uid) {
+		String sql = "SELECT COUNT(*) FROM T40 WHERE 1=1 ";
+		if(uid > 0){
+			sql += " and F04 = " +uid;
+		}
+		Connection conn = this.getConnection();
+		try{
+			ResultSet rs = this.select(conn, sql, null);
+			if(rs.next()) {
+				int count = rs.getInt(1);
+				rs.close();
+				rs.getStatement().close();
+				return count;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
+
+	@Override
+	public JSON getProjectInfo(int projectId) {
+		String sql = "SELECT * FROM T40 WHERE F01 = ?";
+		Connection conn = this.getConnection();
+		try {
+			final JSON t40 = new JSON();
+			this.select(conn, sql, new SelectExecutor() {
+				
 				@Override
 				public void execute(ResultSet rs) {
+					T40 t = new T40();
+					
 					try {
-						List<JSON> list = new ArrayList<JSON>();
-						while(rs.next()) {
-							T40 t = new T40();
+						if(rs.next()) {
 							t.setF01(rs.getInt(1));
 							t.setF02(rs.getString(2));
 							t.setF03(rs.getFloat(3));
@@ -111,25 +198,79 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 							t.setF15(rs.getInt(15));
 							t.setF16(rs.getTimestamp(16));
 							t.setF17(rs.getInt(17));
-							JSON t40 = new JSON();
 							t40.put("t40", t);
-							list.add(t40);
 						}
-						result.put("data", list);
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
-				
-			}, args);
+			}, new Object[]{projectId});
+			return t40;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void realeaseProject(int projectId) {
+		String sql = "UPDATE T40 SET F05 = ? WHERE F01 = ?";
+		Connection conn = this.getConnection();
+		try {
+			this.update(conn, sql, null, T40_F05.TBZ.name(), projectId);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public int getProjectSize(int uid, T40_F05 status) {
+		String sql = "SELECT COUNT(*) FROM T40 WHERE 1=1 ";
+		List<Object> args = new ArrayList<Object>();
+		if(uid > 0){
+			sql += " and F04 = ?";
+			args.add(uid);
+		}
+		if(status != null) {
+			sql += " and F05 = ?";
+			args.add(status.name());
+		}
+		Connection conn = this.getConnection();
+		try{
+			ResultSet rs = this.select(conn, sql, args.toArray());
+			if(rs.next()) {
+				int count = rs.getInt(1);
+				rs.close();
+				rs.getStatement().close();
+				return count;
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
-			return null;
-		} finally{
-			conn.close();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		return result;
+		return 0;
 	}
 
 }

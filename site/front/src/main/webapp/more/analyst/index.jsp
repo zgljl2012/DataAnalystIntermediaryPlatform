@@ -59,16 +59,16 @@
 		              <label><a hint href="javascript:;">不限</a> </label>
 		              <label>
 		                <input name="workTime" type="radio" value="1" autocomplete="off"/>
-		                <a hint href="javascript:;"> 一年</a> </label>
+		                <a hint href="javascript:;"> 一年以上</a> </label>
 		              <label>
 		                <input name="workTime" type="radio" value="2" autocomplete="off"/>
-		                <a hint href="javascript:;">三年</a></label>
+		                <a hint href="javascript:;">三年以上</a></label>
 		              <label>
 		                <input name="workTime" type="radio" value="5" autocomplete="off"/>
-		                <a hint href="javascript:;">五年</a></label>
+		                <a hint href="javascript:;">五年以上</a></label>
 		              <label>
 		                <input name="workTime" type="radio" value="10" autocomplete="off"/>
-		            	<a hint href="javascript:;">十年</a></label>
+		            	<a hint href="javascript:;">十年以上</a></label>
 		            </dd>
 		          </dl>
 		          <dl>

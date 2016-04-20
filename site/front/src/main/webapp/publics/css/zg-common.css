@@ -14,7 +14,7 @@
 .cp{cursor:pointer;}
 .vm{vertical-align: middle;}
 .lh15{line-height:1.5;}.lh14{line-height: 1.428571429;} lh22{line-height:2.222222;}
-.w100{width:100%;}
+.w100{width:100%;} .w80{width:80%}
 .border_eee{
 	border:2px solid #eee;
 	-moz-border-radius: 10px;

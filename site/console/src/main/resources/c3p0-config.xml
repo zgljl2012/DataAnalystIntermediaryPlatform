@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<c3p0-config>  
+    <!-- This is default config! -->  
+    <default-config>  
+        <property name="initialPoolSize">10</property>  
+        <property name="maxIdleTime">30</property>  
+        <property name="maxPoolSize">100</property>  
+        <property name="minPoolSize">10</property>  
+        <property name="maxStatements">200</property>  
+    </default-config>  
+  
+    <!-- This is my config for mysql-->
+    <named-config name="mysql">  
+        <property name="driverClass">com.mysql.jdbc.Driver</property>  
+        <property name="jdbcUrl">jdbc:mysql://localhost:3306/db_01?useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true</property>  
+        <property name="user">root</property>
+        <property name="password"></property>
+        <property name="initialPoolSize">10</property>  
+        <property name="maxIdleTime">30</property>  
+        <property name="maxPoolSize">100</property>  
+        <property name="minPoolSize">10</property>  
+        <property name="maxStatements">0</property>  
+        <!-- 当连接池耗尽时，一次获得连接数 -->
+        <property name="acquireIncrement">5</property>
+    </named-config>  
+      
+      
+    <!-- This is my config for oracle -->  
+    <named-config name="oracle">  
+        <property name="driverClass">oracle.jdbc.driver.OracleDriver</property>  
+        <property name="jdbcUrl">jdbc:oracle:thin:@localhost:1521:orcl</property>  
+        <property name="user">scott</property>  
+        <property name="password">liang</property>  
+        <property name="initialPoolSize">10</property>  
+        <property name="maxIdleTime">30</property>  
+        <property name="maxPoolSize">100</property>  
+        <property name="minPoolSize">10</property>  
+        <property name="maxStatements">200</property>  
+    </named-config>  
+</c3p0-config>

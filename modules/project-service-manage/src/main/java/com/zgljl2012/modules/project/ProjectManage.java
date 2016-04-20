@@ -4,6 +4,7 @@ import com.zgljl2012.common.database.enums.T40_F05;
 import com.zgljl2012.framework.service.Service;
 import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.modules.project.query.ProjectBaseInfoQuery;
+import com.zgljl2012.modules.project.query.ProjectStatusPaggingQuery;
 
 /**
  * @author 廖金龙
@@ -35,6 +36,32 @@ public interface ProjectManage extends Service{
 	 * @return
 	 * @throws Exception
 	 */
-	public JSON projectList(int uid, T40_F05 status) throws Exception;
+	public JSON projectList(int uid, ProjectStatusPaggingQuery query) throws Exception;
 	
+	/**
+	 * 查询项目数目，当uid为0时查询所有项目个数
+	 * @param uid
+	 * @return
+	 */
+	public int getProjectSize(int uid);
+	
+	/**
+	 * 查询项目数目，当uid为0时查询所有项目个数
+	 * @param uid
+	 * @return
+	 */
+	public int getProjectSize(int uid, T40_F05 status);
+	
+	/**
+	 * 获取项目信息
+	 * @param projectId
+	 * @return
+	 */
+	public JSON getProjectInfo(int projectId);
+	
+	/**
+	 * 发布项目
+	 * @param projectId
+	 */
+	public void realeaseProject(int projectId);
 }

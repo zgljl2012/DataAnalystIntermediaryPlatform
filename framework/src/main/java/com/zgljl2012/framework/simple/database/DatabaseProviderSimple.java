@@ -114,9 +114,10 @@ public class DatabaseProviderSimple implements DatabaseProvider {
 	public ResultSet select(Connection conn, String sql, Object... args) throws SQLException {
 		// TODO Auto-generated method stub
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		for(int i = 0; i < args.length; i++) {
-			stmt.setObject(i+1, args[i]);
-		}
+		if(args != null)
+			for(int i = 0; i < args.length; i++) {
+				stmt.setObject(i+1, args[i]);
+			}
 		ResultSet rs = stmt.executeQuery();
 		return rs;
 	}
@@ -242,7 +243,7 @@ public class DatabaseProviderSimple implements DatabaseProvider {
 	@Override
 	public void update(Connection conn, String sql, UpdateExecutor executor,
 			Object... args) throws SQLException {
-		PreparedStatement stmt = conn.prepareStatement(sql);
+		PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		try{
 			for(int i = 0; i < args.length; i++) {
 				stmt.setObject(i+1, args[i]);

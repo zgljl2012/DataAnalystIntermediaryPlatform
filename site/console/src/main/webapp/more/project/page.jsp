@@ -1,0 +1,110 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"%>
+<%@ page import="com.zgljl2012.common.database.enums.Gender" %>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<title>项目主页-<%=variableManage.getValue(SystemVariable.SITENAME) %></title>
+<%@include file="/include/meta.jsp" %>
+<!-- Bootstrap core CSS -->
+<link href="publics/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<link href="publics/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+<link href="publics/css/offcanvas.css" rel="stylesheet">
+    
+<link href="publics/css/app.css" rel="stylesheet"/>
+    
+<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+<!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
+<!-- <script src="publics/js/ie-emulation-modes-warning.js"></script> -->
+
+<link rel="stylesheet" type="text/css" href="publics/css/zg-common.css">
+<script src="publics/js/jquery.min.js"></script>
+<script src="publics/js/plugins/template/jquery.tmpl.min.js"></script>
+<%
+	headerPage="PROJECT";
+%>
+</head>
+<body>
+	<!--导航栏-->
+    <%@include file="/include/header.jsp" %>
+    <div class="container">
+    <div class="row">
+    <div class="panel panel-default">
+    	<div class="panel-heading">${data.get("t40").get("F02")}</div>
+    	<div class="panel-body">
+    <div id="fxsInfo" class="tab-content">
+   <div class="row mt20 tc">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-2 tc">
+			<span class="fr">项目名称：</span>
+			<span class="red fr lh15">*</span>
+			
+		</div>
+		<div class="col-sm-2 tc">
+			<input style="width:100%;" class="m-input-form-control" name="projectName" type="text" value='${ data.get("t40").get("F02") }' readonly>
+		</div>
+		<div class="col-sm-2 tc">
+			<span class="fr">意向价格：</span>
+		</div>
+		<div class="col-sm-3">
+			<input style="width:80%;" class="fl m-input-form-control" name="willPrice" type="text" readonly value='${ data.get("t40").get("F03")}'>
+			<span class="fl ml5"><input type="checkbox" id="mianyi" checked >面议</span>
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+	<div class="row mt20 tc">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-2 tc">
+			<span class="fr">招标天数：</span>
+			<span class="red fr lh15">*</span>
+		</div>
+		<div class="col-sm-2 tc">
+			<input style="width:100%;" readonly class="m-input-form-control" name="bidDays" type="text" value='${ data.get("t40").get("F17") }'>
+		</div>
+		<div class="col-sm-2 tc">
+			<span class="fr">完成时间：</span>
+		</div>
+		<div class="col-sm-3">
+			<input style="width:80%;" readonly type="text" name="timeLimit" 
+			class="fl m-input-form-control" value='${ data.get("t40").get("F12") }'
+			>
+			<span error class="display_none red fl"></span>
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+	<hr>
+	<div class="row tc mt10">
+		<div class="col-sm-12 tc">
+			<span class="red lh15">*</span>
+			<span class="fs12">项目描述</span><br>
+		    <textarea name="projectDescription" class="mt10"  readonly
+		    	class="form-control m-input-form-control" rows="8" cols="80"
+		   >${ data.get("t40").get("F13") }</textarea><br>
+		</div>
+	</div>
+	<hr>
+	<div class="row tc mt10">
+	<form action="project/realease" onsubmit="">
+		<input name="id" value="${ data.get("t40").get("F01") }" class="display_none">
+		<input type="submit" class="btn btn-primary"  value="发布项目">
+	</form>
+	</div>
+ </div>
+ </div></div></div></div>
+    <!--底部导航栏-->
+   <%@include file="/include/footer.jsp" %>
+   <%--对话框 --%>
+   <%@include file="/include/dialog.jsp" %>
+   <script>
+   var data = eval('('+'${data}'+')');
+   if(data.t40.F03 == 0.0) {
+		$("#mianyi").attr("checked","checked")   
+   } else {
+	   $("#mianyi").removeAttr("checked")
+   }
+   </script>
+</body>
+</html>
