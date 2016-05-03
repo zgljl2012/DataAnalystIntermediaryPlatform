@@ -22,7 +22,7 @@
 	headerPage="REGISTER";
 	// 验证码图片链接
 	String verifyCodeLink = 
-		"/front/verifyCode?createcreateTypeFlag=n&width=120&height=30&count="
+		"/front/verifyCode?createTypeFlag=l&width=120&height=30&count="
 		+ variableManage.getValue(SystemVariable.VERIFYCODE_LENGTH);
 	
 	String username = (String)request.getAttribute("username");

@@ -6,21 +6,57 @@
 .mb10{margin-bottom:10px;}.mb5{margin-bottom:5px;}.mb15{margin-bottom:15px;}.mb20{margin-bottom:20px;}
 .pl5{padding-left: 5px;}.pl10{padding-left: 10px;}.pl15{padding-left: 15px;}.pl20{padding-left: 20px;}.pl25{padding-left: 25px;}
 .tc{text-align:center;}.tl{text-align:left;} .tr{text-align:right;}
-.red{color:red;} .gray{color:gray;} .lightblue{color:#0e93eb;} .orange{color:#ff8a00;}
+.red{color:red;} .gray{color:gray;} .lightblue{color:#0e93eb;} .orange{color:#ff8a00;} .blue{color:blue;}
 .green{color:green;}
 .display_none{display:none;} .display_block{display:block;} .display_inline{display:inline;}
-.fs05{font-size:0.5em;} .fs12{font-size:1.2em;} .fs20{font-size:2em;} .fs15{font-size:1.5em;}
-.fs08{font-size:0.8em;}
+.fs05{font-size:0.5em;} .fs10{font-size:1em;} .fs12{font-size:1.2em;} .fs20{font-size:2em;} .fs15{font-size:1.5em;}
+.fs06{font-size:0.6em;} .fs08{font-size:0.8em;} .fs20{font-size:2.0em;} .fs25{font-size:2.5em;}
 .cp{cursor:pointer;}
 .vm{vertical-align: middle;}
 .lh15{line-height:1.5;}.lh14{line-height: 1.428571429;} lh22{line-height:2.222222;}
 .w100{width:100%;} .w80{width:80%}
+.wh400{font-weight:200;}
 .border_eee{
 	border:2px solid #eee;
 	-moz-border-radius: 10px;
    -webkit-border-radius: 10px;
    border-radius: 10px;
 }
+.autoline{
+	overflow:hidden;
+	word-wrap:break-word;	
+}
+
+.pre-comment {
+	float:left;
+	background-color:transparent;
+	padding-top:0px;
+	margin-top:-8px;
+	border:0px solid transparent;
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+.opacity-black-position {
+	transition:0.5s;
+}
+.select-buttons {
+	z-index:1001;
+	position:relative;
+	top:-50;
+}
+.opacity-black-position:hover {
+	background-color:black;
+	opacity:0.5;  
+	z-index:3;  
+	filter:alpha(opacity=50); /* IE6 */  
+	-moz-opacity:0.5; /* Mozilla */  
+	-khtml-opacity:0.5; /* Safari */ 
+}
+
 /* #fxsInfo  input[type='text']{
 	-moz-border-radius: 1px 1px;
    -webkit-border-radius: 1px 1px;

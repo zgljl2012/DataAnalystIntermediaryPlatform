@@ -214,7 +214,7 @@ public class DatabaseProviderSimple implements DatabaseProvider {
 	@Override
 	public int insert(Connection conn, String sql, InsertExecutor executor,
 			Object... args) throws Throwable {
-		PreparedStatement stmt = conn.prepareStatement(sql);
+		PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		ResultSet resultSet = null; 
 		int id = -1;
 		try {

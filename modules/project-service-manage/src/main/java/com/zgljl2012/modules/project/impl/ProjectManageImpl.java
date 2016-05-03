@@ -18,6 +18,7 @@ import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.framework.util.StringHelper;
 import com.zgljl2012.modules.project.ProjectManage;
 import com.zgljl2012.modules.project.query.ProjectBaseInfoQuery;
+import com.zgljl2012.modules.project.query.ProjectListIndeQuery;
 import com.zgljl2012.modules.project.query.ProjectStatusPaggingQuery;
 
 /**
@@ -254,6 +255,129 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 		Connection conn = this.getConnection();
 		try{
 			ResultSet rs = this.select(conn, sql, args.toArray());
+			if(rs.next()) {
+				int count = rs.getInt(1);
+				rs.close();
+				rs.getStatement().close();
+				return count;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
+
+	@Override
+	public JSON getProjectIndexList(final ProjectListIndeQuery query) 
+			throws SQLException {
+		String sql = "SELECT * FROM T40 WHERE 1=1 ";
+		ArrayList<Object> listArgs = new ArrayList<>();
+		if (query.getStatus() != null) {
+			sql += " AND F05 = ? ";
+			listArgs.add(query.getStatus().name());
+		} else {
+			sql += " AND (F05 = ? OR F05=? OR F05=?) ";
+			listArgs.add(T40_F05.JXZ.name());
+			listArgs.add(T40_F05.YJS.name());
+			listArgs.add(T40_F05.TBZ.name());
+		}
+		if (query.getSalaryRange() != 0) {
+			int range = query.getSalaryRange();
+			if(range >= 10000) {
+				sql += " AND F03 > ?";
+			} else {
+				sql += " AND F03 < ?";
+			}
+			listArgs.add(range);
+		}
+		sql += " ORDER BY F03 DESC, F06 DESC";
+		Object[] args = listArgs.toArray();
+		final JSON result = new JSON();
+		Connection conn = this.getConnection();
+		try {
+			ResultSet rs = this.selectPaging(conn, sql, new PagingInfo(){
+
+				@Override
+				public int getCurrentPage() {
+					// TODO Auto-generated method stub
+					return query.current();
+				}
+
+				@Override
+				public int getPageSize() {
+					// TODO Auto-generated method stub
+					return query.pageSize();
+				}
+				
+			}, args);
+			List<JSON> list = new ArrayList<JSON>();
+			while(rs.next()) {
+				T40 t = new T40();
+				t.setF01(rs.getInt(1));
+				t.setF02(rs.getString(2));
+				t.setF03(rs.getFloat(3));
+				t.setF04(rs.getInt(4));
+				t.setF05(T40_F05.parse(rs.getString(5)));
+				t.setF06(rs.getDate(6));
+				t.setF07(rs.getDate(7));
+				t.setF08(rs.getInt(8));
+				t.setF09(rs.getString(9));
+				t.setF10(rs.getDate(10));
+				t.setF11(rs.getDate(11));
+				t.setF12(rs.getDate(12));
+				t.setF13(rs.getString(13));
+				t.setF14(Bool.parse(rs.getString(14)));
+				t.setF15(rs.getInt(15));
+				t.setF16(rs.getTimestamp(16));
+				t.setF17(rs.getInt(17));
+				JSON t40 = new JSON();
+				t40.put("t40", t);
+				list.add(t40);
+			}
+			rs.close();
+			rs.getStatement().close();
+			result.put("data", list);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally{
+			conn.close();
+		}
+		return result;
+	}
+
+	@Override
+	public int getProjectSize(ProjectListIndeQuery query) {
+		String sql = "SELECT COUNT(*) FROM T40 WHERE 1=1 ";
+		List<Object> listArgs = new ArrayList<Object>();
+		if (query.getStatus() != null) {
+			sql += " AND F05 = ? ";
+			listArgs.add(query.getStatus().name());
+		} else {
+			sql += " AND (F05 = ? OR F05=? OR F05=?) ";
+			listArgs.add(T40_F05.JXZ.name());
+			listArgs.add(T40_F05.YJS.name());
+			listArgs.add(T40_F05.TBZ.name());
+		}
+		if (query.getSalaryRange() != 0) {
+			int range = query.getSalaryRange();
+			if(range >= 10000) {
+				sql += " AND F03 > ?";
+			} else {
+				sql += " AND F03 < ?";
+			}
+			listArgs.add(range);
+		}
+		Connection conn = this.getConnection();
+		try{
+			ResultSet rs = this.select(conn, sql, listArgs.toArray());
 			if(rs.next()) {
 				int count = rs.getInt(1);
 				rs.close();

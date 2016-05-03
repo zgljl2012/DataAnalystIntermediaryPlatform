@@ -6,80 +6,17 @@
 <%@include file="/include/meta.jsp" %>
 <!-- Bootstrap core CSS -->
 <link href="publics/css/bootstrap.min.css" rel="stylesheet">
-
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <link href="publics/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
+<!-- Custom styles for this template -->
 <link href="publics/css/offcanvas.css" rel="stylesheet">
-    
 <link href="publics/css/app.css" rel="stylesheet"/>
-    
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
 <script src="publics/js/ie-emulation-modes-warning.js"></script>
-    
-<%--筛选条件框 --%>
-<link rel="stylesheet" type="text/css" href="publics/css/shaixuan/list.css"/>
-<link rel="stylesheet" type="text/css" href="publics/css/shaixuan/manhuaDate.1.0.css"/>
-
 <%--项目列表 --%>
 <link rel="stylesheet" type="text/css" href="publics/css/zg-common.css">
- 
-<script type="text/javascript" src="publics/js/shaixuan/jquery-1.5.1.js"></script>
-<script type="text/javascript" src="publics/js/shaixuan/ui.tab.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-	var tab = new $.fn.tab({
-		tabList:"#demo1 .ui-tab-container .ui-tab-list li",
-		contentList:"#demo1 .ui-tab-container .ui-tab-content"
-	});
-	var tab = new $.fn.tab({
-		tabList:"#demo1 .ui-tab-container .ui-tab-list2 li",
-		contentList:"#demo1 .ui-tab-container .ui-tab-content2"
-	});		
-});	
-</script>
-<script type="text/javascript">
-$(function (){
-	$("input.mh_date").datejs({					       
-		Event : "click",//可选				       
-		Left : 0,//弹出时间停靠的左边位置
-		Top : -16,//弹出时间停靠的顶部边位置
-		fuhao : "-",//日期连接符默认为-
-		isTime : false,//是否开启时间值默认为false
-		beginY : 2010,//年份的开始默认为1949
-		endY :2015//年份的结束默认为2049
-	});
-	
-});
-</script>
-<script type="text/javascript">
-$(document).ready(function(e) {
-    $("#selectList").find(".more").toggle(function(){
-	$(this).addClass("more_bg");
-	$(".more-none").show()
-    },function(){
-	$(this).removeClass("more_bg");
-	$(".more-none").hide()
-	});
-});
-$(document).ready(function(){
-	var taboy_box=$(".lefttable-list");
-	taboy_box.children("tbody").find("tr:gt(2)").hide(); 
-	$(".leftbox-morea").toggle(function(){
-	$(this).parent().prev().find("tr").show();
-	$(this).addClass("more-i")
-	},function(){
-	$(this).removeClass("more-i");
-	$(this).parent().prev().children("tbody").find("tr:gt(2)").hide(); 
-	}
-	);
-});
-</script>
-<%
-	headerPage="XMSC";
-%>
+<%headerPage="XMSC";%>
 </head>
 <body>
 	<!--导航栏-->
@@ -94,107 +31,168 @@ $(document).ready(function(){
 		    <div class="screen-term">
 		      <div class="selectNumberScreen">
 		        <div id="selectList" class="screenBox screenBackground">
-		          <dl class="listIndex" attr="薪酬范围">
+		          <dl>
+		            <dt>项目进度</dt>
+		            <dd>
+		              <label><a hint href="javascript:;">不限</a></label>
+		              <label>
+		                <input name="status" type="radio" value="TBZ" />
+		                <a hint href="javascript:;">可投标</a></label>
+		              <label>
+		                <input name="status" type="radio" value="JXZ" />
+		                <a hint href="javascript:;" >工作中</a></label>
+		              <label>
+		                <input name="status" type="radio" value="YJS" />
+		                <a hint href="javascript:;" >已完成</a></label>
+		            </dd>
+		          </dl>
+		          <dl>
 		            <dt>薪酬范围</dt>
 		            <dd>
-		              <label><a href="javascript:;" values2="" values1="" attrval="不限">不限</a></label>
+		              <label><a hint href="javascript:;">不限</a></label>
 		              <label>
-		                <input name="radio2" type="radio" value="" />
-		                <a href="javascript:;" values2="99" values1="1" attrval="1-99">100元以下</a></label>
+		                <input name="salaryRange" type="radio" value="1000" autocomplete="off"/>
+		                <a hint href="javascript:;">一千以下</a> </label>
 		              <label>
-		                <input name="radio2" type="radio" value="" />
-		                <a href="javascript:;" values2="300" values1="100" attrval="100-300">100-1000元 </a></label>
+		                <input name="salaryRange" type="radio" value="5000" autocomplete="off"/>
+		                <a hint href="javascript:;">五千以下</a></label>
 		              <label>
-		                <input name="radio2" type="radio" value="" />
-		                <a href="javascript:;" values2="600" values1="300" attrval="300-600">1000-5000元</a></label>
-		              <div class="custom"><span>自定义</span>&nbsp;
-		                <input name="" type="text" id="custext1"/>
-		                &nbsp;-&nbsp;
-		                <input name="" type="text" id="custext2"/>
-		                <input name="" type="button" id="cusbtn"/>
-		              </div>
+		                <input name="salaryRange" type="radio" value="9999" autocomplete="off"/>
+		                <a hint href="javascript:;">一万以下</a></label>
+		              <label>
+		                <input name="salaryRange" type="radio" value="10000" autocomplete="off"/>
+		            	<a hint href="javascript:;">一万以上</a></label>
 		            </dd>
 		          </dl>
-		          <dl class=" listIndex" attr="terminal_os_s">
-		            <dt>完成期限</dt>
+		          <dl>
+		            <dt>企业评分</dt>
 		            <dd>
-		              <label><a href="javascript:;" values2="" values1="" attrval="不限">不限</a> </label>
+		              <label><a hint href="javascript:;" >不限</a></label>
 		              <label>
-		                <input name="checkbox2" type="checkbox" value="" autocomplete="off"/>
-		                <a href="javascript:;" values2="" values1="" attrval="android"> 一天内</a> </label>
+		                <input name="grade" type="radio" value="1" autocomplete="off"/>
+		                <a hint href="javascript:;" >1分</a></label>
 		              <label>
-		                <input name="checkbox2" type="checkbox" value="" autocomplete="off"/>
-		                <a href="javascript:;" values2="" values1="" attrval="symbian">三天内</a></label>
+		                <input name="grade" type="radio" value="2" autocomplete="off"/>
+		                <a hint href="javascript:;" >2分</a> </label>
 		              <label>
-		                <input name="checkbox2" type="checkbox" value="" autocomplete="off"/>
-		                <a href="javascript:;" values2="" values1="" attrval="百度易平台">七天内</a></label>
+		                <input name="grade" type="radio" value="3" autocomplete="off"/>
+		                <a hint href="javascript:;" >3分</a> </label>
 		              <label>
-		                <input name="checkbox2" type="checkbox" value="" autocomplete="off"/>
-		                <a href="javascript:;" values2="" values1="" attrval="百度易平台">一年内</a></label>
+		                <input name="grade" type="radio" value="4" autocomplete="off"/>
+		                <a hint href="javascript:;" >4分</a> </label>
 		              <label>
-		                <input name="checkbox2" type="checkbox" value="" autocomplete="off"/>
-		                <a href="javascript:;" values2="" values1="" attrval="百度易平台">其他</a></label>
-		            </dd>
-		          </dl>
-		          <dl class="listIndex" attr="terminal_brand_s">
-		            <dt>项目状态</dt>
-		            <dd>
-		              <label><a href="javascript:;" values2="" values1="" attrval="不限">不限</a></label>
-		              <label>
-		                <input name="checkbox2" type="checkbox" value="" autocomplete="off"/>
-		                <a href="javascript:;" values2="" values1="" attrval="小米">投标中</a></label>
-		              <label>
-		                <input name="checkbox2" type="checkbox" value="" autocomplete="off"/>
-		                <a href="javascript:;" values2="" values1="" attrval="华为">已完成</a> </label>
-		              <label>
-		                <input name="checkbox2" type="checkbox" value="" autocomplete="off"/>
-		                <a href="javascript:;" values2="" values1="" attrval="lenovo">进行中</a> </label>
+		                <input name="grade" type="radio" value="5" autocomplete="off"/>
+		                <a hint href="javascript:;" >5分</a> </label>
 		               </dd> 
 		          </dl>
 		        </div>
       </div>   
     </div>
     </div>
-    
-    <div class="hasBeenSelected clearfix"><span id="time-num"><font>208</font>个项目</span>
-          <div style="float:right;" class="eliminateCriteria">【清空】 </div>
+    <div class="hasBeenSelected clearfix"><span style="position:absolute;left:10px;top:10px;" id="time-num">共<font id="number" style="color:#fa7003;"></font>个项目</span>
+          <div style="float:right;" class="eliminateCriteria" id="clearAll">【清空】 </div>
           <dl>
             <dt>已选条件：</dt>
-            <dd style="DISPLAY: none" class=clearDd>
-              <div class=clearList></div>
+            <dd id="hasSelected" class="selectedInfor"></dd>
           </dl>
      </div>
-     <script type="text/javascript" src="publics/js/shaixuan/shaixuan.js"></script> 
-  	 </div></div></div></div>
+     </div></div></div></div>
     
     <%--企业项目列表 --%>
 	<div class="container">
     	<div class="panel panel-default">
     	<div class="panel-heading">所有项目</div>
     	<div class="panel-body">
-    		
-			<table class="table table-hover">
+    		<div id="project_noDataHint" class="row tc orange fs15 mt10 display_none">暂无数据</div>
+			<div id="project_loading" class="row tc">
+				<img src="publics/images/loadingBig.gif"></img>
+			</div>
+			<%-- 分页 --%>
+			<div class="row col-sm-12 fl">
+			<ul class="pagination fs08 ml30 mt10 cp" name="project_paging">
+				<li>
+					<a href="#" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+			</div>
+			<table class="table table-hover" id="project_tmplTable" >
+				<script id="project_tmplData" type="text/x-jquery-tmpl">
+				{{each(i, d) data}}
+				{{if d!=null}}
 				<tr>
-					<td>
-					<div>
-						<span class="zg-price">￥100.00</span>
-						<span class="zg-title"><a href="#">标题...</a></span>
-						<span class="zg-time-before-limit">3天后截止</span>
-					</div>
-					<div>
-						<span class="zg-content-abbr">内容共设30个字，多余的使用...</span>
-						<span class="zg-time-after-limit">完成期限：3天</span>
-						<span class="zg-join-people">现有28人参与</span>
-					</div>
+					<td >
+						<div>
+							<span class="zg-price">{{= t40.F03 }}</span>
+							<span class="zg-title cp"><a href="project/page/{{= t40.F01 }}">{{= t40.F02 }}</a></span>
+							<span class="zg-time-before-limit">{{= t40.F17 }}天后截止</span>
+						</div><br>
+						<div>
+							<span class="zg-content-abbr">{{= t40.F13 }}</span>
+							<span class="zg-time-after-limit">发布时间：{{= t40.F06 }}</span>
+							{{if d.t40.F05 == 'TBZ'}}
+							<span class="zg-time-after-limit">期望完成时间：{{= t40.F12 }}</span>
+							{{/if}}
+							<span class="zg-join-people">现有28人参与</span>
+						</div>
 					</td>
 				</tr>
-				<tr><td>2</td></tr>
-				<tr><td>3</td></tr>
+				{{/if}}
+				{{/each}}
+				</script>
 			</table>
+			<%-- 分页 --%>
+			<div class="row col-sm-12 fl">
+			<ul class="pagination fs08 ml30 mt10 cp" name="project_paging">
+				<li>
+					<a href="#" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+			</div>
 		</div>
 		</div>
-	</div>    
+	</div>
     <!--底部导航栏-->
    <%@include file="/include/footer.jsp" %>
+   <%@include file="/include/dialog.jsp" %>
+   <script>
+   var refresh = function(data,count){
+		$("#project_loading").hide();
+		var size = data&&data.length;
+		console.log(count)
+		$("#number").html(count)
+		if(data==null||data.length == 0) {
+			$("#project_noDataHint").show();
+			$("ul[name=project_paging]").hide()
+		} else {
+			$("#project_noDataHint").hide();
+			$("ul[name=project_paging]").show()
+		}
+	}
+   require(["jquery-2.1.1","bootstrap.min","project/project", "common/filter2"], function(bootstrap, jq, doc, filter){
+	   $("ul[name=project_paging]").hide();
+	   doc.loadData($("#project_tmplData"), $("#project_tmplTable"), refresh);
+	   filter.init($("#selectList"), $("#hasSelected"), function(data){
+	   	doc.params = data;
+		   doc.loadData($("#project_tmplData"), $("#project_tmplTable"), refresh);
+		})
+		$("#clearAll").click(function(){
+			filter.clear()
+		})
+   })
+   </script>
 </body>
 </html>

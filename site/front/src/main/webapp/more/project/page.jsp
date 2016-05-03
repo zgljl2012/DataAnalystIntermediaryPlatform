@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ page import="com.zgljl2012.common.database.enums.Gender" %>
+<%@ page import="com.zgljl2012.modules.project.BidManage" %>
+<%@ page import="com.zgljl2012.framework.util.JSON" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -24,7 +27,17 @@
 <script src="publics/js/jquery.min.js"></script>
 <script src="publics/js/plugins/template/jquery.tmpl.min.js"></script>
 <%
-	headerPage="PROJECT";
+	headerPage="XMSC";
+	BidManage bidManage = controller.getServiceManage().getService(BidManage.class);
+	boolean isMatch = false;
+	if(ljlSession.isLogined()) {
+		isMatch = bidManage.isMatch(
+			Integer.parseInt(
+				(String)(((JSON)((JSON)
+				request.getAttribute("data")).get("t40")).get("F01"))),
+			ljlSession.getUserId());
+	}
+	request.setAttribute("isMatch", isMatch);
 %>
 </head>
 <body>
@@ -35,61 +48,74 @@
     <div class="panel panel-default">
     	<div class="panel-heading">${data.get("t40").get("F02")}</div>
     	<div class="panel-body">
-    <div id="fxsInfo" class="tab-content">
-   <div class="row mt20 tc">
-		<div class="col-sm-1"></div>
-		<div class="col-sm-2 tc">
-			<span class="fr">项目名称：</span>
-			<span class="red fr lh15">*</span>
-			
-		</div>
-		<div class="col-sm-2 tc">
-			<input style="width:100%;" class="m-input-form-control" name="projectName" type="text" value='${ data.get("t40").get("F02") }' readonly>
-		</div>
-		<div class="col-sm-2 tc">
-			<span class="fr">意向价格：</span>
-		</div>
-		<div class="col-sm-3">
-			<input style="width:80%;" class="fl m-input-form-control" name="willPrice" type="text" readonly value='${ data.get("t40").get("F03")}'>
-			<span class="fl ml5"><input type="checkbox" id="mianyi" checked >面议</span>
-		</div>
-		<div class="col-sm-2"></div>
-	</div>
-	<div class="row mt20 tc">
-		<div class="col-sm-1"></div>
-		<div class="col-sm-2 tc">
-			<span class="fr">招标天数：</span>
-			<span class="red fr lh15">*</span>
-		</div>
-		<div class="col-sm-2 tc">
-			<input style="width:100%;" readonly class="m-input-form-control" name="bidDays" type="text" value='${ data.get("t40").get("F17") }'>
-		</div>
-		<div class="col-sm-2 tc">
-			<span class="fr">完成时间：</span>
-		</div>
-		<div class="col-sm-3">
-			<input style="width:80%;" readonly type="text" name="timeLimit" 
-			class="fl m-input-form-control" value='${ data.get("t40").get("F12") }'
-			>
-			<span error class="display_none red fl"></span>
-		</div>
-		<div class="col-sm-2"></div>
-	</div>
-	<hr>
-	<div class="row tc mt10">
-		<div class="col-sm-12 tc">
-			<span class="red lh15">*</span>
-			<span class="fs12">项目描述</span><br>
-		    <textarea name="projectDescription" class="mt10"  readonly
-		    	class="form-control m-input-form-control" rows="8" cols="80"
-		   >${ data.get("t40").get("F13") }</textarea><br>
-		</div>
-	</div>
-	<hr>
-	<div class="row tc mt10">
-	
-	</div>
- </div>
+    	<div class="row">
+	    	<div class="col-sm-6 fs20 ml15 mt10 orange">
+	    		${data.get("t40").get("F02")}
+		    	<div class="fs06 mt20 red">
+		    		预算：<label id="mianyi">￥${ data.get("t40").get("F03")}元</label>
+		    	</div>
+		    	<div class="fs06 mt20 wh400 gray">项目描述：</div>
+		    	<div class="fs06 mt5 wh400 gray">
+		    	${ data.get("t40").get("F13") }
+		    	</div>
+	    	</div>
+	    	<div class="col-sm-4 fs12 mt10">
+	    	<div>期望完成时间：<span class="red">${ data.get("t40").get("F12") }</span></div>
+	    		<c:choose>
+	    		<c:when test='${data.get("t40").get("F05").equals("TBZ")}'>
+	    			<div class="mt10">剩余天数：${data.get("t40").get("F17") }</div>
+	    		</c:when>
+	    		</c:choose>
+	    	</div>
+    	</div>
+    	<hr>
+    	<div class="row">
+    		<div class="col-sm-12 fs12 mt5">
+    			<div class="ml15">我要投标：</div>
+    			<form action="" method="post">
+    			<div class="ml15 mt5">
+    				<textarea name="solution" cols="80" rows="6" placeholder="请输入项目需求提出您的解决方案，解决方案只有雇主可见（登录后可提交）"></textarea>
+    			</div>
+    			<div class="mt5 col-sm-4">
+    				<input type="text" name="quote_price" class="m-input-form-control" placeholder="请输入您的报价">
+    				<input type="button" id="release" value="发布" class="btn btn-primary" <%if(!ljlSession.isLogined()) out.println("disabled"); %>>
+    			</div>
+    			</form>
+    		</div>
+    	</div>
+    	<hr>
+    	<div class="row">
+    		<table class="table table-hover" id="project-bid-table">
+    		<script type="text/x-jquery-tmpl" id="project-bid-item-tmpl">
+    		{{each(i, d) data}}
+				{{if d!=null}}
+				<tr>
+					<td class="opacity-black-position">
+						<div class="col-sm-12">
+							<span class="lightblue fs12 col-sm-4">{{= d.username }}</span>
+							<span class="col-sm-4 fr">投标时间：<label>{{= d.F05 }}</label></span>
+							<span class="col-sm-3">报价：<label>{{= d.F04 }}</label>元</span>
+						</div>
+						<div class="col-sm-12">
+							<span class="col-sm-12 fs08 gray">投标：<span>
+							<div class="row">
+							<pre class="col-sm-12 fs10 gray pre-comment">
+								{{= d.comment }}
+							</pre>
+							</div>
+						</div>
+						<div class="display_none select-buttons tc">
+   	 						<input type="button" value="中标">
+   	 						<input type="button" value="删除">
+   	 						<input type="button" value="私信">
+   						</div>
+					</td>
+				</tr>
+			{{/if}}
+			{{/each}}
+    		</script>
+    		</table>
+    	</div>
  </div></div></div></div>
     <!--底部导航栏-->
    <%@include file="/include/footer.jsp" %>
@@ -98,10 +124,31 @@
    <script>
    var data = eval('('+'${data}'+')');
    if(data.t40.F03 == 0.0) {
-		$("#mianyi").attr("checked","checked")   
-   } else {
-	   $("#mianyi").removeAttr("checked")
+		$("#mianyi").html("面议"); 
    }
+   require(["publics/js/project/page.js","publics/js/bootstrap.min.js"], function(page){
+	   var projectId = "${data.get('t40').get('F01')}";
+	   page.list(projectId, function(data){
+		   page.showbids(data, $("#project-bid-item-tmpl"), $("#project-bid-table"));
+		   $(".opacity-black-position").mouseover(function(){
+		   	   if("${isMatch}"=="true") {
+		   		   $(this).find(".select-buttons").show();
+		   	   }
+		   });
+		   $(".opacity-black-position").mouseout(function(){
+		   	   if("${isMatch}"=="true") {
+		   		   $(this).find(".select-buttons").hide();
+		   	   }
+		   });
+	   });
+	   $("#release").click(function(){
+		  var e1 = $("textarea[name=solution]");
+		  var e2 = $("input[name=quote_price]");
+		  if(page.checkComment(e1)&&page.checkPrice(e2)) {
+			  page.bid("${data.get('t40').get('F01')}",e2.val(), e1.val());
+		  } 
+	   });
+   })
    </script>
 </body>
 </html>

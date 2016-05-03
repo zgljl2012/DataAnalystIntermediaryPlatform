@@ -4,6 +4,7 @@ import com.zgljl2012.common.database.enums.T40_F05;
 import com.zgljl2012.framework.service.Service;
 import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.modules.project.query.ProjectBaseInfoQuery;
+import com.zgljl2012.modules.project.query.ProjectListIndeQuery;
 import com.zgljl2012.modules.project.query.ProjectStatusPaggingQuery;
 
 /**
@@ -64,4 +65,18 @@ public interface ProjectManage extends Service{
 	 * @param projectId
 	 */
 	public void realeaseProject(int projectId);
+	
+	/**
+	 * 项目市场项目列表
+	 * @param query
+	 * @return
+	 */
+	public JSON getProjectIndexList(ProjectListIndeQuery query) throws Exception;
+	
+	/**
+	 * 查询项目数目，当uid为0时查询所有项目个数
+	 * @param uid
+	 * @return
+	 */
+	public int getProjectSize(ProjectListIndeQuery status);
 }
