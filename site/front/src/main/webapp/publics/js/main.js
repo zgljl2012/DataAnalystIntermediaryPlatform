@@ -13,7 +13,7 @@ requirejs.config({
 		"bootstrap":"bootstrap.min",
 		"jquery.tmpl": "plugins/template/jquery.tmpl.min",
 		"dialog":"common/dialog2",
-		"pagging":"common/pagging"
+		"pagging":"common/pagging",
 		
 	}
 })

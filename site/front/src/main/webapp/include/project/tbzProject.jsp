@@ -1,26 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <script>
-$("#dsh_loading").show();
+$("#tbz_loading").show();
 require(["user/project/projectList"], function(ProjectList){
-	var list = new ProjectList("DSH");
-	list.loadData($("#dsh_tmplData"), $("#dsh_tmplTable"),function(data){
-		$("#dsh_loading").hide();
+	var list = new ProjectList("TBZ");
+	list.loadData($("#tbz_tmplData"), $("#tbz_tmplTable"), function(data){
+		$("#tbz_loading").hide();
 		if(data==null||data.length == 0) {
-			$("#dsh_noDataHint").show();
-			$("ul[name=dsh_paging]").hide()
+			$("#tbz_noDataHint").show();
+			$("ul[name=tbz_paging]").hide();
 		}
 	});
 });
 </script>
 <div class="container">
 	<%-- 暂无数据 --%>
-			<div id="dsh_noDataHint" class="row tc orange fs15 mt10 display_none">暂无数据</div>
-			<div id="dsh_loading" class="row tc">
+			<div id="tbz_noDataHint" class="row tc orange fs15 mt10 display_none">暂无数据</div>
+			<div id="tbz_loading" class="row tc">
 				<img src="publics/images/loadingBig.gif"></img>
 			</div>
 			<%-- 分页 --%>
 			<div class="row col-sm-12 fl">
-			<ul class="pagination fs08 ml30 mt10 cp" name="dsh_paging">
+			<ul class="pagination fs08 ml30 mt10 cp" name="tbz_paging">
 				<li>
 					<a href="#" aria-label="Previous">
 						<span aria-hidden="true">&laquo;</span>
@@ -34,8 +34,8 @@ require(["user/project/projectList"], function(ProjectList){
 			</ul>
 			</div>
 			<div class="row">
-			<table class="table table-hover" id="dsh_tmplTable" style="width:95%;">
-				<script id="dsh_tmplData" type="text/x-jquery-tmpl">
+			<table class="table table-hover" id="tbz_tmplTable" style="width:95%;">
+				<script id="tbz_tmplData" type="text/x-jquery-tmpl">
 				{{each(i, d) data}}
 				{{if d!=null}}
 				<tr>
@@ -58,7 +58,7 @@ require(["user/project/projectList"], function(ProjectList){
 			</div>
 			<%-- 分页 --%>
 			<div class="row col-sm-12 fl">
-			<ul class="pagination fs08 ml30 mt10 cp" name="dsh_paging">
+			<ul class="pagination fs08 ml30 mt10 cp" name="tbz_paging">
 				<li>
 					<a href="#" aria-label="Previous">
 						<span aria-hidden="true">&laquo;</span>

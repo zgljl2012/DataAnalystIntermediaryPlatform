@@ -131,7 +131,12 @@
 						<div>
 							<span class="zg-price">{{= t40.F03 }}</span>
 							<span class="zg-title cp"><a href="project/page/{{= t40.F01 }}">{{= t40.F02 }}</a></span>
+							{{if d.t40.F05 == 'TBZ'}}
 							<span class="zg-time-before-limit">{{= t40.F17 }}天后截止</span>
+							{{/if}}
+							{{if d.t40.F05 == 'JXZ'}}
+							<span class="zg-time-before-limit">已选择分析师</span>
+							{{/if}}
 						</div><br>
 						<div>
 							<span class="zg-content-abbr">{{= t40.F13 }}</span>
@@ -168,6 +173,7 @@
     <!--底部导航栏-->
    <%@include file="/include/footer.jsp" %>
    <%@include file="/include/dialog.jsp" %>
+   <script type="text/javascript" src="publics/js/jquery-2.1.1.js"></script>
    <script>
    var refresh = function(data,count){
 		$("#project_loading").hide();

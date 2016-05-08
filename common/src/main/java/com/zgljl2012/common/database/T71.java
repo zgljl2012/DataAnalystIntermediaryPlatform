@@ -23,5 +23,5 @@ public class T71 extends AbstractEntity{
 	/**
 	 * 分析师给企业评分（5星）
 	 */
-	public int F03;
+	public float F03;
 }

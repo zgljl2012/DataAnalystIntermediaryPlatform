@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <div class="container">
 <div class="panel panel-default">
 	<div class="panel-heading">企业的个人主页</div>
@@ -16,10 +17,10 @@
 		    </a>
 		    <ul class="dropdown-menu">
 		      <li><a href="#dsh_project" data-toggle="tab">待审核项目 </a></li>
+		      <li><a href="#bidding_project" data-toggle="tab">投标中项目 </a></li>
 		      <li><a href="#running_project" data-toggle="tab">进行中项目 </a></li>
-			   <li><a href="#bidding_project" data-toggle="tab">已发布项目 </a></li>
-			   <li><a href="#stayed_project" data-toggle="tab">待处理项目 </a></li>
 			   <li><a href="#finished_project" data-toggle="tab">已完成项目 </a></li>
+			   <li><a href="#deleted_project" data-toggle="tab">回收站 </a></li>
 		    </ul>
 		  </li>
 		   
@@ -91,16 +92,19 @@
 		    	<%@include file="/include/project/dshProject.jsp" %>
 		    </div>
 			<div class="tab-pane fade" id="running_project">
-		    	<p>进行中项目</p>
+		    	<%@include file="/include/project/jxzProject.jsp" %>
 		    </div>
 		    <div class="tab-pane fade" id="bidding_project">
-		    	<p>投标中项目</p>
+		    	<%@include file="/include/project/tbzProject.jsp" %>
 		    </div>
 		    <div class="tab-pane fade" id="stayed_project">
 		    	<p>待处理项目</p>
 		    </div>
 		    <div class="tab-pane fade" id="finished_project">
 		    	<p>已完成项目</p>
+		    </div>
+		    <div class="tab-pane fade" id="deleted_project">
+		    	<p>回收站</p>
 		    </div>
 		</div>
 	</div>

@@ -1,5 +1,6 @@
 package com.zgljl2012.modules.project;
 
+import com.zgljl2012.common.database.enums.T40_F05;
 import com.zgljl2012.framework.database.PagingInfo;
 import com.zgljl2012.framework.exceptions.PostException;
 import com.zgljl2012.framework.service.Service;
@@ -60,4 +61,48 @@ public interface BidManage extends Service{
 	 */
 	boolean isMatch(int projectId, int uid) throws PostException;
 	
+	/**
+	 * 删除一个投标单
+	 * @param bidId
+	 * @throws PostException
+	 */
+	void del(int bidId) throws PostException;
+	
+	/**
+	 * 中标
+	 * @param bidId
+	 * @throws PostException
+	 */
+	void select(int bidId) throws PostException;
+	
+	/**
+	 * 此项目是否处于进行中状态
+	 * @param projectId
+	 * @return
+	 */
+	boolean isSelected(int projectId);
+	
+	/**
+	 * 分析师投标情况查询
+	 * @param uid
+	 * @param status
+	 * @return
+	 * @throws PostException
+	 */
+	JSON queryFxs(int uid, T40_F05 status, PagingInfo info) throws PostException;
+	
+	/**
+	 * 分析师投标情况数量查询
+	 * @param uid
+	 * @param status
+	 * @return
+	 */
+	int queryFxsCount(int uid, T40_F05 status);
+	
+	/**
+	 * 是否存在此项目
+	 * @param pid
+	 * @return
+	 */
+	boolean isExistsProjectId(int pid);
 }

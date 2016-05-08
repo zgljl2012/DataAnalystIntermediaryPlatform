@@ -4,7 +4,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zgljl2012.common.variable.PaggingVariable;
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.database.PagingInfo;
 import com.zgljl2012.framework.exceptions.PostException;
 import com.zgljl2012.framework.service.annotation.Impl;
 import com.zgljl2012.framework.servlet.AbstractServlet;
@@ -28,8 +30,26 @@ public class ProjectBidServlet extends AbstractServlet{
 			Controller controller) throws Exception {
 		// 获取投标列表
 		String projectId = req.getParameter("projectId");
+		final String current = req.getParameter("current");
+		final int pageSize = Integer.parseInt(
+				controller.getVariableManage().getValue(
+						PaggingVariable.PAGE_BID_SIZE));
 		if(projectId != null) {
-			JSON json = bidManage.list(Integer.parseInt(projectId));
+			JSON json = bidManage.list(Integer.parseInt(projectId), new PagingInfo(){
+
+				@Override
+				public int getCurrentPage() {
+					if(current == null) return 1;
+					return Integer.parseInt(current);
+				}
+
+				@Override
+				public int getPageSize() {
+					return pageSize;
+				}
+				
+			});
+			json.put("pageSize", ""+pageSize);
 			out(res, json);
 			return;
 		} else {

@@ -1,7 +1,6 @@
-
 define(["common/url","dialog","common/pagging2","jquery.tmpl"], function(url,dialog,pagging){
 	var doc = function(status) {
-		this.url = url.user.qy.project.list,
+		this.url = url.user.fxs.project.query,
 		this.data = {"data":[]},
 		this.pg = null,
 		this.current = 1;
@@ -11,14 +10,14 @@ define(["common/url","dialog","common/pagging2","jquery.tmpl"], function(url,dia
 		tmp = data["data"];
 		for(d in tmp) {
 			d = tmp[d];
-			if(d.t40.F03 == "0.0") {
-				d.t40.F03= "面议";
+			if(d.price == "0.0") {
+				d.price= "面议";
 			}
-			if(d.t40.F02.length > 15) {
-				d.t40.F02 = d.t40.F02.substr(0,13)+"..." 
+			if(d.description&&d.description.length > 15) {
+				d.description.F02 = d.description.substr(0,13)+"..." 
 			}
-			if(d.t40.F13.length > 15) {
-				d.t40.F13 = d.t40.F13.substr(0,13)+"..."
+			if(d.projectName&&d.projectName > 15) {
+				d.projectName = d.projectName.substr(0,13)+"..."
 			}
 		}
 		return data;

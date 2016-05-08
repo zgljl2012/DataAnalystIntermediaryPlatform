@@ -66,6 +66,7 @@ define([], function(){
 		if(i == null) i=1;
 		if(pagging.current > 1) {
 			pagging.pullData(pagging.current-i);
+			pagging.current -= i;
 		}
 	}
 
@@ -73,6 +74,7 @@ define([], function(){
 		if(i==null) i=1;
 		if(pagging.current < getPageCount()) {
 			pagging.pullData(pagging.current+i);
+			pagging.current += i;
 		}
 	}
 

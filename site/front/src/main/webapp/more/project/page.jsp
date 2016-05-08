@@ -24,20 +24,21 @@
 <!-- <script src="publics/js/ie-emulation-modes-warning.js"></script> -->
 
 <link rel="stylesheet" type="text/css" href="publics/css/zg-common.css">
-<script src="publics/js/jquery.min.js"></script>
-<script src="publics/js/plugins/template/jquery.tmpl.min.js"></script>
+<link rel="stylesheet" type="text/css" href="publics/css/plugins/star/star-rating.min.css">
 <%
 	headerPage="XMSC";
 	BidManage bidManage = controller.getServiceManage().getService(BidManage.class);
 	boolean isMatch = false;
+	boolean isSelected = false;
+	int projectId = Integer.parseInt(
+			(String)(((JSON)((JSON)request.getAttribute("data")).get("t40")).get("F01")));
+	isSelected = bidManage.isSelected(projectId);
 	if(ljlSession.isLogined()) {
-		isMatch = bidManage.isMatch(
-			Integer.parseInt(
-				(String)(((JSON)((JSON)
-				request.getAttribute("data")).get("t40")).get("F01"))),
+		isMatch = bidManage.isMatch(projectId,
 			ljlSession.getUserId());
 	}
 	request.setAttribute("isMatch", isMatch);
+	request.setAttribute("isSelected", isSelected);
 %>
 </head>
 <body>
@@ -63,12 +64,13 @@
 	    	<div>期望完成时间：<span class="red">${ data.get("t40").get("F12") }</span></div>
 	    		<c:choose>
 	    		<c:when test='${data.get("t40").get("F05").equals("TBZ")}'>
-	    			<div class="mt10">剩余天数：${data.get("t40").get("F17") }</div>
+	    			<div class="mt10">投标剩余天数：${data.get("t40").get("F17") }</div>
 	    		</c:when>
 	    		</c:choose>
 	    	</div>
     	</div>
     	<hr>
+    	<c:if test="!${isSelected}">
     	<div class="row">
     		<div class="col-sm-12 fs12 mt5">
     			<div class="ml15">我要投标：</div>
@@ -83,7 +85,35 @@
     			</form>
     		</div>
     	</div>
+    	</c:if>
+    	<c:if test="${isSelected}">
+    	<div class="row">
+    		<div class="col-sm-12 tc fs15 red">
+    			<span>企业已选择分析师，分析师工作中...</span>
+    		</div>
+    		<c:if test="${isMatched }">
+    		<div class="col-sm-12 tc">
+    			<button class="btn-8 mt10" name="fxsFinish">分析师已完成工作</button>
+    		</div>
+    		</c:if>
+    	</div>
+    	</c:if>
     	<hr>
+    	<%-- 分页 --%>
+			<div class="row col-sm-12 fl">
+			<ul class="pagination fs08 ml30 mt10 cp" name="bid_paging">
+				<li>
+					<a href="#" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+			</div>
     	<div class="row">
     		<table class="table table-hover" id="project-bid-table">
     		<script type="text/x-jquery-tmpl" id="project-bid-item-tmpl">
@@ -104,10 +134,10 @@
 							</pre>
 							</div>
 						</div>
-						<div class="display_none select-buttons tc">
-   	 						<input type="button" value="中标">
-   	 						<input type="button" value="删除">
-   	 						<input type="button" value="私信">
+						<div class="visibility_hidden select-buttons fr">
+   	 						<button class="btn-8 <%=isSelected?"display_none":""%>" onclick="select({{= d.F01}})">中标</button>
+   	 						<button class="btn-8" onclick="del({{= d.F01}})">删除</button>
+   	 						<button class="btn-8">私信</button>
    						</div>
 					</td>
 				</tr>
@@ -116,39 +146,73 @@
     		</script>
     		</table>
     	</div>
+    	<%-- 分页 --%>
+			<div class="row col-sm-12 fl">
+			<ul class="pagination fs08 ml30 mt10 cp" name="bid_paging">
+				<li>
+					<a href="#" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+			</div>
  </div></div></div></div>
     <!--底部导航栏-->
    <%@include file="/include/footer.jsp" %>
    <%--对话框 --%>
    <%@include file="/include/dialog.jsp" %>
+  	<%@include file="/include/star.jsp" %>
    <script>
    var data = eval('('+'${data}'+')');
    if(data.t40.F03 == 0.0) {
 		$("#mianyi").html("面议"); 
    }
-   require(["publics/js/project/page.js","publics/js/bootstrap.min.js"], function(page){
-	   var projectId = "${data.get('t40').get('F01')}";
-	   page.list(projectId, function(data){
-		   page.showbids(data, $("#project-bid-item-tmpl"), $("#project-bid-table"));
-		   $(".opacity-black-position").mouseover(function(){
-		   	   if("${isMatch}"=="true") {
-		   		   $(this).find(".select-buttons").show();
-		   	   }
-		   });
-		   $(".opacity-black-position").mouseout(function(){
-		   	   if("${isMatch}"=="true") {
-		   		   $(this).find(".select-buttons").hide();
-		   	   }
+   require(["jquery-2.1.1"], function() {
+	   require(["bootstrap"], function() {
+		   require(["project/page","common/star", "dialog"], function(page, star, dialog){
+			   var projectId = "${data.get('t40').get('F01')}";
+			   page.list(projectId, function(data){
+				   page.showbids(data, $("#project-bid-item-tmpl"), $("#project-bid-table"));
+				   $(".opacity-black-position").mouseover(function(){
+				   	   if("${isMatch}"=="true") {
+				   	   	   $(this).find(".select-buttons").removeClass("visibility_hidden");
+				   		   $(this).find(".select-buttons").addClass("visibility_visible");
+				   	   }
+				   });
+				   $(".opacity-black-position").mouseout(function(){
+				   	   if("${isMatch}"=="true") {
+				   	       $(this).find(".select-buttons").removeClass("visibility_visible");
+				   		   $(this).find(".select-buttons").addClass("visibility_hidden");
+				   	   }
+				   });
+			   });
+			   $("#release").click(function(){
+				  var e1 = $("textarea[name=solution]");
+				  var e2 = $("input[name=quote_price]");
+				  if(page.checkComment(e1)&&page.checkPrice(e2)) {
+					  page.bid("${data.get('t40').get('F01')}",e2.val(), e1.val());
+				  }
+			   });
+			   document.del = page.del;
+			   document.select = page.select;
+			   $("button[name=fxsFinish]").unbind("click");
+			   $("button[name=fxsFinish]").click(function() {
+				  dialog.showDialog("确定您选择的分析师已经圆满完成了您的项目？（点击确定后将" +
+						   "需要对分析师工作进行评价与评分）", function(){
+					   star.show(function(comment, grade){
+							star.qy2fxs("${data.get('t40').get('F01')}", comment, grade);
+					   });
+				   })
+			   });
+			   
 		   });
 	   });
-	   $("#release").click(function(){
-		  var e1 = $("textarea[name=solution]");
-		  var e2 = $("input[name=quote_price]");
-		  if(page.checkComment(e1)&&page.checkPrice(e2)) {
-			  page.bid("${data.get('t40').get('F01')}",e2.val(), e1.val());
-		  } 
-	   });
-   })
+   });
    </script>
 </body>
 </html>

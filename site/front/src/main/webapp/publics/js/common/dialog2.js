@@ -18,6 +18,7 @@ define([], function(){
 		$("#modalTitle").html(title);
 		$("#modalBody").html(content);
 		$("#modalOk").addClass("ml20");
+		$("#modalOk").unbind("click");
 		$("#modalOk").click(function(){
 			okCall.apply([],[]);
 		});
@@ -38,6 +39,7 @@ define([], function(){
 		$("#modalAlertTitle").html(title);
 		$("#modalAlertBody").html(content);
 		$("#modalAlertOk").removeClass("ml20");
+		$("#modalAlertOk").unbind("click");
 		$("#modalAlertOk").click(okCall);
 		$("#modalAlertDialog").modal("show");
 		$("#modalAlertCancel").hide();

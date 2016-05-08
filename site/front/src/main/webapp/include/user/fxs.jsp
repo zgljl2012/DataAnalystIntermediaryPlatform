@@ -9,8 +9,8 @@
                      个人信息
       </a>
    </li>
-   <li><a href="#running_project" data-toggle="tab">进行中项目 </a></li>
    <li><a href="#bidding_project" data-toggle="tab">已投标项目 </a></li>
+   <li><a href="#running_project" data-toggle="tab">进行中项目 </a></li>
    <li><a href="#finished_project" data-toggle="tab">已完成项目 </a></li>
 </ul>
 <div id="fxsInfo" class="tab-content">
@@ -184,10 +184,10 @@
    
    
    <div class="tab-pane fade" id="running_project">
-      <p>进行中项目</p>
+      <%@include file="/include/project-list-fxs/jxzProject.jsp" %> 
    </div>
    <div class="tab-pane fade" id="bidding_project">
-      <p>投标中项目</p>
+      <%@include file="/include/project-list-fxs/tbzProject.jsp" %> 
    </div>
    <div class="tab-pane fade" id="finished_project">
       <p>已完成项目</p>
