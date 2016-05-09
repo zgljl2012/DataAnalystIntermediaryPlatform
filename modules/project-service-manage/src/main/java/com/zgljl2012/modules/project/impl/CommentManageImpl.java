@@ -5,8 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.database.executor.SelectExecutor;
 import com.zgljl2012.framework.exceptions.PostException;
 import com.zgljl2012.framework.service.AbstractService;
+import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.modules.project.BidManage;
 import com.zgljl2012.modules.project.CommentManage;
 
@@ -128,6 +130,48 @@ public class CommentManageImpl extends AbstractService implements CommentManage{
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public JSON getQy2Fxs(int projectId) throws PostException {
+		if(!bidManage.isExistsProjectId(projectId)) {
+			throw new PostException("没有找到该项目");
+		}
+		String sql = "SELECT F02,F03 FROM T70 WHERE F01 = ?";
+		final JSON result = new JSON();
+		Connection conn = this.getConnection();
+		try {
+			this.select(conn, sql, new SelectExecutor() {
+				
+				@Override
+				public void execute(ResultSet rs) {
+					try {
+						if(rs.next()) {
+							result.put("comment", rs.getString(1));
+							result.put("grade", ""+rs.getFloat(2));
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}, projectId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new PostException("系统发生错误");
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public JSON getFxs2Qy(int projectId) throws PostException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

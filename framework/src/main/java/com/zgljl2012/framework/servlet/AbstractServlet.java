@@ -41,9 +41,16 @@ public abstract class AbstractServlet extends HttpServlet{
 		// TODO Auto-generated method stub
 		try {
 			get(req, resp, controller);
-		} catch (Exception e) {
+		} catch(PostException e) {
+			e.printStackTrace();
+			JSON json = new JSON();
+			json.put("status", "error");
+			json.put("description", e.getMessage());
+			out(resp, json);
+		}
+		catch (Exception e) {
 			// TODO Auto-generated catch block
-			// e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 	

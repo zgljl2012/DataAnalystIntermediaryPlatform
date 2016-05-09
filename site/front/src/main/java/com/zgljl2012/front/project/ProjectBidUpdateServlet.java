@@ -10,47 +10,37 @@ import com.zgljl2012.framework.service.annotation.Impl;
 import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.framework.util.StringHelper;
-import com.zgljl2012.modules.project.CommentManage;
-import com.zgljl2012.modules.project.ProjectManage;
+import com.zgljl2012.modules.project.BidManage;
 
 /**
  * @author 廖金龙
- * @version 2016年5月8日下午10:43:59
- * 企业评论分析师的Servlet
+ * @version 2016年5月9日下午11:12:42
+ * 
  */
 @SuppressWarnings("serial")
-@WebServlet(name="projectQyComment", urlPatterns={"/project/qy/comment"})
-public class ProjectQyCommentServlet extends AbstractServlet{
+@WebServlet(name="projectBidUpdate", urlPatterns={"/project/bid/update"})
+public class ProjectBidUpdateServlet extends AbstractServlet{
 	
 	@Impl
-	private CommentManage commentManage;
-	
-	@Impl
-	private ProjectManage projectManage;
+	BidManage bidManage;
 	
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse res,
 			Controller controller) throws Exception {
-		String sProjectId = req.getParameter("projectId");
-		JSON j = commentManage.getQy2Fxs(Integer.parseInt(sProjectId));
-		System.out.println(j.toString());
-		out(res, j);
+		
 	}
 
 	@Override
 	protected void post(HttpServletRequest req, HttpServletResponse res,
 			Controller controller) throws Exception {
 		String comment = req.getParameter("comment");
-		String sGrade = req.getParameter("grade");
-		String sProjectId = req.getParameter("projectId");
-		try{
-			if(StringHelper.isEmpty(comment)) {
-				comment = "";
+		String sGrade = req.getParameter("price");
+		String sBid = req.getParameter("bid");
+		try {
+			if(StringHelper.isEmpty(sGrade)) {
+				throw new PostException("请输入报价");
 			}
-			float grade = Float.parseFloat(sGrade);
-			int projectId = Integer.parseInt(sProjectId);
-			projectManage.setProjectYJS(projectId);
-			commentManage.qy2fxs(projectId, comment, grade);
+			bidManage.update(Integer.parseInt(sBid), comment, Float.parseFloat(sGrade));
 			JSON j = new JSON();
 			j.put("status", "success");
 			out(res,j);
@@ -62,5 +52,6 @@ public class ProjectQyCommentServlet extends AbstractServlet{
 			throw new PostException("系统发生错误，请刷新重试");
 		}
 	}
+	
 
 }

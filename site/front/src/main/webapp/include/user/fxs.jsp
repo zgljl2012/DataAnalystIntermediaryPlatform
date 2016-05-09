@@ -190,7 +190,7 @@
       <%@include file="/include/project-list-fxs/tbzProject.jsp" %> 
    </div>
    <div class="tab-pane fade" id="finished_project">
-      <p>已完成项目</p>
+      <%@include file="/include/project-list-fxs/yjsProject.jsp" %>
    </div>
 </div>
 	</div></div>

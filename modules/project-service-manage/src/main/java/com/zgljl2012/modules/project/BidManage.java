@@ -105,4 +105,28 @@ public interface BidManage extends Service{
 	 * @return
 	 */
 	boolean isExistsProjectId(int pid);
+	
+	/**
+	 * 这个用户是否投了这个标
+	 * @param projectId
+	 * @param uid
+	 * @return
+	 */
+	boolean isExistsThisBid(int projectId, int uid);
+	
+	/**
+	 * 更新评论和报价
+	 * @param bid
+	 * @param comment
+	 * @param price
+	 */
+	void update(int bid, String comment, float price) throws PostException;
+	
+	/**
+	 * 获取中标人用户ID，如果没有则返回-1
+	 * @param projectId
+	 * @return
+	 */
+	int getSelectedUserId(int projectId);
+	
 }

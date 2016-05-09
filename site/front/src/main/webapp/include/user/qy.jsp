@@ -20,7 +20,7 @@
 		      <li><a href="#bidding_project" data-toggle="tab">投标中项目 </a></li>
 		      <li><a href="#running_project" data-toggle="tab">进行中项目 </a></li>
 			   <li><a href="#finished_project" data-toggle="tab">已完成项目 </a></li>
-			   <li><a href="#deleted_project" data-toggle="tab">回收站 </a></li>
+			   <li><a href="#deleted_project" data-toggle="tab">待修改项目</a></li>
 		    </ul>
 		  </li>
 		   
@@ -97,14 +97,11 @@
 		    <div class="tab-pane fade" id="bidding_project">
 		    	<%@include file="/include/project/tbzProject.jsp" %>
 		    </div>
-		    <div class="tab-pane fade" id="stayed_project">
-		    	<p>待处理项目</p>
-		    </div>
 		    <div class="tab-pane fade" id="finished_project">
-		    	<p>已完成项目</p>
+		    	<%@include file="/include/project/yjsProject.jsp" %>
 		    </div>
 		    <div class="tab-pane fade" id="deleted_project">
-		    	<p>回收站</p>
+		    	<p>待修改项目</p>
 		    </div>
 		</div>
 	</div>

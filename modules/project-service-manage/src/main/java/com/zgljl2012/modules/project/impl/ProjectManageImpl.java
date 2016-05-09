@@ -13,9 +13,12 @@ import com.zgljl2012.common.database.enums.T40_F05;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.database.PagingInfo;
 import com.zgljl2012.framework.database.executor.SelectExecutor;
+import com.zgljl2012.framework.exceptions.PostException;
 import com.zgljl2012.framework.service.AbstractService;
 import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.framework.util.StringHelper;
+import com.zgljl2012.modules.project.BidManage;
+import com.zgljl2012.modules.project.CommentManage;
 import com.zgljl2012.modules.project.ProjectManage;
 import com.zgljl2012.modules.project.query.ProjectBaseInfoQuery;
 import com.zgljl2012.modules.project.query.ProjectListIndeQuery;
@@ -27,9 +30,12 @@ import com.zgljl2012.modules.project.query.ProjectStatusPaggingQuery;
  * 
  */
 public class ProjectManageImpl extends AbstractService implements ProjectManage{
-
+	
+	BidManage bidManage;
+	
 	public ProjectManageImpl(Controller controller) {
 		super(controller);
+		bidManage = controller.getServiceManage().getService(BidManage.class);
 	}
 
 	@Override
@@ -75,6 +81,8 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 
 	@Override
 	public JSON projectList(int uid, final ProjectStatusPaggingQuery query) throws Exception {
+		CommentManage commentManage = 
+				controller.getServiceManage().getService(CommentManage.class);
 		String sql = "SELECT * FROM T40 WHERE 1=1 ";
 		ArrayList<Object> listArgs = new ArrayList<>();
 		if (query.getStatus() != null) {
@@ -107,7 +115,8 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 			List<JSON> list = new ArrayList<JSON>();
 			while(rs.next()) {
 				T40 t = new T40();
-				t.setF01(rs.getInt(1));
+				int projectId = rs.getInt(1);
+				t.setF01(projectId);
 				t.setF02(rs.getString(2));
 				t.setF03(rs.getFloat(3));
 				t.setF04(rs.getInt(4));
@@ -125,7 +134,10 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 				t.setF16(rs.getTimestamp(16));
 				t.setF17(rs.getInt(17));
 				JSON t40 = new JSON();
+				JSON json = commentManage.getQy2Fxs(projectId);
 				t40.put("t40", t);
+				t40.put("comment", (String)json.get("comment"));
+				t40.put("grade", ""+json.get("grade"));
 				list.add(t40);
 			}
 			rs.close();
@@ -202,7 +214,6 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 							t40.put("t40", t);
 						}
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -395,6 +406,24 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	public void setProjectYJS(int projectId) throws PostException {
+		if(!bidManage.isExistsProjectId(projectId)) {
+			throw new PostException("项目不存在");
+		}
+		String sql = "UPDATE T40 SET F05=?,F11=? WHERE F01 = ?";
+		Connection conn = this.getConnection();
+		try {
+			this.execute(conn, sql, 
+					T40_F05.YJS.name(), 
+					this.getNowTimestamp(), 
+					projectId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new PostException("系统发生错误");
+		}
 	}
 
 }

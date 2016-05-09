@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <script>
 var doc = {}
-require(["user/project/newProject"], function(_doc){
-	doc = _doc
-});
+require(["jquery-2.1.1.min"], function(){
+		require(["publics/js/plugins/date/bootstrap-datetimepicker.min.js"],function(){
+		   require(["publics/js/plugins/date/bootstrap-datetimepicker.zh-CN.js"], 
+				   function(){
+			require(["user/project/newProject"], function(_doc){
+				doc = _doc
+			});
+		})
+})});
 </script>
 <div class="container">
 	<form action="" method="post" onsubmit="return doc.onNewProject(this)">

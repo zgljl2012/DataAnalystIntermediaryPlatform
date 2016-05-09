@@ -1,16 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <script>
-$("#tbz_loading").show();
-require(["user/project/projectList"], function(ProjectList){
-	var list = new ProjectList("TBZ");
-	list.loadData($("#tbz_tmplData"), $("#tbz_tmplTable"), function(data){
-		$("#tbz_loading").hide();
-		if(data==null||data.length == 0) {
-			$("#tbz_noDataHint").show();
-			$("ul[name=tbz_paging]").hide();
-		}
-	});
-});
+require(["jquery-2.1.1.min"], function(){
+		require(["user/project/projectList"], function(ProjectList){
+			$("#tbz_loading").show();
+			var list = new ProjectList("TBZ");
+			list.loadData($("#tbz_tmplData"), $("#tbz_tmplTable"), function(data){
+				$("#tbz_loading").hide();
+				if(data==null||data.length == 0) {
+					$("#tbz_noDataHint").show();
+					$("ul[name=tbz_paging]").hide();
+				}
+			});
+		});
+}) 
 </script>
 <div class="container">
 	<%-- 暂无数据 --%>

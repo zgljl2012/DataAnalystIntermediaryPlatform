@@ -22,6 +22,7 @@
         <property name="maxStatements">0</property>  
         <!-- 当连接池耗尽时，一次获得连接数 -->
         <property name="acquireIncrement">5</property>
+        <property name="checkoutTimeout">100000</property>
     </named-config>  
       
       

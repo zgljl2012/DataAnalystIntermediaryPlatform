@@ -25,7 +25,8 @@ define(["common/config"], function(config) {
 			select:host+"project/bid/select", // 中标
 			comment:{
 				qy:host+"project/qy/comment", // 企业评论分析师Servlet
-			}
+			},
+			bidUpdate:host+"project/bid/update", // 编辑投标单
 		}
 	}
 	return url;

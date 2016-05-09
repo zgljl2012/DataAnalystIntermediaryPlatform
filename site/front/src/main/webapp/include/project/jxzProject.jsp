@@ -1,16 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <script>
-$("#jxz_loading").show();
-require(["user/project/projectList"], function(ProjectList){
-	var list = new ProjectList("JXZ");
-	list.loadData($("#jxz_tmplData"), $("#jxz_tmplTable"),function(data){
-		$("#jxz_loading").hide();
-		if(data==null||data.length == 0) {
-			$("#jxz_noDataHint").show();
-			$("ul[name=jxz_paging]").hide()
-		}
-	});
-});
+
+require(["jquery-2.1.1.min"], function(){
+	require(["user/project/projectList"], function(ProjectList){
+			$("#jxz_loading").show();
+			var list = new ProjectList("JXZ");
+			list.loadData($("#jxz_tmplData"), $("#jxz_tmplTable"),function(data){
+				$("#jxz_loading").hide();
+				if(data==null||data.length == 0) {
+					$("#jxz_noDataHint").show();
+					$("ul[name=jxz_paging]").hide()
+				}
+			});
+		});
+}) 
 </script>
 <div class="container">
 	<%-- 暂无数据 --%>

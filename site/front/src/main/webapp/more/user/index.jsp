@@ -20,9 +20,9 @@
 <!--[if lt IE 9]><script src="publics/js/ie8-responsive-file-warning.js"></script><![endif]-->
 <script type="text/javascript" src="publics/js/jquery.min.js"></script>
 <script type="text/javascript" src="publics/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="publics/js/plugins/date/bootstrap-datetimepicker.min.js"></script>
+<!-- <script type="text/javascript" src="publics/js/plugins/date/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="publics/js/plugins/date/bootstrap-datetimepicker.zh-CN.js"></script>
-<script type="text/javascript" src="publics/js/plugins/fileInput/fileinput.min.js"></script>
+ --><script type="text/javascript" src="publics/js/plugins/fileInput/fileinput.min.js"></script>
 <script type="text/javascript" src="publics/js/plugins/fileInput/fileinput_locale_zh.js"></script>
 <%--验证用户有没有登录 --%>
 <%@include file="/include/validate.jsp" %>

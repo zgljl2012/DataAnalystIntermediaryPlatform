@@ -2,6 +2,7 @@ package com.zgljl2012.modules.project;
 
 import com.zgljl2012.framework.exceptions.PostException;
 import com.zgljl2012.framework.service.Service;
+import com.zgljl2012.framework.util.JSON;
 
 /**
  * @author 廖金龙
@@ -39,4 +40,8 @@ public interface CommentManage extends Service{
 	 * @return
 	 */
 	boolean isExistsCommentOfQy(int projectId) throws PostException;
+	
+	JSON getQy2Fxs(int projectId) throws PostException;
+	
+	JSON getFxs2Qy(int projectId) throws PostException;
 }

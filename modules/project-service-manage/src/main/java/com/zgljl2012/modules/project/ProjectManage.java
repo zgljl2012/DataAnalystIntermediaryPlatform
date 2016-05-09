@@ -1,6 +1,7 @@
 package com.zgljl2012.modules.project;
 
 import com.zgljl2012.common.database.enums.T40_F05;
+import com.zgljl2012.framework.exceptions.PostException;
 import com.zgljl2012.framework.service.Service;
 import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.modules.project.query.ProjectBaseInfoQuery;
@@ -79,4 +80,11 @@ public interface ProjectManage extends Service{
 	 * @return
 	 */
 	public int getProjectSize(ProjectListIndeQuery status);
+	
+	/**
+	 * 设置项目已结束
+	 * @param projectId
+	 * @throws PostException
+	 */
+	public void setProjectYJS(int projectId) throws PostException;
 }

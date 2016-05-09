@@ -12,10 +12,12 @@ import com.zgljl2012.common.database.enums.T40_F05;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.database.PagingInfo;
 import com.zgljl2012.framework.database.executor.SelectExecutor;
+import com.zgljl2012.framework.database.executor.UpdateExecutor;
 import com.zgljl2012.framework.exceptions.PostException;
 import com.zgljl2012.framework.service.AbstractService;
 import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.modules.project.BidManage;
+import com.zgljl2012.modules.project.CommentManage;
 
 /**
  * @author 廖金龙
@@ -23,7 +25,9 @@ import com.zgljl2012.modules.project.BidManage;
  * 
  */
 public class BidManageImpl extends AbstractService implements BidManage{
-
+	
+	private CommentManage commentManage;
+	
 	public BidManageImpl(Controller controller) {
 		super(controller);
 	}
@@ -427,6 +431,7 @@ public class BidManageImpl extends AbstractService implements BidManage{
 	@Override
 	public JSON queryFxs(int uid, T40_F05 status, PagingInfo info)
 			throws PostException {
+		commentManage = controller.getServiceManage().getService(CommentManage.class);
 		String sql = null;
 		if(T40_F05.TBZ.name().equals(status.name())) {
 			sql = "SELECT t1.*, t2.F02, t2.F03, t2.F06, t2.F13,"
@@ -435,6 +440,9 @@ public class BidManageImpl extends AbstractService implements BidManage{
 		} else if(T40_F05.JXZ.name().equals(status.name())) {
 			sql = "SELECT t1.F01,t1.F02, t1.F03, t1.F06, t1.F13, t1.F16 "
 					+ "FROM T40 AS t1 WHERE t1.F05 = 'JXZ' AND t1.F15 = ?";
+		} else if(T40_F05.YJS.name().equals(status.name())) {
+			sql = "SELECT t1.F01,t1.F02, t1.F03, t1.F06, t1.F13, t1.F16 "
+					+ "FROM T40 AS t1 WHERE t1.F05 = 'YJS' AND t1.F15 = ?";
 		}
 		if(sql == null) {
 			throw new PostException("请输入正确的标状态");
@@ -466,6 +474,17 @@ public class BidManageImpl extends AbstractService implements BidManage{
 					j.put("createDate", sdf.format(rs.getDate(4)));
 					j.put("description", rs.getString(5));
 					j.put("bidDate", sdf.format(rs.getDate(6)));
+				} else if(T40_F05.YJS.name().equals(status.name())) {
+					int pid = rs.getInt(1);
+					j.put("F01", "" + pid);
+					j.put("projectName", rs.getString(2));
+					j.put("price", ""+rs.getFloat(3));
+					j.put("createDate", sdf.format(rs.getDate(4)));
+					j.put("description", rs.getString(5));
+					j.put("bidDate", sdf.format(rs.getDate(6)));
+					JSON json = commentManage.getQy2Fxs(pid);
+					j.put("comment", (String)json.get("comment"));
+					j.put("grade", ""+json.get("grade"));
 				}
 				list.add(j);
 			}
@@ -496,6 +515,9 @@ public class BidManageImpl extends AbstractService implements BidManage{
 		} else if(T40_F05.JXZ.name().equals(status.name())) {
 			sql = "SELECT COUNT(t1.F01) "
 					+ "FROM T40 AS t1 WHERE t1.F05 = 'JXZ' AND t1.F15 = ?";
+		} else if(T40_F05.YJS.name().equals(status.name())) {
+			sql = "SELECT COUNT(t1.F01) "
+					+ "FROM T40 AS t1 WHERE t1.F05 = 'YJS' AND t1.F15 = ?";
 		}
 		Connection conn = this.getConnection();
 		ResultSet rs = null;
@@ -519,6 +541,77 @@ public class BidManageImpl extends AbstractService implements BidManage{
 			}
 		}
 		return count;
+	}
+
+	@Override
+	public void update(int bid, String comment, float price) throws PostException{
+		if(!this.isExistsBidId(bid)) {
+			throw new PostException("投标单不存在");
+		}
+		Connection conn = this.getConnection();
+		try {
+			System.out.println(bid);
+			System.out.println(comment);
+			//conn.setAutoCommit(false);
+			String sql = "UPDATE T50 SET F04 =? WHERE F01 = ?";
+			this.update(conn, sql, new UpdateExecutor(){
+
+				@Override
+				public void execute(int rows) {
+					
+				}
+				
+			}, price, bid);
+			sql = "UPDATE T51 SET F02=? WHERE F01 = ?";
+			this.update(conn, sql, new UpdateExecutor(){
+
+				@Override
+				public void execute(int rows) {
+					
+				}
+				
+			}, comment, bid);
+			//conn.commit();
+		} catch(Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			throw new PostException("系统发生错误");
+		} finally {
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	@Override
+	public int getSelectedUserId(int projectId) {
+		Connection conn = this.getConnection();
+		try{
+			String sql = "SELECT F15 FROM T40 WHERE F01=? AND F05 = 'JXZ' OR F05 = 'YJS'";
+			ResultSet rs = this.select(conn, sql, projectId);
+			int r = -1;
+			if(rs.next()) {
+				r = rs.getInt(1);
+			}
+			return r;
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
 	}
 	
 }

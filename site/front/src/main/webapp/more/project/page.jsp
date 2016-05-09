@@ -37,8 +37,14 @@
 		isMatch = bidManage.isMatch(projectId,
 			ljlSession.getUserId());
 	}
+	int userId = controller.getSession(session).getUserId();
 	request.setAttribute("isMatch", isMatch);
 	request.setAttribute("isSelected", isSelected);
+	int selectId = -1; 
+	if(isMatch) {
+		selectId = bidManage.getSelectedUserId(projectId);
+		request.setAttribute("selectedId", selectId);
+	}
 %>
 </head>
 <body>
@@ -50,6 +56,7 @@
     	<div class="panel-heading">${data.get("t40").get("F02")}</div>
     	<div class="panel-body">
     	<div class="row">
+    	<div id="toubiao"></div>
 	    	<div class="col-sm-6 fs20 ml15 mt10 orange">
 	    		${data.get("t40").get("F02")}
 		    	<div class="fs06 mt20 red">
@@ -70,7 +77,7 @@
 	    	</div>
     	</div>
     	<hr>
-    	<c:if test="!${isSelected}">
+    	<c:if test="${!isSelected}">
     	<div class="row">
     		<div class="col-sm-12 fs12 mt5">
     			<div class="ml15">我要投标：</div>
@@ -88,13 +95,29 @@
     	</c:if>
     	<c:if test="${isSelected}">
     	<div class="row">
-    		<div class="col-sm-12 tc fs15 red">
-    			<span>企业已选择分析师，分析师工作中...</span>
-    		</div>
-    		<c:if test="${isMatched }">
-    		<div class="col-sm-12 tc">
-    			<button class="btn-8 mt10" name="fxsFinish">分析师已完成工作</button>
-    		</div>
+    		<c:if test='${data.get("t40").get("F05").equals("JXZ")}'>
+	    		<div class="col-sm-12 tc fs15 red">
+	    			<span>企业已选择分析师，分析师工作中...</span>
+	    		</div>
+    			<c:if test="${isMatch}">
+		    		<div class="col-sm-12 tc">
+		    			<button class="btn-8 mt10" name="fxsFinish">分析师已完成工作</button>
+		    		</div>
+		    	</c:if>
+    		</c:if>
+    		<c:if test='${data.get("t40").get("F05").equals("YJS")}'>
+	    		<div class="col-sm-12 tc fs15 red">
+	    			<span>当前项目已圆满结束</span>
+	    		</div>
+	    		<c:if test="${isMatch}">
+		    		<div class="col-sm-12 tc mt20">
+		    			<div>
+		    			<span>评分：<label name="qy2fxs_grade"></label></span><br>
+		    			<textarea rows="8" cols="80" name="qy2fxs_comment" readonly></textarea>
+		    			</div>
+		    			<button class="btn-8 mt10" name="commentUpdate">修改评论</button>
+		    		</div>
+		    	</c:if>
     		</c:if>
     	</div>
     	</c:if>
@@ -130,15 +153,23 @@
 							<span class="col-sm-12 fs08 gray">投标：<span>
 							<div class="row">
 							<pre class="col-sm-12 fs10 gray pre-comment">
-								{{= d.comment }}
+								{{= d._comment }}
 							</pre>
 							</div>
 						</div>
 						<div class="visibility_hidden select-buttons fr">
    	 						<button class="btn-8 <%=isSelected?"display_none":""%>" onclick="select({{= d.F01}})">中标</button>
-   	 						<button class="btn-8" onclick="del({{= d.F01}})">删除</button>
-   	 						<button class="btn-8">私信</button>
+   	 						{{if d.F03!=<%=selectId%> }}
+							<button class="btn-8" onclick="del({{= d.F01}})">删除</button>
+   	 						{{/if}}
+							<button class="btn-8">私信</button>
    						</div>
+						{{if d.F03 == <%=userId%> }}
+						<div class="display_none" name="{{= d.F01}}_div">{{= d.comment}}</div>
+						<div class="select-buttons fr">
+							<button class="btn-8 <%=isSelected?"display_none":""%>" onclick='update({{= d.F01}}, {{= d.F04}}, $("div[name={{= d.F01}}_div]").html())'>编辑</button>
+						</div>
+						{{/if}}
 					</td>
 				</tr>
 			{{/if}}
@@ -172,11 +203,20 @@
    if(data.t40.F03 == 0.0) {
 		$("#mianyi").html("面议"); 
    }
+   function goToTopXX(obj){
+	    var _targetTop = $('#'+obj).offset().top;//获取位置
+	    jQuery("html,body").animate({scrollTop:_targetTop},300);//跳转
+	}
    require(["jquery-2.1.1"], function() {
 	   require(["bootstrap"], function() {
-		   require(["project/page","common/star", "dialog"], function(page, star, dialog){
+		   require(["project/page","common/star", "dialog"], function(page, Star, dialog){
 			   var projectId = "${data.get('t40').get('F01')}";
-			   page.list(projectId, function(data){
+			   star = new Star();
+			   $("ul[name=bid_paging]").hide();
+			   page.list(projectId, function(data) {
+				   if(data&&data.data.length>0) {
+					   $("ul[name=bid_paging]").show();
+				   }
 				   page.showbids(data, $("#project-bid-item-tmpl"), $("#project-bid-table"));
 				   $(".opacity-black-position").mouseover(function(){
 				   	   if("${isMatch}"=="true") {
@@ -200,6 +240,15 @@
 			   });
 			   document.del = page.del;
 			   document.select = page.select;
+			   document.update = function(bid, price, comment){
+				   $("textarea[name=solution]").val(comment);
+				   $("input[name=quote_price]").val(price);
+				   $("#release").unbind("click");
+				   $("#release").click(function(){
+					   page.update(bid, $("input[name=quote_price]").val(), $("textarea[name=solution]").val());
+				   })
+				   goToTopXX("toubiao");
+			   }
 			   $("button[name=fxsFinish]").unbind("click");
 			   $("button[name=fxsFinish]").click(function() {
 				  dialog.showDialog("确定您选择的分析师已经圆满完成了您的项目？（点击确定后将" +
@@ -209,7 +258,21 @@
 					   });
 				   })
 			   });
-			   
+			   $("button[name=commentUpdate]").unbind("click");
+			   $("button[name=commentUpdate]").click(function() {
+				   star.show(function(comment, grade){
+							star.qy2fxs("${data.get('t40').get('F01')}", comment, grade, function(data){
+								star.getQy2Fxs("${data.get('t40').get('F01')}", function(data){
+									   $("label[name=qy2fxs_grade]").html(data.grade);
+								   		$("textarea[name=qy2fxs_comment]").html(data.comment);
+								   });
+							});
+				   });
+			   });
+			   star.getQy2Fxs("${data.get('t40').get('F01')}", function(data){
+				   $("label[name=qy2fxs_grade]").html(data.grade);
+			   		$("textarea[name=qy2fxs_comment]").html(data.comment);
+			   });
 		   });
 	   });
    });

@@ -5,6 +5,7 @@ define(["common/url", "dialog","pagging",
 	var url = urlUtil.project.bid,
 		delUrl = urlUtil.project.del,
 		selectUrl = urlUtil.project.select,
+		updateUrl = urlUtil.project.bidUpdate,
 		doc = {},
 		meta={
 			current:0,
@@ -57,7 +58,7 @@ define(["common/url", "dialog","pagging",
 				var l = tmp.length;
 				for(var i=0; i < l; i++) {
 					if(tmp[i].comment) {
-						tmp[i].comment = "\n"+tmp[i].comment;
+						tmp[i]._comment = "\n"+tmp[i].comment;
 					}
 				}
 				if(!doc.tmplItem||!doc.tmplItem.nodes||doc.tmplItem.nodes.length==0) {
@@ -131,7 +132,6 @@ define(["common/url", "dialog","pagging",
 			})
 		},
 		select:function(id) {
-			console.log("select")
 			dialog.showDialog("中标确认","确定选中此分析师？一经选中不得更改",function(){
 				$.ajax({
 					type:"post",
@@ -148,6 +148,26 @@ define(["common/url", "dialog","pagging",
 						dialog.showAlert("网络错误，请刷新重试")
 					}
 				})
+			})
+		},
+		update:function(id, price, comment) {
+			console.log(price);
+			console.log(comment);
+			console.log(id);
+			$.ajax({
+				type:"post",
+				url:updateUrl,
+				data:{bid:id, price:price, comment:comment},
+				success:function(data) {
+					data = eval("("+data+")");
+					if(data.status == "success") {
+						window.location.reload(true);
+					} else {
+						dialog.showAlert(data.description);
+					}
+				},error:function() {
+					dialog.showAlert("网络错误，请刷新重试")
+				}
 			})
 		}
 	}

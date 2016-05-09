@@ -1,12 +1,27 @@
-define(["common/url","dialog","plugins/star/star-rating"],function(url,dialog) {
-	var url = url.project.comment.qy;
-	var star = function() {
+define(["common/url","dialog","common/request","plugins/star/star-rating"],
+		function(url,dialog,request) {
+	var _url = url.project.comment.qy;
+	var star = function(url, comment, grade) {
+		this.url = url;
+		if(this.url==null) {
+			this.url = _url;
+		}
 		this.title = "评论";
 		$("#commentModalCancel").click(function(){
-			$("#commentTextarea").val("");
-			$("#commentGrade").val(4);
+			if(!comment) comment="";
+			if(!grade) grade = 4;
+			$("#commentTextarea").val(comment);
+			$("#commentGrade").val(grade);
 		});
-	}
+	};
+	star.prototype.setComment = function(comment) {
+		$("#commentTextarea").val(comment);
+		return this;
+	};
+	star.prototype.setGrade = function(grade) {
+		$("#commentGrade").val(grade);
+		return this;
+	};
 	star.prototype.show = function(ok) {
 		$("#commentModalTitle").html(this.title);
 		$("#commentModalOk").unbind("click");
@@ -20,10 +35,11 @@ define(["common/url","dialog","plugins/star/star-rating"],function(url,dialog) {
 			}
 		});
 		$("#commentModalDialog").modal("show");
-	}
-	star.prototype.qy2fxs = function(projectId, comment, grade) {
+		return this;
+	};
+	star.prototype.qy2fxs = function(projectId, comment, grade, callback) {
 		$.ajax({
-			url:url,
+			url:this.url,
 			type:"post",
 			data:{projectId:projectId, comment:comment, grade:grade},
 			success:function(data){
@@ -33,10 +49,25 @@ define(["common/url","dialog","plugins/star/star-rating"],function(url,dialog) {
 				} else {
 					dialog.showAlert(data.description);
 				}
+				if(callback) {
+					callback.apply([],[data]);
+				}
 			},error:function() {
 				dialog.showAlert("网络发生错误，请刷新重试");
 			}
 		});
+	};
+	star.prototype.getQy2Fxs = function(projectId, call) {
+		request.get({
+			url:this.url,
+			data:{projectId:projectId},
+			success:function(data){
+				data = request.toJson(data);
+				if(call) {
+					call(data);
+				}
+			}
+		});
 	}
-	return new star();
+	return star;
 })
