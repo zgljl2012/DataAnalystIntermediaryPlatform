@@ -70,9 +70,10 @@ public class BidManageImpl extends AbstractService implements BidManage{
 		Boolean ifExist = true;
 		// 如果存在就修改
 		String sql = "SELECT F01 FROM T51 WHERE F01 = ?";
+		Connection conn = getConnection();
 		ResultSet rs;
 		try {
-			rs = this.select(getConnection(), sql, bidId);
+			rs = this.select(conn, sql, bidId);
 			if(rs.next()) {
 				ifExist = true;
 			} else {
@@ -85,10 +86,12 @@ public class BidManageImpl extends AbstractService implements BidManage{
 			} else {
 				sql = "INSERT INTO T51(F02, F01) VALUES(?,?) ";
 			}
-			this.execute(getConnection(), sql, comment, bidId);
+			this.execute(conn, sql, comment, bidId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new PostException("系统发生错误");
+		} finally {
+			this.close(conn);
 		}
 		
 	}
@@ -98,8 +101,9 @@ public class BidManageImpl extends AbstractService implements BidManage{
 		if(!isExistsBidId(bidId)) {
 			throw new PostException("投标单不存在");
 		}
+		Connection conn = getConnection();
 		try {
-			this.execute(getConnection(), "UPDATE T50 SET F06=? WHERE F01=? ", 
+			this.execute(conn, "UPDATE T50 SET F06=? WHERE F01=? ", 
 					new Object[]{
 				Bool.S.name(),
 				bidId
@@ -107,13 +111,16 @@ public class BidManageImpl extends AbstractService implements BidManage{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new PostException("系统发生错误");
+		} finally {
+			this.close(conn);
 		}
 	}
 	
 	public boolean isExistsUid(int uid) {
 		ResultSet rs = null;
+		Connection conn = getConnection();
 		try{
-			rs= this.select(getConnection(), 
+			rs= this.select(conn, 
 						"SELECT F01 FROM T10 WHERE F01 = ? ", uid);
 			if(rs.next()) {
 				return true;
@@ -124,6 +131,7 @@ public class BidManageImpl extends AbstractService implements BidManage{
 			try {
 				rs.close();
 				rs.getStatement().close();
+				this.close(conn);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -138,8 +146,9 @@ public class BidManageImpl extends AbstractService implements BidManage{
 	 */
 	public boolean isExistsProjectId(int pid) {
 		ResultSet rs = null;
+		Connection conn = getConnection();
 		try{
-			rs= this.select(getConnection(), 
+			rs= this.select(conn, 
 					"SELECT F01 FROM T40 WHERE F01 = ? ", pid);
 			if(rs.next()) {
 				return true;
@@ -150,6 +159,7 @@ public class BidManageImpl extends AbstractService implements BidManage{
 			try {
 				rs.close();
 				rs.getStatement().close();
+				this.close(conn);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -164,8 +174,9 @@ public class BidManageImpl extends AbstractService implements BidManage{
 	 */
 	public boolean isExistsBidId(int bid) {
 		ResultSet rs = null;
+		Connection conn = getConnection();
 		try{
-			rs= this.select(getConnection(), 
+			rs= this.select(conn, 
 					"SELECT F01 FROM T50 WHERE F01 = ? ", bid);
 			if(rs.next()) {
 				return true;
@@ -176,6 +187,7 @@ public class BidManageImpl extends AbstractService implements BidManage{
 			try {
 				rs.close();
 				rs.getStatement().close();
+				this.close(conn);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -222,8 +234,9 @@ public class BidManageImpl extends AbstractService implements BidManage{
 	public boolean isExistsThisBid(int projectId, int uid) {
 		String sql = "SELECT F01 FROM T50 WHERE F02=? AND F03 = ?";
 		ResultSet rs = null;
+		Connection conn = getConnection();
 		try {
-			rs = this.select(getConnection(), sql, projectId, uid);
+			rs = this.select(conn, sql, projectId, uid);
 			if(rs.next()) {
 				return true;
 			}
@@ -237,8 +250,8 @@ public class BidManageImpl extends AbstractService implements BidManage{
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				
 			}
+			this.close(conn);
 		}
 		return false;
 	}
@@ -252,8 +265,9 @@ public class BidManageImpl extends AbstractService implements BidManage{
 		final JSON result = new JSON();
 		final SimpleDateFormat sdf = 
 				new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
+		Connection conn = getConnection();
 		try {
-			this.select(getConnection(), sql, new SelectExecutor() {
+			this.select(conn, sql, new SelectExecutor() {
 				
 				@Override
 				public void execute(ResultSet rs) {
@@ -281,6 +295,8 @@ public class BidManageImpl extends AbstractService implements BidManage{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new PostException("系统出现异常");
+		} finally {
+			this.close(conn);
 		}
 		return result;
 	}
@@ -483,8 +499,10 @@ public class BidManageImpl extends AbstractService implements BidManage{
 					j.put("description", rs.getString(5));
 					j.put("bidDate", sdf.format(rs.getDate(6)));
 					JSON json = commentManage.getQy2Fxs(pid);
+					JSON json2 = commentManage.getFxs2Qy(pid);
 					j.put("comment", (String)json.get("comment"));
 					j.put("grade", ""+json.get("grade"));
+					j.put("fxs", json2);
 				}
 				list.add(j);
 			}
@@ -610,6 +628,30 @@ public class BidManageImpl extends AbstractService implements BidManage{
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+		}
+		return 0;
+	}
+
+	@Override
+	public int countBid(int projectId) {
+		String sql = "SELECT COUNT(F01) FROM T50 WHERE F02 = ?";
+		Connection conn = this.getConnection();
+		ResultSet rs = null;
+		try {
+			rs = this.select(conn, sql, projectId);
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				rs.getStatement().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			this.close(conn);
 		}
 		return 0;
 	}

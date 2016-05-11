@@ -16,11 +16,13 @@ import com.zgljl2012.common.database.enums.T10_F08;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.database.PagingInfo;
 import com.zgljl2012.framework.database.executor.SelectExecutor;
+import com.zgljl2012.framework.exceptions.PostException;
 import com.zgljl2012.framework.service.AbstractService;
 import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.framework.util.StringHelper;
 import com.zgljl2012.modules.front.analyst.FxsMarketManage;
 import com.zgljl2012.modules.front.analyst.query.FxsInfoQuery;
+import com.zgljl2012.modules.project.CommentManage;
 
 /**
  * @author 廖金龙
@@ -28,7 +30,9 @@ import com.zgljl2012.modules.front.analyst.query.FxsInfoQuery;
  * 
  */
 public class FxsMarketManageImpl extends AbstractService implements FxsMarketManage{
-
+	
+	CommentManage commentManage;
+	
 	public FxsMarketManageImpl(Controller controller) {
 		super(controller);
 		// TODO Auto-generated constructor stub
@@ -40,6 +44,7 @@ public class FxsMarketManageImpl extends AbstractService implements FxsMarketMan
 				+ "LEFT JOIN T20 AS t2 ON t1.F01 = t2.F01 WHERE t1.F05 = 'FXS' "
 				+ "AND t2.F05 IS NOT NULL AND t2.F06 IS NOT NULL AND t2.F10 IS NOT NULL");
 		ArrayList<Object> args = new ArrayList<>();
+		commentManage = controller.getServiceManage().getService(CommentManage.class);
 		if(query != null) {
 			if(query.getDegree() != null) {
 				sql.append(" AND t2.F10 = ? ");
@@ -49,8 +54,16 @@ public class FxsMarketManageImpl extends AbstractService implements FxsMarketMan
 				sql.append(" AND YEAR(CURRENT_DATE()) - YEAR(t2.F06) >= ?");
 				args.add(query.getWorkTime());
 			}
-			if(query.getGrade() > -1) {
-				// 分数暂时不考虑
+			if(query.getGrade() > 0) {
+				float star = query.getGrade();
+				sql .append(" AND "+ 
+					"(SELECT AVG(t3.F03) FROM T70 AS t3 LEFT JOIN T40 AS t4 ON "
+					+ "t3.F01 = t4.F01 WHERE t4.F15 = t1.F01)"+" > " 
+					+ (star-1)+ " AND " +
+					"(SELECT AVG(t3.F03) FROM T70 AS t3 LEFT JOIN T40 AS t4 ON "
+					+ "t3.F01 = t4.F01 WHERE t4.F15 = t1.F01)"
+					+" <= "+star);
+				
 			}
 		}
 		Connection conn = getConnection();
@@ -63,7 +76,8 @@ public class FxsMarketManageImpl extends AbstractService implements FxsMarketMan
 			while(rs.next()) {
 				T10 t10 = new T10();
 				int j = 1;
-				t10.setF01(rs.getInt(j++));
+				int fxsId = rs.getInt(j++);
+				t10.setF01(fxsId);
 				t10.setF02(rs.getString(j++));
 				t10.setF03(rs.getString(j++));
 				t10.setF04(rs.getString(j++));
@@ -96,7 +110,13 @@ public class FxsMarketManageImpl extends AbstractService implements FxsMarketMan
 				}
 				
 				json.put("t20", jtmp);
-				
+				try {
+					float avg = commentManage.getAverageOfFxs(fxsId);
+					json.put("avg", ""+avg);
+				} catch (PostException e) {
+					e.printStackTrace();
+					json.put("avg", ""+0);
+				}
 				list.add(json);
 			}
 			rs.close();
@@ -113,8 +133,8 @@ public class FxsMarketManageImpl extends AbstractService implements FxsMarketMan
 
 	@Override
 	public int fxsCount(FxsInfoQuery query) {
-		StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM T20 WHERE 1=1 "
-				+ "AND F05 IS NOT NULL AND F06 IS NOT NULL AND F10 IS NOT NULL");
+		StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM T20 AS t1 WHERE 1=1 "
+				+ "AND t1.F05 IS NOT NULL AND t1.F06 IS NOT NULL AND t1.F10 IS NOT NULL");
 		ArrayList<Object> args = new ArrayList<>();
 		if(query != null) {
 			if(query.getDegree() != null) {
@@ -125,8 +145,15 @@ public class FxsMarketManageImpl extends AbstractService implements FxsMarketMan
 				sql.append(" AND YEAR(CURRENT_DATE()) - YEAR(F06) >= ?");
 				args.add(query.getWorkTime());
 			}
-			if(query.getGrade() > -1) {
-				// 分数暂时不考虑
+			if(query.getGrade() > 0) {
+				float star = query.getGrade();
+				sql .append(" AND "+ 
+					"(SELECT AVG(t3.F03) FROM T70 AS t3 LEFT JOIN T40 AS t4 ON "
+					+ "t3.F01 = t4.F01 WHERE t4.F15 = t1.F01)"+" > " 
+					+ (star-1)+ " AND " +
+					"(SELECT AVG(t3.F03) FROM T70 AS t3 LEFT JOIN T40 AS t4 ON "
+					+ "t3.F01 = t4.F01 WHERE t4.F15 = t1.F01)"
+					+" <= "+star);
 			}
 		}
 		Connection conn = this.getConnection();

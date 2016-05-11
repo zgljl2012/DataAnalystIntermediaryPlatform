@@ -153,6 +153,9 @@
 						</div>
 						</a>
 					</td>
+					<td>
+						<span><label class="orange">{{= d.avg}}</label></span>
+					</td>
 				</tr>
 				{{/if}}
 				{{/each}}

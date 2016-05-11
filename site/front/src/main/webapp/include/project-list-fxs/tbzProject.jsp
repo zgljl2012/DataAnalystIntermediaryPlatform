@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <script>
 $("#tbz_loading").show();
+require(["jquery-2.1.1.min"], function(){
 require(["user/project/projectList-fxs"], function(ProjectList){
 	var list = new ProjectList("TBZ");
 	list.loadData($("#tbz_tmplData"), $("#tbz_tmplTable"), function(data){
@@ -10,7 +11,7 @@ require(["user/project/projectList-fxs"], function(ProjectList){
 			$("ul[name=tbz_paging]").hide();
 		}
 	});
-});
+});});
 </script>
 <div class="container">
 	<%-- 暂无数据 --%>

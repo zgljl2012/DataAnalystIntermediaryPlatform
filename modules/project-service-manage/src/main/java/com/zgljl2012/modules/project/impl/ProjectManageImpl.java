@@ -13,6 +13,7 @@ import com.zgljl2012.common.database.enums.T40_F05;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.database.PagingInfo;
 import com.zgljl2012.framework.database.executor.SelectExecutor;
+import com.zgljl2012.framework.database.executor.UpdateExecutor;
 import com.zgljl2012.framework.exceptions.PostException;
 import com.zgljl2012.framework.service.AbstractService;
 import com.zgljl2012.framework.util.JSON;
@@ -32,6 +33,7 @@ import com.zgljl2012.modules.project.query.ProjectStatusPaggingQuery;
 public class ProjectManageImpl extends AbstractService implements ProjectManage{
 	
 	BidManage bidManage;
+	CommentManage commentManage;
 	
 	public ProjectManageImpl(Controller controller) {
 		super(controller);
@@ -75,8 +77,47 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 	}
 
 	@Override
-	public void updateProject(int pid, ProjectBaseInfoQuery query) {
-		
+	public void updateProject(int pid, ProjectBaseInfoQuery query) throws PostException {
+		if(!bidManage.isExistsProjectId(pid)) {
+			throw new PostException("项目不存在");
+		}
+		String sql = "UPDATE T40 SET F01=F01";
+		List<Object> args = new ArrayList<>();
+		if(!StringHelper.isEmpty(query.getProjectName())) {
+			sql += ",F02=? ";
+			args.add(query.getProjectName());
+		}
+		if(!StringHelper.isEmpty(query.getDescription())) {
+			sql += ",F13=? ";
+			args.add(query.getDescription());
+		}
+		if(query.getBidDays() != -1) {
+			sql += ",F17=? ";
+			args.add(query.getBidDays());
+		}
+		if(query.getFinishDate()!=null) {
+			sql += ",F12=? ";
+			args.add(query.getFinishDate());
+		}
+		if(query.getWillPrice() != -1) {
+			sql += ",F03=?";
+			args.add(query.getWillPrice());
+		}
+		sql += " where F01=?";
+		args.add(pid);
+		Connection conn = getConnection();
+		try {
+			this.update(conn, sql, new UpdateExecutor() {
+				
+				@Override
+				public void execute(int rows) {
+					
+				}
+			}, args.toArray());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -289,6 +330,7 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 	public JSON getProjectIndexList(final ProjectListIndeQuery query) 
 			throws SQLException {
 		String sql = "SELECT * FROM T40 WHERE 1=1 ";
+		commentManage = controller.getServiceManage().getService(CommentManage.class);
 		ArrayList<Object> listArgs = new ArrayList<>();
 		if (query.getStatus() != null) {
 			sql += " AND F05 = ? ";
@@ -308,7 +350,18 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 			}
 			listArgs.add(range);
 		}
+		if(query.getStar() > 0) {
+			int star = query.getStar();
+			sql +=" AND "+ 
+				"(SELECT AVG(t1.F03) FROM T71 AS t1 LEFT JOIN T40 AS "
+				+ "t2 ON t1.F01 = t2.F01 WHERE t2.F04 = F04)"+" > " 
+				+ (star-1)+ " AND " +
+				"(SELECT AVG(t1.F03) FROM T71 AS t1 LEFT JOIN T40 AS "
+				+ "t2 ON t1.F01 = t2.F01 WHERE t2.F04 = F04)"
+				+" <= "+star;
+		}
 		sql += " ORDER BY F03 DESC, F06 DESC";
+		System.out.println(sql);
 		Object[] args = listArgs.toArray();
 		final JSON result = new JSON();
 		Connection conn = this.getConnection();
@@ -331,10 +384,12 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 			List<JSON> list = new ArrayList<JSON>();
 			while(rs.next()) {
 				T40 t = new T40();
-				t.setF01(rs.getInt(1));
+				int pid = rs.getInt(1);
+				t.setF01(pid);
 				t.setF02(rs.getString(2));
 				t.setF03(rs.getFloat(3));
-				t.setF04(rs.getInt(4));
+				int qyId = rs.getInt(4);
+				t.setF04(qyId);
 				t.setF05(T40_F05.parse(rs.getString(5)));
 				t.setF06(rs.getDate(6));
 				t.setF07(rs.getDate(7));
@@ -349,7 +404,11 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 				t.setF16(rs.getTimestamp(16));
 				t.setF17(rs.getInt(17));
 				JSON t40 = new JSON();
+				float avg = commentManage.getAverageOfQy(qyId);
 				t40.put("t40", t);
+				t40.put("avg", ""+avg);
+				int countBid = bidManage.countBid(pid);
+				t40.put("countBid", ""+countBid);
 				list.add(t40);
 			}
 			rs.close();
@@ -359,7 +418,7 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 			e.printStackTrace();
 			return null;
 		} finally{
-			conn.close();
+			this.close(conn);
 		}
 		return result;
 	}
@@ -386,6 +445,16 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 			}
 			listArgs.add(range);
 		}
+		if(query.getStar() > 0) {
+			int star = query.getStar();
+			sql +=" AND "+ 
+				"(SELECT AVG(t1.F03) FROM T71 AS t1 LEFT JOIN T40 AS "
+				+ "t2 ON t1.F01 = t2.F01 WHERE t2.F04 = F04)"+" > " 
+				+ (star-1)+ " AND " +
+				"(SELECT AVG(t1.F03) FROM T71 AS t1 LEFT JOIN T40 AS "
+				+ "t2 ON t1.F01 = t2.F01 WHERE t2.F04 = F04)"
+				+" <= "+star;
+		}
 		Connection conn = this.getConnection();
 		try{
 			ResultSet rs = this.select(conn, sql, listArgs.toArray());
@@ -401,7 +470,6 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

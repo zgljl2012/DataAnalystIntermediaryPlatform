@@ -44,4 +44,20 @@ public interface CommentManage extends Service{
 	JSON getQy2Fxs(int projectId) throws PostException;
 	
 	JSON getFxs2Qy(int projectId) throws PostException;
+	
+	/**
+	 * 获取企业平均分
+	 * @param projectId
+	 * @return
+	 * @throws PostException
+	 */
+	float getAverageOfQy(int projectId) throws PostException;
+	
+	/**
+	 * 获取分析师平均分
+	 * @param fxsId
+	 * @return
+	 * @throws PostException
+	 */
+	float getAverageOfFxs(int fxsId) throws PostException;
 }

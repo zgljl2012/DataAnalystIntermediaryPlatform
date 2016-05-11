@@ -199,10 +199,6 @@
    <%@include file="/include/dialog.jsp" %>
   	<%@include file="/include/star.jsp" %>
    <script>
-   var data = eval('('+'${data}'+')');
-   if(data.t40.F03 == 0.0) {
-		$("#mianyi").html("面议"); 
-   }
    function goToTopXX(obj){
 	    var _targetTop = $('#'+obj).offset().top;//获取位置
 	    jQuery("html,body").animate({scrollTop:_targetTop},300);//跳转
@@ -211,6 +207,10 @@
 	   require(["bootstrap"], function() {
 		   require(["project/page","common/star", "dialog"], function(page, Star, dialog){
 			   var projectId = "${data.get('t40').get('F01')}";
+			   var data = eval('('+'${data}'+')');
+			   if(data.t40.F03 == 0.0) {
+					$("#mianyi").html("面议"); 
+			   }
 			   star = new Star();
 			   $("ul[name=bid_paging]").hide();
 			   page.list(projectId, function(data) {

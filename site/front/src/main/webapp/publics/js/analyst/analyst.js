@@ -73,6 +73,7 @@ function pullData(url, current, data) {
  */
 function loadTable(data) {
 	for(var i in data.data) {
+		data.data[i].avg = parseFloat(data.data[i].avg).toFixed(2);
 		if(data.data[i].t10) {
 			if(data.data[i].t10.F01) {
 				data.data[i].t10.F01 = "/front/analyst/"+data.data[i].t10.F01;

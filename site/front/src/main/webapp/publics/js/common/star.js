@@ -1,12 +1,14 @@
 define(["common/url","dialog","common/request","plugins/star/star-rating"],
 		function(url,dialog,request) {
-	var _url = url.project.comment.qy;
+	var _url = url.project.comment.qy,
+		fxsUrl = url.project.comment.fxs;
 	var star = function(url, comment, grade) {
 		this.url = url;
 		if(this.url==null) {
 			this.url = _url;
 		}
 		this.title = "评论";
+		this.placeHolder = "请输入评论";
 		$("#commentModalCancel").click(function(){
 			if(!comment) comment="";
 			if(!grade) grade = 4;
@@ -37,6 +39,9 @@ define(["common/url","dialog","common/request","plugins/star/star-rating"],
 		$("#commentModalDialog").modal("show");
 		return this;
 	};
+	star.prototype.placeholder = function(s) {
+		$("#commentTextarea").attr("placeholder", s);
+	}
 	star.prototype.qy2fxs = function(projectId, comment, grade, callback) {
 		$.ajax({
 			url:this.url,
@@ -60,6 +65,38 @@ define(["common/url","dialog","common/request","plugins/star/star-rating"],
 	star.prototype.getQy2Fxs = function(projectId, call) {
 		request.get({
 			url:this.url,
+			data:{projectId:projectId},
+			success:function(data){
+				data = request.toJson(data);
+				if(call) {
+					call(data);
+				}
+			}
+		});
+	}
+	star.prototype.fxs2qy = function(projectId, comment, grade, callback) {
+		$.ajax({
+			url:fxsUrl,
+			type:"post",
+			data:{projectId:projectId, comment:comment, grade:grade},
+			success:function(data){
+				data = eval('('+data+')');
+				if(data.status == 'success') {
+					dialog.showAlert("评论成功");
+				} else {
+					dialog.showAlert(data.description);
+				}
+				if(callback) {
+					callback.apply([],[data]);
+				}
+			},error:function() {
+				dialog.showAlert("网络发生错误，请刷新重试");
+			}
+		});
+	};
+	star.prototype.getFxs2Qy = function(projectId, call) {
+		request.get({
+			url:fxsUrl,
 			data:{projectId:projectId},
 			success:function(data){
 				data = request.toJson(data);

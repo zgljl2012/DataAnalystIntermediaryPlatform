@@ -20,11 +20,11 @@ import com.zgljl2012.modules.project.query.ProjectBaseInfoQuery;
 /**
  * @author 廖金龙
  * @version 2016年4月13日下午9:59:57
- * 新增项目列表
+ * 编辑项目
  */
 @SuppressWarnings("serial")
-@WebServlet(name="NewProject",urlPatterns={"/project/new"})
-public class NewProjectServlet extends AbstractServlet{
+@WebServlet(name="EditProject",urlPatterns={"/project/update"})
+public class EditProjectServlet extends AbstractServlet{
 	
 	@Impl
 	ProjectManage projectManage;
@@ -32,21 +32,15 @@ public class NewProjectServlet extends AbstractServlet{
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse res,
 			Controller controller) throws Exception {
-		try {
-			post(req, res, controller);
-		} catch(PostException e) {
-			e.printStackTrace();
-			JSON json = new JSON();
-			json.put("status", "error");
-			json.put("description", e.getMessage());
-			out(res, json);
-		}
+		this.doPost(req, res);
 	}
 
 	@Override
 	protected void post(final HttpServletRequest req, HttpServletResponse res,
 			Controller controller) throws Exception {
 		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String projectId = req.getParameter("projectId");
+		int pid = Integer.parseInt(projectId);
 		ProjectBaseInfoQuery info = new ProjectBaseInfoQuery(){
 
 			@Override
@@ -61,10 +55,10 @@ public class NewProjectServlet extends AbstractServlet{
 					try{
 						return Float.parseFloat(req.getParameter("willPrice"));
 					} catch (Exception e){
-						return 0;
+						return -1;
 					}
 				}
-				return 0;
+				return -1;
 			}
 
 			@Override
@@ -104,29 +98,9 @@ public class NewProjectServlet extends AbstractServlet{
 			
 		};
 		
-		if(info.getBidDays() == -1) {
-			throw new PostException("招标天数不能为空");
-		}
-		
-		if(info.getDescription() == null) {
-			throw new PostException("项目描述不能为空");
-		}
-		
-		if(info.getProjectName() == null) {
-			throw new PostException("项目名称不能为空");
-		}
-		
-		if(info.getFinishDate() == null) {
-			throw new PostException("期望完成时间不能为空");
-		}
-		try {
-			projectManage.addProject(controller.getSession(req.getSession()).getUserId(), 
-					info);
-		} catch(Exception e) {
-			throw new PostException(e.getMessage());
-		}
+		projectManage.updateProject(pid, info);
 		String path = this.getServletContext().getContextPath();
-		String url = path+"/user";
+		String url = path+"/project/edit/" + pid;
 		this.redirect(res, url);
 	}
 	

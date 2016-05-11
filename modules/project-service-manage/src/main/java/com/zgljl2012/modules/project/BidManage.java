@@ -129,4 +129,11 @@ public interface BidManage extends Service{
 	 */
 	int getSelectedUserId(int projectId);
 	
+	/**
+	 * 一个项目的投标人数
+	 * @param projectId
+	 * @return
+	 */
+	int countBid(int projectId);
+	
 }

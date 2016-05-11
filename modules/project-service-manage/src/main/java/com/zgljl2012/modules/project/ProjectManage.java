@@ -29,7 +29,7 @@ public interface ProjectManage extends Service{
 	 * @param query 项目信息接口
 	 * @return 项目ID
 	 */
-	public void updateProject(int pid, ProjectBaseInfoQuery query) throws Exception;
+	public void updateProject(int pid, ProjectBaseInfoQuery query) throws PostException;
 
 	/**
 	 * 当uid为0时，就查询所有用户对于状态的项目

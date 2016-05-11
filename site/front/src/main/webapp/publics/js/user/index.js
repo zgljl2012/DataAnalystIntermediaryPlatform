@@ -3,9 +3,16 @@
 var global = new Object();
 
 $(function(){
-	if(userType == 'FXS') {
-		initFxs();
-	}
+	require(["bootstrap"],function(){
+	require(["common/dialog","publics/js/plugins/date/bootstrap-datetimepicker.min.js"],function(){
+	   require(["publics/js/plugins/date/bootstrap-datetimepicker.zh-CN.js"], 
+		function(){
+		   if(userType == 'FXS') {
+			   initFxs();
+		   }
+	   })
+	});
+	});
 });
 
 /**

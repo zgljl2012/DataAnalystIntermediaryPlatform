@@ -170,8 +170,85 @@ public class CommentManageImpl extends AbstractService implements CommentManage{
 
 	@Override
 	public JSON getFxs2Qy(int projectId) throws PostException {
-		// TODO Auto-generated method stub
-		return null;
+		if(!bidManage.isExistsProjectId(projectId)) {
+			throw new PostException("没有找到该项目");
+		}
+		String sql = "SELECT F02,F03 FROM T71 WHERE F01 = ?";
+		final JSON result = new JSON();
+		Connection conn = this.getConnection();
+		try {
+			this.select(conn, sql, new SelectExecutor() {
+				
+				@Override
+				public void execute(ResultSet rs) {
+					try {
+						if(rs.next()) {
+							result.put("comment", rs.getString(1));
+							result.put("grade", ""+rs.getFloat(2));
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}, projectId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new PostException("系统发生错误");
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public float getAverageOfQy(int projectId) throws PostException {
+		String sql = "SELECT AVG(t1.F03) FROM T71 AS t1 LEFT JOIN T40 AS t2 ON t1.F01 = t2.F01 WHERE t2.F04 = ?";
+		Connection conn = this.getConnection();
+		try {
+			ResultSet rs = this.select(conn, sql, projectId);
+			float r = 0;
+			if(rs.next()) {
+				r = rs.getFloat(1);
+			}
+			rs.close();
+			rs.getStatement().close();
+			return r;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
+
+	@Override
+	public float getAverageOfFxs(int fxsId) throws PostException {
+		String sql = "SELECT AVG(t1.F03) FROM T70 AS t1 LEFT JOIN T40 AS t2 ON t1.F01 = t2.F01 WHERE t2.F15 = ?";
+		Connection conn = this.getConnection();
+		try {
+			ResultSet rs = this.select(conn, sql, fxsId);
+			float r = 0;
+			if(rs.next()) {
+				r = rs.getFloat(1);
+			}
+			rs.close();
+			rs.getStatement().close();
+			return r;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.close(conn);
+		}
+		return 0;
 	}
 
 }

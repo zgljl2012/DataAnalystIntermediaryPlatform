@@ -16,6 +16,7 @@
 <script src="publics/js/ie-emulation-modes-warning.js"></script>
 <%--项目列表 --%>
 <link rel="stylesheet" type="text/css" href="publics/css/zg-common.css">
+<link rel="stylesheet" type="text/css" href="publics/css/plugins/star/star-rating.min.css">
 <%headerPage="XMSC";%>
 </head>
 <body>
@@ -134,6 +135,7 @@
 							{{if d.t40.F05 == 'TBZ'}}
 							<span class="zg-time-before-limit">{{= t40.F17 }}天后截止</span>
 							{{/if}}
+							<span class="fs08 blue ml20">分数：{{= avg}}</span>
 							{{if d.t40.F05 == 'JXZ'}}
 							<span class="zg-time-before-limit">已选择分析师</span>
 							{{/if}}
@@ -144,7 +146,7 @@
 							{{if d.t40.F05 == 'TBZ'}}
 							<span class="zg-time-after-limit">期望完成时间：{{= t40.F12 }}</span>
 							{{/if}}
-							<span class="zg-join-people">现有28人参与</span>
+							<span class="zg-join-people">现有{{= countBid}}人参与</span>
 						</div>
 					</td>
 				</tr>
@@ -197,7 +199,7 @@
 		})
 		$("#clearAll").click(function(){
 			filter.clear()
-		})
+		});
    })
    </script>
 </body>

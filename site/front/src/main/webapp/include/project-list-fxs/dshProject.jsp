@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <script>
 $("#dsh_loading").show();
+require(["jquery-2.1.1.min"], function(){
 require(["user/project/projectList"], function(ProjectList){
 	var list = new ProjectList("DSH");
 	list.loadData($("#dsh_tmplData"), $("#dsh_tmplTable"),function(data){
@@ -10,6 +11,7 @@ require(["user/project/projectList"], function(ProjectList){
 			$("ul[name=dsh_paging]").hide()
 		}
 	});
+});
 });
 </script>
 <div class="container">

@@ -55,7 +55,7 @@ require(["jquery-2.1.1.min"], function(){
 						</div></div>
 						<div class="col-sm-2 mt40">
 						<div class="select-buttons fr">
-							<button class="btn-8" onclick=''>编辑</button>
+							<button class="btn-8" onclick='window.location.href="project/edit/{{= t40.F01}}"'>编辑</button>
 						</div>
 						</div>
 						</div>

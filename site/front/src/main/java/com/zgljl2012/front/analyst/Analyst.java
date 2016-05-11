@@ -48,7 +48,9 @@ public class Analyst extends AbstractServlet{
 			
 			@Override
 			public float getGrade() {
-				// TODO Auto-generated method stub
+				if(!StringHelper.isEmpty(req.getParameter("grade"))) {
+					return Float.parseFloat(req.getParameter("grade"));
+				}
 				return 0;
 			}
 			

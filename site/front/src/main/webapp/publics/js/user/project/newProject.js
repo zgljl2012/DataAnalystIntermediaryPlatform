@@ -2,7 +2,8 @@
 define(["common/url"], function(url){
 	
 	var doc = document,
-		submitUrl = url.user.qy.project.add;
+		submitUrl = url.user.qy.project.add,
+		updateUrl = url.user.qy.project.edit;
 	
 	//初始化日期控件
 	$('input[date]').datetimepicker({  
@@ -67,7 +68,6 @@ define(["common/url"], function(url){
 	 */
 	doc.checkBidDays = function(bd) {
 		var value = bd.value;
-		console.log(value)
 		var a = $(bd).nextAll('span[error]');
 		if(value==null||value=="") {
 			a.html("请输入招标天数");
@@ -88,7 +88,7 @@ define(["common/url"], function(url){
 	 * 检查完成时间
 	 * @param tl
 	 */
-	doc.checkTimeLimit = function(tl) {
+	doc.checkTimeLimit = function(tl, isedit) {
 		var value = tl.value;
 		var a = $(tl).nextAll('span[error]');
 		if(value==null||value=="") {
@@ -100,10 +100,14 @@ define(["common/url"], function(url){
 		}
 		var now = new Date();
 		var target = new Date(value);
-		if(now > target) {
-			a.html("完成时间不能小于当前时间");
-			return false;
-		}
+		if(isedit&&isedit==true) {
+			
+		} else
+			if(now > target) {
+				a.html("完成时间不能小于当前时间");
+				a.show();
+				return false;
+			}
 		a.hide();
 		return true;
 	}
@@ -134,12 +138,15 @@ define(["common/url"], function(url){
 	 * @param form
 	 * @returns {Boolean}
 	 */
-	doc.onNewProject = function(form) {
-		console.log(form)
+	doc.onNewProject = function(form, isedit) {
+		var url = submitUrl;
+		if(isedit) {
+			url = updateUrl;
+		}
 		if(doc.checkProjectName(form.projectName)&&doc.checkWillPrice(form.willPrice)
-				&&doc.checkBidDays(form.bidDays)&&doc.checkTimeLimit(form.timeLimit)
+				&&doc.checkBidDays(form.bidDays)&&doc.checkTimeLimit(form.timeLimit, true)
 				&&doc.checkProjectDescription(form.projectDescription)) {
-			$(form).attr("action",submitUrl);
+			$(form).attr("action",url);
 			return true;
 		}
 		return false;

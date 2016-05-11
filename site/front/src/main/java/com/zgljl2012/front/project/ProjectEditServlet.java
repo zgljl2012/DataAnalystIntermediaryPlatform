@@ -16,7 +16,7 @@ import com.zgljl2012.modules.project.ProjectManage;
  * 项目编辑界面
  */
 @SuppressWarnings("serial")
-@WebServlet(name="projectEdit", urlPatterns={"/project/Edit/*"})
+@WebServlet(name="projectEdit", urlPatterns={"/project/edit/*"})
 public class ProjectEditServlet extends AbstractServlet{
 	
 	@Impl
@@ -29,7 +29,7 @@ public class ProjectEditServlet extends AbstractServlet{
 		String id = url.substring(url.lastIndexOf('/')+1);
 		JSON r = projectManage.getProjectInfo(Integer.parseInt(id));
 		req.setAttribute("data", r);
-		url = "/more/project/page.jsp";
+		url = "/more/project/edit.jsp";
 		this.forward(req, res, url);
 	}
 
