@@ -4,6 +4,7 @@
  */
 define(["common/config"], function(config) {
 	var host = config.host;
+	var console = config.console;
 	var url = {
 		user: {
 			qy:{
@@ -12,6 +13,9 @@ define(["common/config"], function(config) {
 					list:host+"project/list", // 项目列表地址
 				}
 			}
+		},
+		system:{
+			variable:console+"variable"
 		}
 	}
 	return url;

@@ -1,11 +1,11 @@
 package com.zgljl2012.framework.system;
 
-import javax.servlet.ServletContextEvent;
+import com.zgljl2012.framework.controller.Controller;
 
 public class TestStartup implements SystemStartupListener{
 
 	@Override
-	public void startup(ServletContextEvent context) {
+	public void startup(Controller controller) {
 		// TODO Auto-generated method stub
 		System.out.println("startup");
 	}

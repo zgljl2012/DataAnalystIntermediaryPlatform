@@ -40,7 +40,6 @@
 		                     待审核项目
 		      </a>
 		   </li>
-		   <li><a href="#add_project" data-toggle="tab">后台新增项目 </a></li>
 		   <li role="presentation" class="dropdown">
 		    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 		      项目管理 <span class="caret"></span>
@@ -56,17 +55,14 @@
 			<div id="dsh_project" class="tab-pane in active">
 				<%@include file="/include/project/dshProject.jsp" %>
 			</div>
-			<div id="add_project" class="tab-pane fade" >
-			
-			</div>
 			<div id="running_project" class="tab-pane fade" >
-			
+				<%@include file="/include/project/jxzProject.jsp" %>
 			</div>
 			<div id="bidding_project" class="tab-pane fade" >
-			
+				<%@include file="/include/project/tbzProject.jsp" %>
 			</div>
 			<div id="finished_project" class="tab-pane fade" >
-			
+				<%@include file="/include/project/yjsProject.jsp" %>
 			</div>
 		
 		</div>

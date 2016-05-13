@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <script>
-$("#dsh_loading").show();
-require(["user/project/projectList"], function(doc){
-	doc.loadData("DSH",$("#dsh_tmplData"), $("#dsh_tmplTable"), function(data){
-		$("#dsh_loading").hide();
-		if(data==null||data.length == 0) {
-			$("#dsh_noDataHint").show();
-			$("ul[name=dsh_paging]").hide()
-		}
+require(["jquery-2.1.1.min"], function(){
+ 	require(["user/project/projectList"], function(ProjectList){
+ 		$("#dsh_loading").show();
+		var list = new ProjectList("DSH");
+		list.loadData($("#dsh_tmplData"), $("#dsh_tmplTable"),function(data){
+			$("#dsh_loading").hide();
+			if(data==null||data.length == 0) {
+				$("#dsh_noDataHint").show();
+				$("ul[name=dsh_paging]").hide()
+			}
+		});
 	});
-});
+}) 
 </script>
 <div class="container">
 	<%-- 暂无数据 --%>

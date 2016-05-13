@@ -38,7 +38,8 @@ public abstract class AbstractServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		req.setCharacterEncoding("utf-8");
+		resp.setCharacterEncoding("utf-8");
 		try {
 			get(req, resp, controller);
 		} catch(PostException e) {

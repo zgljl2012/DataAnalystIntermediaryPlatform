@@ -38,6 +38,7 @@
   	<module>front-service-user</module>
     <module>front-service-analyst</module>
     <module>project-service-manage</module>
+    <module>console-service-manage</module>
   </modules>
   <build>  
     <plugins>  

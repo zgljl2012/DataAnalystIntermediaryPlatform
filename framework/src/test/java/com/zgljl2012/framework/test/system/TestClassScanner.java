@@ -9,6 +9,7 @@ import javax.servlet.ServletContextEvent;
 import org.easymock.EasyMock;
 import org.junit.Test;
 
+import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.simple.system.SystemInitializeSimple;
 import com.zgljl2012.framework.system.SystemInitialize;
 import com.zgljl2012.framework.system.SystemStartupListener;
@@ -49,7 +50,7 @@ public class TestClassScanner {
 	public void testSystemInitialize() {
 		SystemInitialize init = new SystemInitializeSimple();
 		String pkgName = "com.zgljl2012";
-		ServletContextEvent context = EasyMock.createMock(ServletContextEvent.class);
+		Controller context = EasyMock.createMock(Controller.class);
 		init.initShutdown(pkgName, context);
 		init.initStartup(pkgName, context);
 	}

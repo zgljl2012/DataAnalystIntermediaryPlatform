@@ -1,50 +1,16 @@
 
-define(["common/url","dialog","pagging","jquery.tmpl"], function(url,dialog,pagging){
-	var doc = window.document,
-		tmpl,
-		tmplTarget,
-		url = url.user.qy.project.list,
-		data = {"data":[]};
-	doc.pagging = pagging;
-	doc.loadData = function(status, _tmpl, _tmplTarget, func) {
-		tmpl = _tmpl;
-		tmplTarget = _tmplTarget;
-		$.ajax({
-			url:url,
-			data:{"status":status,current:pagging.current},
-			success:function(_data){
-				if(_data == null) {
-					dialog.showAlert("数据出错，请刷新重试");
-				}
-				data = eval("("+_data+")");
-				data = doc.filterData(data);
-				if(!doc.tmplItem||!doc.tmplItem.nodes||doc.tmplItem.nodes.length==0) {
-					tmpl = tmpl.tmpl(data).appendTo(tmplTarget);
-					doc.tmplItem = $.tmplItem(tmpl);
-				} else {
-					doc.tmplItem.data = data;
-					doc.tmplItem.update();
-				}
-				if(func != null) {
-					func.apply(this, [data["data"]])
-				}
-				console.log(data)
-				pagging.name = status.toLowerCase() + "_" + "paging";
-				// 开始分页
-				pagging.paging(function(cur){
-					pagging.current = cur;
-					doc.loadData(status, tmpl, tmplTarget, func);
-				}, data.count, data.pageSize);
-			},
-			error:function(){
-				dialog.showAlert("网络出错，请刷新重试！");
-			}
-		});
-	}
-	doc.filterData= function(data){
+define(["common/url","dialog","common/pagging2","jquery.tmpl"], function(url,dialog,pagging){
+	var doc = function(status) {
+		this.url = url.user.qy.project.list,
+		this.data = {"data":[]},
+		this.pg = null,
+		this.current = 1;
+		this.status = status;
+	};
+	var filterData= function(data){
 		tmp = data["data"];
 		for(d in tmp) {
-			d = tmp[d]
+			d = tmp[d];
 			if(d.t40.F03 == "0.0") {
 				d.t40.F03= "面议";
 			}
@@ -57,5 +23,46 @@ define(["common/url","dialog","pagging","jquery.tmpl"], function(url,dialog,pagg
 		}
 		return data;
 	}
+	doc.prototype.loadData = function(_tmpl, _tmplTarget, func) {
+		var tmpl = _tmpl;
+		var tmplTarget = _tmplTarget;
+		var status = this.status;
+		var self = this;
+		$.ajax({
+			url:this.url,
+			data:{"status":status,current:this.current},
+			success:function(_data){
+				if(_data == null) {
+					dialog.showAlert("数据出错，请刷新重试");
+				}
+				this.data = eval("("+_data+")");
+				this.data = filterData(this.data);
+				if(!self.tmplItem||!self.tmplItem.nodes||self.tmplItem.nodes.length==0) {
+					tmpl = tmpl.tmpl(this.data).appendTo(tmplTarget);
+					self.tmplItem = $.tmplItem(tmpl);
+				} else {
+					self.tmplItem.data = this.data;
+					self.tmplItem.update();
+				}
+				if(func != null) {
+					func.apply(this, [this.data["data"]])
+				}
+				if(self.pg == null) {
+					var name = status.toLowerCase() + "_" + "paging";
+					self.pg = new pagging(name, function(cur){
+						self.current = cur;
+						self.pg.current = cur;
+						self.loadData(tmpl, tmplTarget, func);
+					}, this.data.count, this.data.pageSize)
+					self.pg.paging();
+					document[name] = self.pg;
+				}
+			},
+			error:function(){
+				dialog.showAlert("网络出错，请刷新重试！");
+			}
+		});
+	}
+	
 	return doc;
 })

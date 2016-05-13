@@ -4,7 +4,7 @@
   <head>
 	<%@include file="/include/meta.jsp" %>
 
-    <title>首页-<%=variableManage.getValue(SystemVariable.SITENAME) %></title>
+    <title>系统管理-<%=variableManage.getValue(SystemVariable.SITENAME) %></title>
 
     <%@include file="/include/style.jsp" %>
     
@@ -27,10 +27,64 @@
   	
     <!--导航栏-->
     <%@include file="/include/header.jsp" %>
+    <div class="container">
+    <div class="panel panel-default">
+    	<div class="panel-heading">系统管理</div>
+    	<div class="panel-body">
+    	<ul id="myTab" class="nav nav-tabs">
+		   <li class="active">
+		      <a href="#variable" data-toggle="tab">
+		                     常量配置
+		      </a>
+		   </li>
+		</ul>
+		<div class="tab-content">
+			<div id="variable" class="tab-pane in active">
+				<div id="loading" class="row tc">
+					<img src="publics/images/loadingBig.gif"></img>
+				</div>
+				<div class="row">
+				<table class="table table-hover" id="tmplTable" style="width:95%;">
+					<tr>
+						<th>ID</th>
+						<th>名字</th>
+						<th>值</th>
+						<th>操作</th>
+					</tr>
+					<script id="tmplData" type="text/x-jquery-tmpl">
+				{{each(i, d) data}}
+				{{if d!=null}}
+				<tr>
+					<td>{{= d.key}}</td>
+					<td>{{= d.name}}</td>
+					<td>{{= d.value}}</td>
+					<td class="cp"><a href="variable/update?key={{= d.key}}">修改</a></td>
+				</tr>
+				{{/if}}
+				{{/each}}
+				</script>
+				</table>
+				</div>
+			</div>
+		</div>
+		</div>
+    </div>
+    </div>
     
     
    <!--底部导航栏-->
    <%@include file="/include/footer.jsp" %>
-    
+   <script>
+   require(["jquery-2.1.1"],function(){
+	   require(["bootstrap.min"], function() {
+		   require(["system/variable"],function(va){
+			   va.list(function(data) {
+				   $("#loading").hide();
+				   va.tmpl(data, $("#tmplData"), $("#tmplTable"));
+			   });
+		   })
+	   })
+   })
+   </script>
   </body>
 </html>

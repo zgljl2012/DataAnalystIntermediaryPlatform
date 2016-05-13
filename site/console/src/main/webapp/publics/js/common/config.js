@@ -12,6 +12,7 @@ define([], function(){
 	}
 	var config = {
 		host:modeTypes["dev"],	// 当前系统模式
+		console:"http://localhost:8080/console/"
 	}
 	return config;
 })

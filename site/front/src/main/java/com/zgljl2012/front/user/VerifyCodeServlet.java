@@ -27,7 +27,7 @@ public class VerifyCodeServlet extends AbstractServlet{
 	
 	public static int WIDTH = 120; // 生成的图片的宽度
 	public static int HEIGHT = 30; // 生成的图片的高度
-	public static int COUNT = 4;   // 字符个数
+	public static int COUNT = 6;   // 字符个数
 	
 	@Override
 	protected void get(HttpServletRequest request, HttpServletResponse response,
@@ -176,6 +176,7 @@ public class VerifyCodeServlet extends AbstractServlet{
         StringBuffer sb = new StringBuffer();
         int x = 5;
         String ch ="";
+        int w = VerifyCodeServlet.WIDTH / VerifyCodeServlet.COUNT;
         // 控制字数
         for (int i = 0; i < COUNT; i++) {
             // 设置字体旋转角度
@@ -187,7 +188,7 @@ public class VerifyCodeServlet extends AbstractServlet{
             g.drawString(ch, x, 20);
             // 反向角度
             g.rotate(-degree * Math.PI / 180, x, 20);
-            x += 30;
+            x += w;
         }
         return sb.toString();
     }

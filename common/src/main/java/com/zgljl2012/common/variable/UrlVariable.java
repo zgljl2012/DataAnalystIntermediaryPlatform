@@ -10,7 +10,9 @@ import com.zgljl2012.framework.variable.VariableClass;
  */
 @VariableClass(key="URL", name="URL变量")
 public enum UrlVariable implements VariableBean{
-	FXS_PERSONAL_ITEM("分析师个人主页展示页面", "more/analyst/personal.jsp")
+	FXS_PERSONAL_ITEM("分析师个人主页展示页面", "more/analyst/personal.jsp"),
+	VARIABLE_UPDATE("系统常量修改URL","/more/system/variableUpdate.jsp"),
+	VARIABLE("系统常量配置页面","/more/system.jsp")
 	;
 	private String key = "";
 	private String name= "";

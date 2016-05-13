@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.servlet.ServletContextEvent;
 
+import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.system.SystemInitialize;
 import com.zgljl2012.framework.system.SystemShutdownListener;
 import com.zgljl2012.framework.system.SystemStartupListener;
@@ -24,13 +25,13 @@ public class SystemInitializeSimple implements SystemInitialize{
 	}
 
 	@Override
-	public void initStartup(String pkgName, ServletContextEvent context) {
-		init(pkgName, SystemStartupListener.class, "startup", new Class<?>[]{ServletContextEvent.class}, new Object[]{context});
+	public void initStartup(String pkgName, Controller controller) {
+		init(pkgName, SystemStartupListener.class, "startup", new Class<?>[]{Controller.class}, new Object[]{controller});
 	}
 
 	@Override
-	public void initShutdown(String pkgName, ServletContextEvent context) {
-		init(pkgName, SystemShutdownListener.class, "shutdown", new Class<?>[]{ServletContextEvent.class}, new Object[]{context});
+	public void initShutdown(String pkgName, Controller controller) {
+		init(pkgName, SystemShutdownListener.class, "shutdown", new Class<?>[]{Controller.class}, new Object[]{controller});
 	}
 	
 	public void init(String pkgName, Class<?> superCls, String methodName, Class<?>[] argClss, Object[] args) {

@@ -99,8 +99,6 @@ public class ScannerUtil {
 												packageName.length() + 1, name
 														.length() - 6);
 										try {
-											System.out.println(packageName + '.'
-															+ className);
 											// 添加到classes
 											classes.add(Class
 													.forName(packageName + '.'

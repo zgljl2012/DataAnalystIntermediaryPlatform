@@ -1,6 +1,6 @@
 package com.zgljl2012.framework.system;
 
-import javax.servlet.ServletContextEvent;
+import com.zgljl2012.framework.controller.Controller;
 
 /**
  * @author 廖金龙
@@ -9,6 +9,6 @@ import javax.servlet.ServletContextEvent;
  */
 public interface SystemStartupListener {
 	
-	public void startup(ServletContextEvent context);
+	public void startup(Controller controller);
 	
 }
