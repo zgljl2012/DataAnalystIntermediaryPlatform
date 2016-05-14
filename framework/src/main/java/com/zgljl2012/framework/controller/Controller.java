@@ -1,6 +1,7 @@
 package com.zgljl2012.framework.controller;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -79,4 +80,5 @@ public interface Controller {
 	 * @return
 	 */
 	public AbstractLog getLogger();
+	
 }

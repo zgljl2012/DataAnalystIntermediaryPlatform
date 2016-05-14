@@ -100,7 +100,12 @@ public class JSON implements Cloneable{
 		} else if(value instanceof JSON) {
 			put(key, (JSON)value);
 			return;
+		} else if(value instanceof Integer) {
+			map.put(key, (Integer)value);
+			return;
 		}
+		System.out.print(key+" ");
+		System.out.println(value);
 		map.put(key, value);
 	}
 	
@@ -262,19 +267,15 @@ public class JSON implements Cloneable{
 		for(Map.Entry<String, Object> entry : map.entrySet()) {
 			if(entry.getValue().getClass().equals(String.class)) {
 				json += margePair(entry.getKey(), (String)entry.getValue());
-				if(count != length-1) {
-					json += ",";
-				}
 			} else if(entry.getValue().getClass().equals(JSON.class)) {
 				json += addMarks(entry.getKey())+":"+entry.getValue().toString();
-				if(count != length-1) {
-					json += ",";
-				}
 			} else if(entry.getValue().getClass().equals(JSONArray.class)) {
 				json += addMarks(entry.getKey())+":" + ((JSONArray)entry.getValue()).array;
-				if(count != length-1) {
-					json += ",";
-				}
+			} else {
+				json += addMarks(entry.getKey())+":"+entry.getValue().toString();
+			}
+			if(count != length-1) {
+				json += ",";
 			}
 			count++;
 		}

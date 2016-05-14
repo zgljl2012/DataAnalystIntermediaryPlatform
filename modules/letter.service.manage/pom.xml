@@ -7,32 +7,18 @@
     <artifactId>modules</artifactId>
     <version>0.0.1</version>
   </parent>
-  <artifactId>front-service-user</artifactId>
-  <name>front-service-user</name>
+  <artifactId>letter-service-manage</artifactId>
+  <name>letter.service.manage</name>
   <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
+      <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-    	<groupId>com.zgljl2012</groupId>
-    	<artifactId>letter-service-manage</artifactId>
-    	<version>0.0.1</version>
-    </dependency>
   </dependencies>
-  <build>  
-    <plugins>  
-      <plugin>  
-        <groupId>org.apache.maven.plugins</groupId>  
-        <artifactId>maven-compiler-plugin</artifactId>  
-        <configuration>  
-          <source>1.7</source>  
-          <target>1.7</target>  
-        </configuration>  
-      </plugin>  
-    </plugins>  
-</build>  
 </project>

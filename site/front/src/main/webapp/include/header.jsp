@@ -25,6 +25,7 @@
 				  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 				    <li><a href="user" title="<%=ljlSession.getUsername() %>">基础资料</a></li>
 				    <li><a href="user/resetPwd">修改密码</a></li>
+				    <li><a >站内信</a></li>
 				  </ul>
 				
           	</li>

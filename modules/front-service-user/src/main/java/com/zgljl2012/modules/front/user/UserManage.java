@@ -2,6 +2,7 @@ package com.zgljl2012.modules.front.user;
 
 import com.zgljl2012.common.database.T10;
 import com.zgljl2012.common.database.T11;
+import com.zgljl2012.framework.exceptions.PostException;
 import com.zgljl2012.framework.service.Service;
 
 /**
@@ -96,5 +97,13 @@ public interface UserManage extends Service {
 	 * @throws Exception
 	 */
 	public void updatePassword(int uid, String pwd) throws Exception;
+	
+	/**
+	 * 根据用户名获取用户ID
+	 * @param username
+	 * @return
+	 * @throws Exception
+	 */
+	public int getUidByUsername(String username) throws PostException;
 	
 }

@@ -42,6 +42,13 @@ public class TestJSON {
 	}
 	
 	@Test
+	public void testInt() {
+		JSON j = new JSON();
+		j.put("i", 1);
+		System.out.println(j);
+	}
+	
+	@Test
 	public void testYinhao() {
 		String s = "Hello\"World\"";
 		s = s.replace("\"", "\\\"");

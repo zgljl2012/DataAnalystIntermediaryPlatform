@@ -58,6 +58,8 @@ public abstract class AbstractServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		resp.setCharacterEncoding("utf-8");
 		try {
 			post(req, resp, controller);
 		} catch(PostException e) {

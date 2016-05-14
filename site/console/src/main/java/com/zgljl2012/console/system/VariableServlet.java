@@ -31,11 +31,13 @@ public class VariableServlet extends AbstractServlet{
 		List<JSON> ls = new ArrayList<>();
 		for(VariableBean vb : list) {
 			JSON j = new JSON();
-			j.put("key", vb.getKey());
-			j.put("name", vb.getName());
-			j.put("description", vb.getDescription());
-			j.put("value", vb.getValue());
-			ls.add(j);
+			if(vb != null){
+				j.put("key", vb.getKey());
+				j.put("name", vb.getName());
+				j.put("description", vb.getDescription());
+				j.put("value", vb.getValue());
+				ls.add(j);
+			}
 		}
 		json.put("data", ls);
 		out(res, json);

@@ -7,6 +7,12 @@
         <dependent-module archiveName="project-service-manage-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/project-service-manage/project-service-manage">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="letter-service-manage-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/letter-service-manage/letter-service-manage">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="front-service-user-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/front-service-user/front-service-user">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="framework-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/framework/framework">
             <dependency-type>uses</dependency-type>
         </dependent-module>

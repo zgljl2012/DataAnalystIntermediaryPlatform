@@ -3,31 +3,40 @@ package com.zgljl2012.modules.front.user.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.zgljl2012.common.database.T10;
 import com.zgljl2012.common.database.T11;
 import com.zgljl2012.common.database.enums.Bool;
 import com.zgljl2012.common.database.enums.T10_F05;
 import com.zgljl2012.common.database.enums.T10_F08;
+import com.zgljl2012.common.variable.LetterVariable;
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.exceptions.PostException;
 import com.zgljl2012.framework.service.AbstractService;
 import com.zgljl2012.framework.util.StringHelper;
+import com.zgljl2012.framework.variable.VariableManage;
 import com.zgljl2012.modules.front.user.UserManage;
+import com.zgljl2012.modules.letter.manage.service.LetterManage;
 
 /**
  * @author 廖金龙
  * UserManage的实现类
  */
 public class UserManageImpl extends AbstractService implements UserManage{
-
+	
+	private LetterManage letterManage; 
+	
+	private VariableManage variableManage;
+	
 	public UserManageImpl(Controller controller) {
 		super(controller);
-		// TODO Auto-generated constructor stub
 	}
 
 	public int login(String username, String password) throws Exception {
-		// TODO Auto-generated method stub
 		Connection conn = this.getConnection();
 		if(StringHelper.isEmpty(username)) {
 			throw new Exception("用户名不能为空");
@@ -57,6 +66,9 @@ public class UserManageImpl extends AbstractService implements UserManage{
 
 	public int register(String username, String password, String email, String userType) throws Exception {
 		Connection conn = this.getConnection();
+		letterManage = 
+				controller.getServiceManage().getService(LetterManage.class);
+		variableManage = controller.getVariableManage();
 		String sql = "INSERT INTO T10(F02,F03,F04,F05,F06,F07,F08) VALUES(? ,? ,? ,? ,? ,? ,?)";
 		String t20 = "INSERT INTO T20(F01) VALUES(?)"; // 插分析师资料简介
 		String t30 = "INSERT INTO T30(F01) VALUES(?)"; // 插企业资料简介
@@ -113,6 +125,12 @@ public class UserManageImpl extends AbstractService implements UserManage{
 				conn.commit();
 				rs.close();
 				pstmt.close();
+				String content = variableManage.getValue(LetterVariable.REGISTER);
+				Map<String, String> map = new HashMap<>();
+				map.put("name", username);
+				content = StringHelper.renderString(content, map);
+				StringHelper.renderString(content, map);
+				letterManage.sendLetter(0, key, "注册成功", content);
 				return key; // 返回自增的ID
 			}
 			return -1; // 注册失败
@@ -285,5 +303,31 @@ public class UserManageImpl extends AbstractService implements UserManage{
 		Connection conn = this.getConnection();
 		this.update(conn, "UPDATE T10 SET F04 = ? WHERE F01 = ?", null, pwd,uid);
 		conn.close();
+	}
+
+	@Override
+	public int getUidByUsername(String username) throws PostException {
+		String sql = "SELECT F01 FROM T10 WHERE F02 = ?";
+		Connection conn = this.getConnection();
+		ResultSet rs = null;
+		try {
+			rs = this.select(conn, sql, username);
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {
+				try {
+					rs.close();
+					rs.getStatement().close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			this.close(conn);
+		}
+		return 0;
 	}	
 }

@@ -24,6 +24,16 @@
     <version>${ljl.version}</version>
     </dependency>
     <dependency>
+    	<groupId>com.zgljl2012</groupId>
+    	<artifactId>letter-service-manage</artifactId>
+    	<version>${ljl.version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.zgljl2012</groupId>
+    	<artifactId>front-service-user</artifactId>
+    	<version>${ljl.version}</version>
+    </dependency>
+    <dependency>
 	<groupId>javax.servlet</groupId>
 	<artifactId>javax.servlet-api</artifactId>
 	<version>3.0.1</version>

@@ -1,5 +1,8 @@
 package com.zgljl2012.framework.test.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -32,5 +35,15 @@ public class TestStringHelper {
 	public void asteriskEmail() {
 		String s = "223344@qq.com";
 		System.out.println(StringHelper.asteriskEmail(s));
+	}
+	
+	@Test
+	public void renderString() {
+		String content = "hello ${name}, 1 2 3 4 5 ${six} 7, again ${name}. ";
+		Map<String, String> map = new HashMap<>();
+		map.put("name", "java");
+		map.put("six", "6");
+		content = StringHelper.renderString(content, map);
+		System.out.println(content);
 	}
 }
