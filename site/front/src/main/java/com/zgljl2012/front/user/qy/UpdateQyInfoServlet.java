@@ -48,7 +48,7 @@ public class UpdateQyInfoServlet extends AbstractServlet{
 			if("username".equals(name)) {
 				userManage.updateUsername(uid, value);
 				json.put("msg", "用户名修改成功");
-			}
+			} else {
 			qyManage.updateQyInfo(uid, new QyUpdateQuery() {
 				
 				@Override
@@ -59,6 +59,7 @@ public class UpdateQyInfoServlet extends AbstractServlet{
 				@Override
 				public String getRemark() {
 					if("remark".equals(name)) {
+						System.out.println(value);
 						return value;
 					}
 					return null;
@@ -88,6 +89,7 @@ public class UpdateQyInfoServlet extends AbstractServlet{
 					return null;
 				}
 			});
+			}
 		} catch (Exception e) {
 			json.put("success", "false");
 			if(e.getMessage() != null) {

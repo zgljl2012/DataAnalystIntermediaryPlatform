@@ -1,4 +1,11 @@
-    <%@page language="java" contentType="text/html; charset=utf-8" %>
+<%@page language="java" contentType="text/html; charset=utf-8" %>
+<%@page language="java" import="com.zgljl2012.modules.letter.manage.service.LetterManage" %>
+<%
+LetterManage letterManage = 
+	controller.getServiceManage().getService(LetterManage.class);
+int unreaded = letterManage.countUnReaded(ljlSession.getUserId());
+
+%>
     <%--引入requireJS框架 --%>
     <script src="publics/js/plugins/require/require.min.js" data-main="publics/js/main.js"></script>
     <nav class="navbar navbar-fixed-top navbar-inverse">
@@ -25,7 +32,7 @@
 				  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 				    <li><a href="user" title="<%=ljlSession.getUsername() %>">基础资料</a></li>
 				    <li><a href="user/resetPwd">修改密码</a></li>
-				    <li><a >站内信</a></li>
+				    <li><a href="more/user/letter.jsp">站内信<label class="white bk_red pl5 pr5 ml5 cp" title="<%=unreaded %>条未读"><%=unreaded %></label></a></li>
 				  </ul>
 				
           	</li>

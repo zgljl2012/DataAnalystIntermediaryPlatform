@@ -21,6 +21,9 @@ define(["common/config"], function(config) {
 				project:{
 					query:host+"user/fxs/project/query", // 分析师查询Url
 				}
+			},
+			letter:{
+				list:host+"letter", // 站内信列表
 			}
 		},
 		project:{

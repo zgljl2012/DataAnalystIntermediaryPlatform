@@ -12,17 +12,15 @@
 <link href="publics/css/offcanvas.css" rel="stylesheet">
 <link href="publics/css/zg-common.css" rel="stylesheet"/>
 <link href="publics/css/app.css" rel="stylesheet"/>
-
 <link href="publics/css/plugins/date/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
 <link href="publics/css/plugins/fileInput/fileinput.css" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" href="publics/css/plugins/star/star-rating.min.css">
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="publics/js/ie8-responsive-file-warning.js"></script><![endif]-->
 <script type="text/javascript" src="publics/js/jquery.min.js"></script>
-<script type="text/javascript" src="publics/js/bootstrap.min.js"></script>
-<!-- <script type="text/javascript" src="publics/js/plugins/date/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="publics/js/plugins/date/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="publics/js/plugins/date/bootstrap-datetimepicker.zh-CN.js"></script>
- --><script type="text/javascript" src="publics/js/plugins/fileInput/fileinput.min.js"></script>
+<script type="text/javascript" src="publics/js/plugins/fileInput/fileinput.min.js"></script>
 <script type="text/javascript" src="publics/js/plugins/fileInput/fileinput_locale_zh.js"></script>
 <%--验证用户有没有登录 --%>
 <%@include file="/include/validate.jsp" %>
@@ -43,17 +41,12 @@
    <%@include file="/include/footer.jsp" %>
    <%--对话框 --%>
    <%@include file="/include/dialog.jsp" %>
-   <%--引入Require框架 --%>
-   <script src="/front/publics/js/plugins/require/require.min.js"></script>
    <%if("FXS".equals(userType)) { %>
     	<script src="/front/publics/js/user/index.js"></script>
     <%} else { %>
-    <script type="text/javascript" src="publics/js/plugins/date/bootstrap-datetimepicker.min.js"></script>
-	<script type="text/javascript" src="publics/js/plugins/date/bootstrap-datetimepicker.zh-CN.js"></script>
-    
     	<script src="/front/publics/js/user/qy.js"></script>
     <%} %>
-   <script src="/front/publics/js/common/dialog.js"></script>
+   <script src="publics/js/common/dialog.js"></script>
    <script>
    <%--用户类型--%>
    var userType = '<%=userType%>';

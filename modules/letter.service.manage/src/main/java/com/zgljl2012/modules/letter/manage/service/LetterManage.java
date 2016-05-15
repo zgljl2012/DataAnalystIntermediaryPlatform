@@ -2,8 +2,10 @@ package com.zgljl2012.modules.letter.manage.service;
 
 import java.util.List;
 
+import com.zgljl2012.framework.database.PagingInfo;
 import com.zgljl2012.framework.service.Service;
 import com.zgljl2012.framework.util.JSON;
+import com.zgljl2012.modules.letter.manage.query.LetterQuery;
 
 /**
  * @author 廖金龙
@@ -46,6 +48,14 @@ public interface LetterManage extends Service{
 	JSON getAllLetter(int userId);
 	
 	/**
+	 * 分页读取用户所有的站内信，按时间排序
+	 * @param userId
+	 * @param info
+	 * @return
+	 */
+	JSON getAllLetter(int userId, PagingInfo info, LetterQuery query);
+	
+	/**
 	 * 查询一封站内信是否已读
 	 * @param lid
 	 * @return
@@ -63,4 +73,17 @@ public interface LetterManage extends Service{
 	 * @param lid
 	 */
 	void readedLetter(int lid);
+	
+	/**
+	 * 删除此用户所有的站内信
+	 * @param userId
+	 */
+	void deleteAllLetterOfOne(int userId);
+	
+	/**
+	 * 用户未读条数
+	 * @param userId
+	 * @return
+	 */
+	int countUnReaded(int userId);
 }

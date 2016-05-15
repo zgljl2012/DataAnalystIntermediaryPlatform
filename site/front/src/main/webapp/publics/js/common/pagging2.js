@@ -71,7 +71,7 @@ define([], function(){
 				"4)>...</a></li>"
 		} else if(!isMiddle&&left.length >= 2&&pageCount>5) {
 			s += "<li><a  title='下一页' onclick="+this.name+".pullData("+
-			 (getPageCount()-3)+")>...</a></li>"
+			 (this.getPageCount()-3)+")>...</a></li>"
 		}
 		for(var i=0;i<right.length;i++) {
 			s += "<li><a onclick="+this.name+".pullData("+right[i]

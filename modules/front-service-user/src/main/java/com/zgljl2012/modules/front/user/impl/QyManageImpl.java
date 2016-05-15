@@ -70,7 +70,7 @@ public class QyManageImpl extends AbstractService implements QyManage{
 		if(!rs.next()) {
 			throw new Exception("没有找到该用户！");
 		}
-		StringBuilder sb = new StringBuilder("UPDATE T30 SET F01=F01");
+		StringBuilder sb = new StringBuilder("UPDATE T30 SET F01=F01 ");
 		ArrayList<Object> args = new ArrayList<>();
 		if(!StringHelper.isEmpty(query.getCompanyName())) {
 			sb.append(", F02 = ? ");
@@ -81,10 +81,10 @@ public class QyManageImpl extends AbstractService implements QyManage{
 			args.add(query.getBusiness());
 		}
 		if(!StringHelper.isEmpty(query.getRemark())) {
-			sb.append(", F04 = ?");
+			sb.append(", F04 = ? ");
 			args.add(query.getRemark());
 		}
-		sb.append("WHERE F01 = ?");
+		sb.append(" WHERE F01 = ?");
 		args.add(uid);
 		this.update(conn, sb.toString(), new UpdateExecutor() {
 			

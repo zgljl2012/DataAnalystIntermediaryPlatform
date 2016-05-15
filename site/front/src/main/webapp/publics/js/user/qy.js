@@ -1,14 +1,19 @@
 var global = {};
 
 $(function() {
-	global.map={};
-	// 初始化数据
-	initItem("username","input");
-	initItem("email","input");
-	initItem("companyName","input");
-	initItem("business","textarea");
-	initItem("remark","textarea");
-	initItem("status","input");
+	require(["bootstrap"],function(){
+		require(["common/dialog"],function(){
+			global.map={};
+			// 初始化数据
+			initItem("username","input");
+			initItem("email","input");
+			initItem("companyName","input");
+			initItem("business","textarea");
+			initItem("remark","textarea");
+			initItem("status","input");
+		});
+	});
+	
 });
 
 function initItem(name, tag) {
@@ -77,9 +82,7 @@ function cancel(name, a_hint1) {
 	var a = e.nextAll("a[edit]");
 	if(name=="business"||name=="remark") {
 		e = $("textarea[name="+name+"]");
-		console.log(e);
 		a = e.parent().children("a[edit]");
-		console.log(a)
 	}
 	if(global.map != null) {
 		if(global.map[name] != null) {

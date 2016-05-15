@@ -24,8 +24,9 @@ public enum PaggingVariable implements VariableBean{
 		public String getValue() {
 			return "5";
 		}
-	}
+	},
 	
+	PAGE_LETTER_SIZE("用户中心站内信每页项目条数","10")
 	;
 	
 	private String key = "";
