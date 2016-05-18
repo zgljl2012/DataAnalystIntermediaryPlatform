@@ -12,6 +12,7 @@ import com.zgljl2012.common.database.enums.Bool;
 import com.zgljl2012.common.database.enums.T40_F05;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.database.PagingInfo;
+import com.zgljl2012.framework.database.executor.InsertExecutor;
 import com.zgljl2012.framework.database.executor.SelectExecutor;
 import com.zgljl2012.framework.database.executor.UpdateExecutor;
 import com.zgljl2012.framework.exceptions.PostException;
@@ -361,7 +362,6 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 				+" <= "+star;
 		}
 		sql += " ORDER BY F03 DESC, F06 DESC";
-		System.out.println(sql);
 		Object[] args = listArgs.toArray();
 		final JSON result = new JSON();
 		Connection conn = this.getConnection();
@@ -492,6 +492,97 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 			e.printStackTrace();
 			throw new PostException("系统发生错误");
 		}
+	}
+
+	@Override
+	public void setNoPass(int uid, int projectId, String reason) throws PostException {
+		if(!bidManage.isExistsProjectId(projectId)) {
+			throw new PostException("项目不存在");
+		}
+		String sql = "UPDATE T40 SET F05 = ?, F07=?,F08=?,F09=? WHERE F01=?";
+		Connection conn = this.getConnection();
+		try {
+			conn.setAutoCommit(false);
+			this.execute(conn, sql, T40_F05.DXG.name(), 
+					this.getNowTimestamp(), uid, reason, projectId);
+			conn.commit();
+		} catch(Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			throw new PostException("系统发生错误");
+		} finally {
+			close(conn);
+		}
+	}
+
+	@Override
+	public void attachmentUpload(int pid, String filename) throws PostException {
+		String sql = "INSERT INTO T41(F02,F03,F04,F05) VALUES(?,?,?,?)";
+		List<Object> args = new ArrayList<>();
+		if(this.isHasAttachment(pid)) {
+			sql = "UPDATE T41 SET F03 = ?,F04=? WHERE F02 = ?";
+			args.add(filename);
+			args.add(this.getNowTimestamp());
+			args.add(pid);
+		} else {
+			args.add(pid);
+			args.add(filename);
+			args.add(this.getNowTimestamp());
+			args.add(Bool.F.name());
+		}
+		if(!bidManage.isExistsProjectId(pid)) {
+			throw new PostException("项目不存在");
+		}
+		Connection conn = this.getConnection();
+		try {
+			this.insert(conn, sql, new InsertExecutor() {
+				
+				@Override
+				public void execute(int id) {
+					
+				}
+			}, args.toArray());
+		} catch (Throwable e) {
+			e.printStackTrace();
+		} finally {
+			close(conn);
+		}
+	}
+
+	@Override
+	public String getAttachment(int pid) throws PostException {
+		String sql = "SELECT F03 FROM T41 WHERE F02 = ?";
+		Connection conn = this.getConnection();
+		final StringBuffer sb = new StringBuffer();
+		try {
+			this.select(conn, sql, new SelectExecutor() {
+				
+				@Override
+				public void execute(ResultSet rs) {
+					try {
+						if(rs.next()) {
+							sb.append(rs.getString(1));
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}, pid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(conn);
+		}
+		return sb.toString();
+	}
+
+	@Override
+	public boolean isHasAttachment(int pid) throws PostException {
+		return !StringHelper.isEmpty(this.getAttachment(pid));
 	}
 
 }

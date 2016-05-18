@@ -5,9 +5,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.fileupload.FileUpload;
 import com.zgljl2012.framework.service.annotation.Impl;
 import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.framework.util.JSON;
+import com.zgljl2012.framework.util.StringHelper;
 import com.zgljl2012.modules.project.ProjectManage;
 
 /**
@@ -28,6 +30,11 @@ public class ProjectEditServlet extends AbstractServlet{
 		String url = req.getRequestURI();
 		String id = url.substring(url.lastIndexOf('/')+1);
 		JSON r = projectManage.getProjectInfo(Integer.parseInt(id));
+		//附件
+		String filename = projectManage.getAttachment(Integer.parseInt(id));
+		if(!StringHelper.isEmpty(filename)) {
+			r.put("filename", filename);
+		}
 		req.setAttribute("data", r);
 		url = "/more/project/edit.jsp";
 		this.forward(req, res, url);

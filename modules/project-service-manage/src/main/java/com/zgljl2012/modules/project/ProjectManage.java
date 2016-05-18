@@ -87,4 +87,36 @@ public interface ProjectManage extends Service{
 	 * @throws PostException
 	 */
 	public void setProjectYJS(int projectId) throws PostException;
+	
+	/**
+	 * 设置项目审核不通过
+	 * @param projectId
+	 * @param reason
+	 * @throws PostException
+	 */
+	public void setNoPass(int uid, int projectId, String reason) throws PostException;
+	
+	/**
+	 * 附件上传
+	 * @param pid
+	 * @param filename
+	 * @throws PostException
+	 */
+	public void attachmentUpload(int pid, String filename) throws PostException;
+	
+	/**
+	 * 获取附件路径
+	 * @param pid
+	 * @return
+	 * @throws PostException
+	 */
+	public String getAttachment(int pid) throws PostException;
+	
+	/**
+	 * 此项目是否已经上传了文件
+	 * @param pid
+	 * @return
+	 * @throws PostException
+	 */
+	public boolean isHasAttachment(int pid) throws PostException;
 }

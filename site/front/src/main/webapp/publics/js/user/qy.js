@@ -2,7 +2,11 @@ var global = {};
 
 $(function() {
 	require(["bootstrap"],function(){
-		require(["common/dialog"],function(){
+		require(["common/dialog",
+		         "publics/js/plugins/date/bootstrap-datetimepicker.min.js"],
+		         function(){
+			require(["publics/js/plugins/date/bootstrap-datetimepicker.zh-CN.js"], 
+					function(){
 			global.map={};
 			// 初始化数据
 			initItem("username","input");
@@ -13,7 +17,7 @@ $(function() {
 			initItem("status","input");
 		});
 	});
-	
+	});
 });
 
 function initItem(name, tag) {

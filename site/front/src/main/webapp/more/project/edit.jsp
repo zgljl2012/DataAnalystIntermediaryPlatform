@@ -26,6 +26,7 @@
 
 <link rel="stylesheet" type="text/css" href="publics/css/zg-common.css">
 <link rel="stylesheet" type="text/css" href="publics/css/plugins/star/star-rating.min.css">
+<link href="publics/css/plugins/fileInput/fileinput.css" rel="stylesheet"/>
 <%
 	headerPage="USER_CENTER";
 %>
@@ -100,13 +101,58 @@
 		   <span error class="display_none red"></span>
 		</div>
 	</div>
-	<hr>
 	<div class="row tc mt10">
 		<input type="submit" class="btn btn-primary"  value="提交">
 	</div>
 	</form>
+	<hr>
+	<div class="row tc mt10">
+		<span>附件上传（可以上传一份包含样例数据的Excel文档）</span>
+		<br>
+		<div class="mt10">
+		<c:if test="${data.get(\"filename\")!=null }">
+			<a href='download/attachment?filename=${data.get("filename") }' >已上传附件，下载查看</a>
+		</c:if>
+		</div>
+		<div class="mt10">
+		<input type="button" onclick="show()" class="btn btn-primary" value="上传文件">
+		</div>
+	</div>
 </div>
     </div></div></div></div>
+    
+    <div class="modal fade" id="imgImputDialog" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" 
+               data-dismiss="modal" aria-hidden="true">
+                  &times;
+            </button>
+            <h4 class="modal-title">
+               	上传文件
+            </h4>
+         </div>
+         <form id="fileForm" enctype="multipart/form-data" action="project/attachment" method="post" onSubmit="return fileUpload()">
+         <div class="modal-body">
+                <input id="file_1" name="filePath" type="file" >
+            	<input name="filename" class="display_none" type="text"/>
+            	<input name="pid" class="display_none" type="text" value='${data.get("t40").get("F01") }'>
+            	<span id="filename_hint" class="mt10 gray">可以上传一份不超过10M的文档</span>            
+         </div>
+         <div class="modal-footer tc">
+            <button type="button" class="btn btn-default mr20" 
+               data-dismiss="modal">取消
+            </button>
+            <button type="button" class="btn btn-primary ml20" data-dismiss="modal" onclick="$('#fileForm').submit()">
+               	确定
+            </button>
+         </div>
+         </form>
+      </div><!-- /.modal-content -->
+</div></div><!-- /.modal -->
+    
     <!--底部导航栏-->
    <%@include file="/include/footer.jsp" %>
    <%--对话框 --%>
@@ -120,8 +166,10 @@
    var doc = {};
    require(["jquery-2.1.1"], function() {
 	   require(["bootstrap"], function() {
-		   require(["publics/js/plugins/date/bootstrap-datetimepicker.min.js"],function(){
-			   require(["publics/js/plugins/date/bootstrap-datetimepicker.zh-CN.js"], 
+		   require(["publics/js/plugins/date/bootstrap-datetimepicker.min.js",
+		            "publics/js/plugins/fileInput/fileinput.js"],function(){
+			   require(["publics/js/plugins/date/bootstrap-datetimepicker.zh-CN.js",
+			            "publics/js/plugins/fileInput/fileinput_locale_zh.js"], 
 					   function(){
 				   require(["user/project/newProject","dialog"], function(_doc, dialog){
 					   var data = eval('('+'${data}'+')');
@@ -132,6 +180,33 @@
 					   }
 				   });
 				})
+				$('#file_1').fileinput({
+					language: 'zh',
+					showUpload : false,
+	                showRemove : false,
+				    maxFileSize : 10000,
+				    allowedFileExtensions : ['xlsx',"xls"],
+				});
+				$("input[name='filename']").addClass("display_none");
+				fileUpload = function() {
+					var elem = $("div[class='file-caption-name']");
+					if(elem == null) {
+						return false;
+					}
+					var filename = elem.text();
+					if(filename==null|| filename!=null&&$.trim(filename)=="") {
+						return false;
+					}
+					$("input[name='filename']").val(filename);
+					$("input[name='filename']").removeClass("display_none");
+					return true;
+				}
+				show = function() {
+					$("#imgImputDialog").modal("show");
+				}
+				download = function(){
+					
+				}
 		   })
 	   });
    });

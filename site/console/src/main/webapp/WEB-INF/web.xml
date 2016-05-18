@@ -16,5 +16,7 @@
   		<include-coda>/include/coda.jsp</include-coda>
   	</jsp-property-group>
   </jsp-config>
-  
+  <welcome-file-list>
+  	<welcome-file>/more/user.jsp</welcome-file>
+  </welcome-file-list>
 </web-app>

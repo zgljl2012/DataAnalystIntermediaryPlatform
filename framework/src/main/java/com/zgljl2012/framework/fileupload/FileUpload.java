@@ -1,5 +1,8 @@
 package com.zgljl2012.framework.fileupload;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.zgljl2012.framework.fileupload.FileUploadSetter.FILETYPE;
@@ -45,5 +48,11 @@ public interface FileUpload {
 	 * @return
 	 */
 	public String getPath();
+	
+	public List<String> upload(HttpServletRequest request, FileUploadSetter setter, 
+			FILETYPE fileType, Map<String, String> args);
+	
+	public List<String> upload(HttpServletRequest request,
+			FILETYPE fileType, Map<String, String> args);
 	
 }

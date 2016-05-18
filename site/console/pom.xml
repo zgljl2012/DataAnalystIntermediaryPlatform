@@ -30,6 +30,11 @@
     </dependency>
     <dependency>
     	<groupId>com.zgljl2012</groupId>
+    	<artifactId>console-service-manage</artifactId>
+    	<version>${ljl.version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.zgljl2012</groupId>
     	<artifactId>front-service-user</artifactId>
     	<version>${ljl.version}</version>
     </dependency>

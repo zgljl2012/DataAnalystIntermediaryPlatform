@@ -16,6 +16,20 @@ public enum LetterVariable implements VariableBean {
 		public String getValue() {
 			return "尊敬的用户${name}，欢迎注册我们网站.";
 		}
+	},
+	
+	PROJECT_PASS("项目审核通过") {
+		@Override
+		public String getValue() {
+			return "尊敬的用户您好，您于${date}发布的项目【${title}】已审核通过。";
+		}
+	},
+	
+	PROJECT_NOPASS("项目审核不通过") {
+		@Override
+		public String getValue() {
+			return "尊敬的用户您好，您于${date}发布的项目【${title}】没有通过审核，具体原因为:\n${reason}";
+		}
 	}
 	;
 	private String key = "";

@@ -9,7 +9,6 @@
         </div>
         <div id="navbar" class="col-md-10">
           <ul class="col-md-8 nav navbar-nav">
-            <li <%=headerPage.equals("SY")?"class='active'":""%>><a href="index.jsp">首页</a></li>
             <li <%=headerPage.equals("USER")?"class='active'":""%>><a href="more/user.jsp">用户管理</a></li>
             <li <%=headerPage.equals("PROJECT")?"class='active'":""%>><a href="more/project.jsp">项目管理</a></li>
             <li <%=headerPage.equals("COMPAIGN")?"class='active'":""%>><a href="more/compaign.jsp">宣传管理</a></li>

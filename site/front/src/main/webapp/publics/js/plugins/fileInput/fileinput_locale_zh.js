@@ -11,7 +11,6 @@
  */
 (function ($) {
     "use strict";
-
     $.fn.fileinputLocales['zh'] = {
         fileSingle: '文件',
         filePlural: '多个文件',

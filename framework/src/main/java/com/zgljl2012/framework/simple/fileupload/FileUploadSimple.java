@@ -2,8 +2,10 @@ package com.zgljl2012.framework.simple.fileupload;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -146,5 +148,78 @@ public class FileUploadSimple implements FileUpload{
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public List<String> upload(HttpServletRequest request, FileUploadSetter setter, 
+			FILETYPE fileType, Map<String, String> args) {
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		// 内存中存储的最大值
+		int sizeThreshold = 4096;
+		factory.setSizeThreshold(sizeThreshold);
+		// 临时文件的存储地点
+		File fileTmp = new File(System.getProperty("java.io.tmpdir"));
+		if(!fileTmp.exists()) {
+			fileTmp.mkdirs();
+		}
+		factory.setRepository(fileTmp);
+
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		// maximum size before a FileUploadException will be thrown
+		upload.setSizeMax(1000000);
+
+		List<FileItem> fileItems;
+		try {
+			fileItems = upload.parseRequest(request);
+			Iterator<FileItem> i = fileItems.iterator();
+			List<String> list = new ArrayList<>();
+			while(i.hasNext()) {
+				FileItem fi = (FileItem)i.next();
+				String fileName = fi.getName();
+				if(fi.isFormField()) {
+					args.put(fi.getFieldName(), fi.getString());
+					continue;
+				}
+				String path = System.getProperty("user.home");
+				if(!StringHelper.isEmpty(this.path)) {
+					path = this.path;
+				}
+				String returnName = ""; // 返回的路径：相对路径/文件名
+				if(setter != null) {
+					fileName = setter.getFileName(fileName);
+					if(fileType!=null) {
+						path += setter.getRelativePath(fileType);
+						returnName += setter.getRelativePath(fileType);
+					}
+				}
+				returnName += "/"+fileName;
+				File filePath = new File(path);
+				if(!filePath.exists()) {
+					filePath.mkdirs();
+				}
+				File file = new File(path, fileName);
+				if(!file.exists()) {
+					file.createNewFile();
+				}
+				fi.write(file);
+				list.add(returnName);
+			}
+			return list;
+		} catch (FileUploadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<String> upload(HttpServletRequest request, FILETYPE fileType,
+			Map<String, String> args) {
+		return this.upload(request,COMMON_SETTER,fileType, args);
 	}
 }

@@ -128,6 +128,7 @@
 		   	   $("#loading").hide();
 		   	   $("ul[name=paging]").hide();
 		   	   letter.load($("#tmpl"), $("#target"), function(data){
+		   		   console.log(data.count);
 		   		   if(data==null||data.count==0||
 		   				   data.data==null||data.data.length==0) {
 		   			   $("#noDataHint").show();

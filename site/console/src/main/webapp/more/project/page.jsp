@@ -23,6 +23,7 @@
 <link rel="stylesheet" type="text/css" href="publics/css/zg-common.css">
 <script src="publics/js/jquery.min.js"></script>
 <script src="publics/js/plugins/template/jquery.tmpl.min.js"></script>
+<script src="publics/js/bootstrap.min.js"></script>
 <%
 	headerPage="PROJECT";
 %>
@@ -87,11 +88,43 @@
 	</div>
 	<hr>
 	<div class="row tc mt10">
-	<form action="project/realease" onsubmit="">
+	<form id="form" action="project/realease" method="post">
 		<input name="id" value="${ data.get("t40").get("F01") }" class="display_none">
+		<input name="type" id="type" value="release" class="display_none">
+		<input name="reason" id="reason" value="" class="display_none">
+		<input type="button" class="btn" value="项目审核不通过" id="nopass">
 		<input type="submit" class="btn btn-primary"  value="发布项目">
 	</form>
 	</div>
+	
+	<div class="modal fade" id="modalAlertDialog" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" 
+               data-dismiss="modal" aria-hidden="true">
+                  &times;
+            </button>
+            <h4 class="modal-title" id="modalAlertTitle">
+               项目审核不通过
+            </h4>
+         </div>
+         <div class="modal-body" id="modalAlertBody">
+         	<div class="row tc"><div class="col-sm-10">
+            <textarea name="reason" id="text_reason" rows="5" cols="60" placeholder="请输入不通过原因"></textarea>
+            </div></div>
+         </div>
+         <div class="modal-footer tc">
+            <button type="button" class="btn btn-default mr20" 
+               data-dismiss="modal" id="modalAlertCancel">取消
+            </button>
+            <button type="button" class="btn btn-primary ml20" data-dismiss="modal" id="modalAlertOk">
+               	确定
+            </button>
+         </div>
+      </div><!-- /.modal-content -->
+</div></div><!-- /.modal -->
  </div>
  </div></div></div></div>
     <!--底部导航栏-->
@@ -101,10 +134,20 @@
    <script>
    var data = eval('('+'${data}'+')');
    if(data.t40.F03 == 0.0) {
-		$("#mianyi").attr("checked","checked")   
+		$("#mianyi").attr("checked","checked");
    } else {
-	   $("#mianyi").removeAttr("checked")
+	   $("#mianyi").removeAttr("checked");
    }
+   $("#nopass").click(function(){
+	   $("#modalAlertDialog").modal("show");
+	   
+   });
+   $("#modalAlertOk").click(function(){
+       var reason = $("#text_reason").val();
+       $("#type").val("nopass");
+       $("#reason").val(reason);
+       document.getElementById("form").submit();
+   });
    </script>
 </body>
 </html>

@@ -39,13 +39,32 @@
 		   </li>
 		</ul>
 		<div class="tab-content">
+			<div class="row ml20 mt20">
+					<input name="name" value="" id="name" class="m-input-form-control" placeholder="请输入变量名">
+					<input type="button" value="查询" class="btn btn-primary ml20" onclick="search($('#name').val())">
+			</div>
 			<div id="variable" class="tab-pane in active">
 				<div id="loading" class="row tc">
 					<img src="publics/images/loadingBig.gif"></img>
 				</div>
-				<div class="row">
-				<table class="table table-hover" id="tmplTable" style="width:95%;">
-					<tr>
+				<%-- 分页 --%>
+			<div class="row col-sm-12 fl">
+			<ul class="pagination fs08 ml30 mt10 cp" name="paging">
+				<li>
+					<a href="#" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+			</div>
+				<div class="row tc">
+				<table class="table table-hover tc" id="tmplTable" style="width:90%;">
+					<tr class="tc">
 						<th>ID</th>
 						<th>名字</th>
 						<th>值</th>
@@ -65,6 +84,21 @@
 				</script>
 				</table>
 				</div>
+			<%-- 分页 --%>
+			<div class="row col-sm-12 fl">
+			<ul class="pagination fs08 ml30 mt10 cp" name="paging">
+				<li>
+					<a href="#" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+			</div>
 			</div>
 		</div>
 		</div>
@@ -82,6 +116,7 @@
 				   $("#loading").hide();
 				   va.tmpl(data, $("#tmplData"), $("#tmplTable"));
 			   });
+			   document.search = va.search;
 		   })
 	   })
    })

@@ -113,7 +113,7 @@ public class LetterManageImpl extends AbstractService implements LetterManage{
 	public JSON getAllLetter(int userId) {
 		String sql = "SELECT t1.F01,t3.F02,t1.F04,t1.F06,t1.F05,t2.F02 FROM T60 AS t1 LEFT "
 				+ "JOIN T61 AS t2 ON t1.F01 = t2.F01 LEFT "
-				+ "JOIN T10 AS t3 ON t1.F02 = t3.F01 WHERE t1.F03 = ? AND t1.F07 != 'S'";
+				+ "JOIN T10 AS t3 ON t1.F02 = t3.F01 WHERE t1.F03 = ? AND t1.F07 != 'S' ORDER BY t1.F04 DESC";
 		final JSON j = new JSON();
 		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
 		Connection conn = this.getConnection();
@@ -142,7 +142,7 @@ public class LetterManageImpl extends AbstractService implements LetterManage{
 					}
 				}
 			}, userId);
-			sql = "SELECT COUNT(F01) FROM T60 WHERE F03 = ?";
+			sql = "SELECT COUNT(F01) FROM T60 WHERE F03 = ? AND F07='F'";
 			this.select(conn, sql, new SelectExecutor() {
 				
 				@Override
@@ -236,7 +236,7 @@ public class LetterManageImpl extends AbstractService implements LetterManage{
 			LetterQuery query) {
 		String sql = "SELECT t1.F01,t3.F02,t1.F04,t1.F06,t1.F05,t2.F02 FROM T60 AS t1 LEFT "
 				+ "JOIN T61 AS t2 ON t1.F01 = t2.F01 LEFT "
-				+ "JOIN T10 AS t3 ON t1.F02 = t3.F01 WHERE t1.F03 = ? AND t1.F07 != 'S' ";
+				+ "JOIN T10 AS t3 ON t1.F02 = t3.F01 WHERE t1.F03 = ? AND t1.F07 != 'S' ORDER BY t1.F04 DESC";
 		if(query.getReaded() != null) {
 			if(query.getReaded().equals(Readed.READED)) {
 				sql += " AND t1.F06 = 'S' ";
@@ -266,7 +266,7 @@ public class LetterManageImpl extends AbstractService implements LetterManage{
 			}
 			j.put("data", list);
 			
-			sql = "SELECT COUNT(F01) FROM T60 WHERE F03 = ?";
+			sql = "SELECT COUNT(F01) FROM T60 WHERE F03 = ? AND F07 = 'F'";
 			if(query.getReaded() != null) {
 				if(query.getReaded().equals(Readed.READED)) {
 					sql += " AND F06 = 'S' ";
