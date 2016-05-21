@@ -28,7 +28,7 @@ public enum LetterVariable implements VariableBean {
 	PROJECT_NOPASS("项目审核不通过") {
 		@Override
 		public String getValue() {
-			return "尊敬的用户您好，您于${date}发布的项目【${title}】没有通过审核，具体原因为:\n${reason}";
+			return "尊敬的用户您好，您于${date}发布的项目【${title}】没有通过审核，具体原因为:${reason}";
 		}
 	}
 	;

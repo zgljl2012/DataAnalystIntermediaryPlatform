@@ -25,6 +25,12 @@ public class TestStringHelper {
 	}
 	
 	@Test
+	public void crypt123456() {
+		String pwd = "123456";// 7c4a8d09ca3762af61e59520943dc26494f8941b
+		System.out.println(StringHelper.crypt(pwd));
+	}
+	
+	@Test
 	public void asteriskRealName() {
 		String s = "廖金龙";
 		System.out.println(StringHelper.asteriskRealName(s));
@@ -39,9 +45,9 @@ public class TestStringHelper {
 	
 	@Test
 	public void renderString() {
-		String content = "hello ${name}, 1 2 3 4 5 ${six} 7, again ${name}. ";
+		String content = "hello \n${name}, \n\n1 2 3 4 5 ${six} 7, again:${name}";
 		Map<String, String> map = new HashMap<>();
-		map.put("name", "java");
+		map.put("name", "ja\nva");
 		map.put("six", "6");
 		content = StringHelper.renderString(content, map);
 		System.out.println(content);

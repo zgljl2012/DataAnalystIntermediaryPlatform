@@ -1,7 +1,6 @@
 package com.zgljl2012.console.project;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.zgljl2012.common.variable.LetterVariable;
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.permission.Permission;
 import com.zgljl2012.framework.service.annotation.Impl;
 import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.framework.util.JSON;
@@ -26,6 +26,7 @@ import com.zgljl2012.modules.project.ProjectManage;
  */
 @SuppressWarnings("serial")
 @WebServlet(name="projectRelease", urlPatterns={"/project/realease"})
+@Permission(name="项目发布或审核不通过")
 public class ProjectReleaseServlet extends AbstractServlet{
 	
 	private static final SimpleDateFormat sdf = 
@@ -60,10 +61,11 @@ public class ProjectReleaseServlet extends AbstractServlet{
 				reason = "项目审核不通过";
 			}
 			map.put("reason", reason);
+			System.out.println(reason);
 			String content = StringHelper.renderString(
 					vm.getValue(LetterVariable.PROJECT_NOPASS)
 					, map);
-			pm.setNoPass(0, Integer.parseInt(id), content);
+			pm.setNoPass(0, Integer.parseInt(id), reason);
 			// 发送站内信
 			lm.sendLetter(0, to, "审核未通过", content);
 		} else if("release".equals(type)) {

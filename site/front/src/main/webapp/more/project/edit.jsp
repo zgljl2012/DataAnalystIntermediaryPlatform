@@ -172,10 +172,9 @@
 			            "publics/js/plugins/fileInput/fileinput_locale_zh.js"], 
 					   function(){
 				   require(["user/project/newProject","dialog"], function(_doc, dialog){
-					   var data = eval('('+'${data}'+')');
+					   var data = eval('('+'${data.get("t40")}'+')');
 					   doc = _doc;
-					   console.log(data);
-					   if(data.t40.F03 == 0.0) {
+					   if(data.F03 == 0.0) {
 							$("#mianyi").html("面议"); 
 					   }
 				   });
@@ -203,9 +202,6 @@
 				}
 				show = function() {
 					$("#imgImputDialog").modal("show");
-				}
-				download = function(){
-					
 				}
 		   })
 	   });

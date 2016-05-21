@@ -9,10 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.zgljl2012.framework.controller.Controller;
-import com.zgljl2012.framework.exceptions.PostException;
 import com.zgljl2012.framework.service.annotation.Impl;
 import com.zgljl2012.framework.servlet.AbstractServlet;
-import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.framework.util.StringHelper;
 import com.zgljl2012.modules.project.ProjectManage;
 import com.zgljl2012.modules.project.query.ProjectBaseInfoQuery;
@@ -97,10 +95,10 @@ public class EditProjectServlet extends AbstractServlet{
 			}
 			
 		};
-		
+		System.out.println("---------------------------------------");
 		projectManage.updateProject(pid, info);
 		String path = this.getServletContext().getContextPath();
-		String url = path+"/project/edit/" + pid;
+		String url = path+"/user";
 		this.redirect(res, url);
 	}
 	

@@ -143,6 +143,7 @@ define(["common/url"], function(url){
 		if(isedit) {
 			url = updateUrl;
 		}
+		console.log(url)
 		if(doc.checkProjectName(form.projectName)&&doc.checkWillPrice(form.willPrice)
 				&&doc.checkBidDays(form.bidDays)&&doc.checkTimeLimit(form.timeLimit, true)
 				&&doc.checkProjectDescription(form.projectDescription)) {

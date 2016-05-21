@@ -90,7 +90,7 @@
 				</div>
 				</div>
 				<div class="row display_none w90 mtr-content">
-					<div class="col-sm-12">{{= content}}</div>
+					<div class="col-sm-12"><pre>{{= content}}</pre></div>
 				</div>
 				</div>
 				{{/if}}

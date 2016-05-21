@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.zgljl2012.common.variable.UrlVariable;
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.permission.Permission;
 import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.framework.variable.VariableManage;
 
@@ -16,6 +17,7 @@ import com.zgljl2012.framework.variable.VariableManage;
  */
 @SuppressWarnings("serial")
 @WebServlet(name="variableUpdate", urlPatterns={"/variable/update"})
+@Permission(name="常量配置修改")
 public class VariableUpdateServlet extends AbstractServlet{
 
 	@Override

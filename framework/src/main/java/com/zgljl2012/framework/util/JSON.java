@@ -104,8 +104,6 @@ public class JSON implements Cloneable{
 			map.put(key, (Integer)value);
 			return;
 		}
-		System.out.print(key+" ");
-		System.out.println(value);
 		map.put(key, value);
 	}
 	

@@ -61,4 +61,12 @@ public class TestJSON {
 		s = s.replace("\\", "\\\\");
 		System.out.println(s);
 	}
+	
+	@Test
+	public void testHuanHang() {
+		String s = "Hello\r\nWorld";
+		JSON j = new JSON();
+		j.put("s",s);
+		System.out.println(j);
+	}
 }

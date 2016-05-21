@@ -4,7 +4,7 @@
 <%
 	// 如果用户没有登录，就跳转到登录界面
 	if(!ljlSession.isLogined()) {
-		controller.redirect(response, "/front/more/user/login.jsp");
+		controller.redirect(response, "/console/more/user/login.jsp");
 		return;
 	}
 %>

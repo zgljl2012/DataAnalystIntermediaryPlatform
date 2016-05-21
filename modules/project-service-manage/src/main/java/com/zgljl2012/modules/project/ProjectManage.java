@@ -119,4 +119,12 @@ public interface ProjectManage extends Service{
 	 * @throws PostException
 	 */
 	public boolean isHasAttachment(int pid) throws PostException;
+	
+	/**
+	 * 获取一个项目的项目状态
+	 * @param pid
+	 * @return
+	 * @throws PostException
+	 */
+	public T40_F05 getProjectStatus(int pid) throws PostException;
 }

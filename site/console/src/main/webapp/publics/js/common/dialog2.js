@@ -18,6 +18,7 @@ define([], function(){
 		$("#modalTitle").html(title);
 		$("#modalBody").html(content);
 		$("#modalOk").addClass("ml20");
+		$("#modalOk").unbind("click");
 		$("#modalOk").click(function(){
 			okCall.apply([],[]);
 		});
@@ -27,16 +28,21 @@ define([], function(){
 	}
 	
 	dialog.showAlert = function(title, content, okCall) {
-		if(content == null) {
+		if(content == null&&okCall==null) {
+			content = title;
+			title = "温馨提示";
+		} else if(content != null && okCall ==null) {
+			okCall = content;
 			content = title;
 			title = "温馨提示";
 		}
 		$("#modalAlertTitle").html(title);
 		$("#modalAlertBody").html(content);
 		$("#modalAlertOk").removeClass("ml20");
+		$("#modalAlertOk").unbind("click");
 		$("#modalAlertOk").click(okCall);
 		$("#modalAlertDialog").modal("show");
 		$("#modalAlertCancel").hide();
 	}
-
+	return dialog;
 })

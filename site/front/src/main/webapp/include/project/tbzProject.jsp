@@ -42,14 +42,22 @@ require(["jquery-2.1.1.min"], function(){
 				{{if d!=null}}
 				<tr>
 					<td >
-						<div class="w80">
+						<div class="row">
+						<div class="col-sm-10">
+						<div class="row col-sm-11">
 							<span class="zg-price">{{= t40.F03 }}</span>
 							<span class="zg-title cp"><a href="project/page/{{= t40.F01 }}">{{= t40.F02 }}</a></span>
 							<span class="zg-time-before-limit">{{= t40.F17 }}天后截止</span>
-						</div><br>
-						<div class="w80">
+						</div>
+						<div class="row col-sm-11">
 							<span class="zg-content-abbr">{{= t40.F13 }}</span>
 							<span class="zg-time-after-limit">完成时间：{{= t40.F12 }}</span>
+						</div></div>
+						<div class="col-sm-2 mt40">
+						<div class="select-buttons fr">
+							<button class="btn-8" onclick='window.location.href="project/edit/{{= t40.F01}}"'>编辑</button>
+						</div>
+						</div>
 						</div>
 					</td>
 				</tr>

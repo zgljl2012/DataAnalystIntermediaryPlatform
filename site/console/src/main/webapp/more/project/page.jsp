@@ -91,7 +91,7 @@
 	<form id="form" action="project/realease" method="post">
 		<input name="id" value="${ data.get("t40").get("F01") }" class="display_none">
 		<input name="type" id="type" value="release" class="display_none">
-		<input name="reason" id="reason" value="" class="display_none">
+		<textarea name="reason" id="reason" class="display_none"></textarea>
 		<input type="button" class="btn" value="项目审核不通过" id="nopass">
 		<input type="submit" class="btn btn-primary"  value="发布项目">
 	</form>

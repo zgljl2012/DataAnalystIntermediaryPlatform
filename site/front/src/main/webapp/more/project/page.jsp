@@ -65,6 +65,11 @@
 		    	<div class="fs06 mt20 wh400 gray">项目描述：</div>
 		    	<div class="fs06 mt5 wh400 gray">
 		    	${ data.get("t40").get("F13") }
+		    	<br>
+		    	<br>
+		    	<c:if test="${data.get(\"filename\")!=null }">
+					<a href='download/attachment?filename=${data.get("filename") }' >下载附件</a>
+				</c:if>
 		    	</div>
 	    	</div>
 	    	<div class="col-sm-4 fs12 mt10">
@@ -162,7 +167,6 @@
    	 						{{if d.F03!=<%=selectId%> }}
 							<button class="btn-8" onclick="del({{= d.F01}})">删除</button>
    	 						{{/if}}
-							<button class="btn-8">私信</button>
    						</div>
 						{{if d.F03 == <%=userId%> }}
 						<div class="display_none" name="{{= d.F01}}_div">{{= d.comment}}</div>
@@ -214,7 +218,7 @@
 			   star = new Star();
 			   $("ul[name=bid_paging]").hide();
 			   page.list(projectId, function(data) {
-				   if(data&&data.data.length>0) {
+				   if(data&&data.data&&data.data.length>0) {
 					   $("ul[name=bid_paging]").show();
 				   }
 				   page.showbids(data, $("#project-bid-item-tmpl"), $("#project-bid-table"));

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.zgljl2012.console.module.service.manage.MyVariableManage;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.database.PagingInfo;
+import com.zgljl2012.framework.permission.Permission;
 import com.zgljl2012.framework.service.annotation.Impl;
 import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.framework.util.JSON;
@@ -19,6 +20,7 @@ import com.zgljl2012.framework.util.StringHelper;
  */
 @SuppressWarnings("serial")
 @WebServlet(name="variableServlet", urlPatterns={"/variable"})
+@Permission(name="常量配置查看")
 public class VariableServlet extends AbstractServlet{
 	
 	@Impl

@@ -101,7 +101,7 @@
 		    	<%@include file="/include/project/yjsProject.jsp" %>
 		    </div>
 		    <div class="tab-pane fade" id="deleted_project">
-		    	<p>待修改项目</p>
+		    	<%@include file="/include/project/dxgProject.jsp" %>
 		    </div>
 		</div>
 	</div>

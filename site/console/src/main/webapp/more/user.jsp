@@ -4,7 +4,7 @@
   <head>
 	<%@include file="/include/meta.jsp" %>
 
-    <title>首页-<%=variableManage.getValue(SystemVariable.SITENAME) %></title>
+    <title>用户管理-<%=variableManage.getValue(SystemVariable.SITENAME) %></title>
 
     <%@include file="/include/style.jsp" %>
     
@@ -22,15 +22,44 @@
     	headerPage = "USER";
     %>
   </head>
-
+	<%-- <%@include file="/include/validate.jsp" %> --%>
   <body>
   	
     <!--导航栏-->
     <%@include file="/include/header.jsp" %>
-    
-    
+    <div class="container">
+    <div class="panel panel-default">
+    	<div class="panel-heading">用户管理</div>
+    	<div class="panel-body">
+    	<ul id="myTab" class="nav nav-tabs">
+		   <li class="active"><a href="#front_user" data-toggle="tab">用户管理</a></li>
+		   <li><a href="#console_user" data-toggle="tab">管理员</a></li>
+		   <li><a href="#console_user_group" data-toggle="tab">管理员组</a></li>
+		</ul>
+		<div id="userTab" class="tab-content">
+			<div id="front_user" class="tab-pane fade in active">
+				<%@include file="/include/user/frontUser.jsp" %>
+			</div>
+			<div id="console_user" class="tab-pane fade">
+				<%@include file="/include/user/consoleUser.jsp" %>
+			</div>
+			<div id="console_user_group" class="tab-pane fade">
+				3
+			</div>
+		</div>
+    </div>
+    </div>
+    </div>
    <!--底部导航栏-->
    <%@include file="/include/footer.jsp" %>
+   <%@include file="/include/dialog.jsp" %>
+    <script type="text/javascript">
+    require(["jquery-2.1.1"],function(){
+ 	   require(["bootstrap.min"], function() {
+ 			   
+ 	   })
+    })
     
+    </script>
   </body>
 </html>

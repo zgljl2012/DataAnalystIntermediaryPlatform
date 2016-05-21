@@ -3,6 +3,7 @@ package com.zgljl2012.framework.service;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 
 import com.zgljl2012.framework.controller.Controller;
@@ -146,6 +147,18 @@ public abstract class AbstractService implements Service, DatabaseOperate{
 	public void update(Connection conn, String sql,
 			UpdateExecutor executor, Object... args) throws SQLException {
 		this.db.update(conn, sql, executor, args);
+	}
+	
+	public void close(ResultSet rs) {
+		if(rs!=null) {
+			try {
+				Statement stmt = rs.getStatement();
+				rs.close();
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 }

@@ -133,7 +133,8 @@ public class LetterManageImpl extends AbstractService implements LetterManage{
 							json.put("readed", ""+(Bool.parse(
 									rs.getString(4)).equals(Bool.S)));
 							json.put("title", rs.getString(5));
-							json.put("content", rs.getString(6));
+							String content = rs.getString(6);
+							json.put("content", content);
 							list.add(json);
 						}
 						j.put("data", list);
@@ -234,9 +235,10 @@ public class LetterManageImpl extends AbstractService implements LetterManage{
 	@Override
 	public JSON getAllLetter(int userId, PagingInfo info,
 			LetterQuery query) {
-		String sql = "SELECT t1.F01,t3.F02,t1.F04,t1.F06,t1.F05,t2.F02 FROM T60 AS t1 LEFT "
+		String sql = "SELECT t1.F01,t3.F02,t1.F04,t1.F06,t1.F05,t2.F02 "
+				+ "FROM T60 AS t1 LEFT "
 				+ "JOIN T61 AS t2 ON t1.F01 = t2.F01 LEFT "
-				+ "JOIN T10 AS t3 ON t1.F02 = t3.F01 WHERE t1.F03 = ? AND t1.F07 != 'S' ORDER BY t1.F04 DESC";
+				+ "JOIN T10 AS t3 ON t1.F02 = t3.F01 WHERE t1.F03 = ? AND t1.F07 != 'S' ";
 		if(query.getReaded() != null) {
 			if(query.getReaded().equals(Readed.READED)) {
 				sql += " AND t1.F06 = 'S' ";
@@ -244,6 +246,7 @@ public class LetterManageImpl extends AbstractService implements LetterManage{
 				sql += " AND t1.F06 = 'F' ";
 			}
 		}
+		sql += "ORDER BY t1.F04 DESC";
 		final JSON j = new JSON();
 		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
 		Connection conn = this.getConnection();

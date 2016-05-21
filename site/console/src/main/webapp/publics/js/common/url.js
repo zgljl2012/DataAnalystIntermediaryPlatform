@@ -12,7 +12,9 @@ define(["common/config"], function(config) {
 					add:host+"project/new",	// 新增项目地址
 					list:host+"project/list", // 项目列表地址
 				}
-			}
+			},
+			front:console+"user/front",
+			console:console+"user/console",
 		},
 		system:{
 			variable:console+"variable"

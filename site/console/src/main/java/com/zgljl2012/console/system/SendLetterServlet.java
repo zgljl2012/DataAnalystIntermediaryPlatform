@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.exceptions.PostException;
+import com.zgljl2012.framework.permission.Permission;
 import com.zgljl2012.framework.service.annotation.Impl;
 import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.modules.front.user.UserManage;
@@ -18,6 +19,7 @@ import com.zgljl2012.modules.letter.manage.service.LetterManage;
  */
 @SuppressWarnings("serial")
 @WebServlet(name="sendLetter", urlPatterns={"/sendLetter"})
+@Permission(name="发送站内信")
 public class SendLetterServlet extends AbstractServlet{
 
 	@Impl

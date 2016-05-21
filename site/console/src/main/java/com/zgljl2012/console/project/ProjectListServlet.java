@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.zgljl2012.common.database.enums.T40_F05;
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.permission.Permission;
 import com.zgljl2012.framework.service.annotation.Impl;
 import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.framework.util.JSON;
@@ -19,6 +20,7 @@ import com.zgljl2012.modules.project.query.ProjectStatusPaggingQuery;
  */
 @SuppressWarnings("serial")
 @WebServlet(name="projectList", urlPatterns={"/project/list"})
+@Permission(name="项目管理")
 public class ProjectListServlet extends AbstractServlet{
 
 	@Impl

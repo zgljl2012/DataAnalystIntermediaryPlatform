@@ -55,10 +55,13 @@ public class DataBaseInit implements SystemStartupListener{
 					e.printStackTrace();
 				}
 			}
-			
 		}
 	}
 	
+	/**
+	 * 初始化常量表
+	 * @param conn
+	 */
 	private void initDB(Connection conn) {
 		StringBuffer sql = new StringBuffer(
 				"CREATE TABLE IF NOT EXISTS ");
@@ -74,7 +77,6 @@ public class DataBaseInit implements SystemStartupListener{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
-
+	
 }
