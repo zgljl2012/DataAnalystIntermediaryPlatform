@@ -38,6 +38,10 @@
 	background:#eee;
 }
 
+.mytable>tbody>tr>td,.mytable>tbody>tr>th {
+	border:1px solid #ddd;
+}
+
 .mtr-content {
 	font-size:0.98em;
 	padding:10px 50px;

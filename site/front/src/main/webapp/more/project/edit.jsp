@@ -111,7 +111,8 @@
 		<br>
 		<div class="mt10">
 		<c:if test="${data.get(\"filename\")!=null }">
-			<a href='download/attachment?filename=${data.get("filename") }' >已上传附件，下载查看</a>
+			<a href='download/attachment?filename=${data.get("filename") }' >下载</a>
+			<a class="fs08 fl10 cp" href='preview?filePath=${data.get("filename") }'>预览</a>
 		</c:if>
 		</div>
 		<div class="mt10">

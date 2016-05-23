@@ -15,7 +15,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
+      <version>4.4</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -76,7 +76,16 @@
 	<artifactId>json</artifactId>
 	<version>20160212</version>
 </dependency>
-
+<dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>3.11-beta1</version>
+  </dependency>
+  <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>3.11-beta1</version>
+  </dependency>
 	
   </dependencies>
   

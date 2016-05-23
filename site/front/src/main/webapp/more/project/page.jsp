@@ -69,6 +69,7 @@
 		    	<br>
 		    	<c:if test="${data.get(\"filename\")!=null }">
 					<a href='download/attachment?filename=${data.get("filename") }' >下载附件</a>
+					<a class="fs08 fl10 cp" href='work?filePath=${data.get("filename") }'>预览</a> 
 				</c:if>
 		    	</div>
 	    	</div>
