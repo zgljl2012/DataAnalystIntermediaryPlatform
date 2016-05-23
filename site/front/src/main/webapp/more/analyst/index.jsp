@@ -80,16 +80,16 @@
 		                <a hint href="javascript:;" >1分</a></label>
 		              <label>
 		                <input name="grade" type="radio" value="2" autocomplete="off"/>
-		                <a hint href="javascript:;" >2分</a> </label>
+		                <a hint href="javascript:;" >1-2分</a> </label>
 		              <label>
 		                <input name="grade" type="radio" value="3" autocomplete="off"/>
-		                <a hint href="javascript:;" >3分</a> </label>
+		                <a hint href="javascript:;" >2-3分</a> </label>
 		              <label>
 		                <input name="grade" type="radio" value="4" autocomplete="off"/>
-		                <a hint href="javascript:;" >4分</a> </label>
+		                <a hint href="javascript:;" >3-4分</a> </label>
 		              <label>
 		                <input name="grade" type="radio" value="5" autocomplete="off"/>
-		                <a hint href="javascript:;" >5分</a> </label>
+		                <a hint href="javascript:;" >4-5分</a> </label>
 		               </dd> 
 		          </dl>
 		        </div>

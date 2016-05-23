@@ -5,10 +5,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.zgljl2012.common.database.enums.T40_F05;
+import com.zgljl2012.console.AbstractConsoleServlet;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.permission.Permission;
 import com.zgljl2012.framework.service.annotation.Impl;
-import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.modules.project.ProjectManage;
 import com.zgljl2012.modules.project.query.ProjectStatusPaggingQuery;
@@ -21,7 +21,7 @@ import com.zgljl2012.modules.project.query.ProjectStatusPaggingQuery;
 @SuppressWarnings("serial")
 @WebServlet(name="projectList", urlPatterns={"/project/list"})
 @Permission(name="项目管理")
-public class ProjectListServlet extends AbstractServlet{
+public class ProjectListServlet extends AbstractConsoleServlet{
 
 	@Impl
 	ProjectManage projectManage;
@@ -65,6 +65,11 @@ public class ProjectListServlet extends AbstractServlet{
 		data.put("count", ""+count);
 		data.put("pageSize", ""+pageSize);
 		out(res, data);
+	}
+
+	@Override
+	protected boolean isPermission() {
+		return true;
 	}
 
 }

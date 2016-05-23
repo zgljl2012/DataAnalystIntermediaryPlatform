@@ -8,7 +8,8 @@
 .pr5{padding-right: 5px;}
 .tc{text-align:center;}.tl{text-align:left;} .tr{text-align:right;}
 .red{color:red;} .gray{color:gray;} .lightblue{color:#0e93eb;} .orange{color:#ff8a00;} .blue{color:blue;}
-.green{color:green;} .white{color:white;}
+.green{color:green;} .white{color:white;} 
+.pagingBk{background-color:#eee;}
 .bk_lightblue{background-color:#0e93eb;}
 .bk_red{background-color:red;}
 .display_none{display:none;} .display_block{display:block;} .display_inline{display:inline;} 

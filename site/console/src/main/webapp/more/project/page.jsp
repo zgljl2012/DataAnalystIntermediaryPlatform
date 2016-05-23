@@ -11,7 +11,7 @@
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <link href="publics/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
+<!-- Custom styles for this template -->
 <link href="publics/css/offcanvas.css" rel="stylesheet">
     
 <link href="publics/css/app.css" rel="stylesheet"/>
@@ -27,7 +27,7 @@
 <%
 	headerPage="PROJECT";
 %>
-</head>
+</head><%@include file="/include/validate.jsp" %>
 <body>
 	<!--导航栏-->
     <%@include file="/include/header.jsp" %>

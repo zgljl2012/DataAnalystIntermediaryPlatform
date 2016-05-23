@@ -176,7 +176,7 @@ public class FileUploadSimple implements FileUpload{
 				FileItem fi = (FileItem)i.next();
 				String fileName = fi.getName();
 				if(fi.isFormField()) {
-					args.put(fi.getFieldName(), fi.getString());
+					args.put(fi.getFieldName(), fi.getString("utf-8"));
 					continue;
 				}
 				String path = System.getProperty("user.home");

@@ -24,17 +24,17 @@
 	 * 
 	 */
 	if(window.$) {
-		$.filter = {};
+		$.filter2 = {};
 	} else {
 		$ = {};
-		$.filter = {};
+		$.filter2 = {};
 	}
-	$.filter.data = {};
-	$.filter.selected = {};
+	$.filter2.data = {};
+	$.filter2.selected = {};
 	
 	var filter = function(root, show, callback) {
 		var as = root.find("a[hint]");
-		$.filter.callback = callback;
+		$.filter2.callback = callback;
 		if(as != null) {
 			as.click(function(){
 				var prev = $(this).prev();
@@ -42,25 +42,25 @@
 					var a = $(this).parent().parent().find("input");
 					a.prop("checked", false);
 					var aname = a.prop("name");
-					delete $.filter.selected[aname];
-					delete $.filter.data[aname];
-					updateSelected($.filter.selected);
+					delete $.filter2.selected[aname];
+					delete $.filter2.data[aname];
+					updateSelected($.filter2.selected);
 					if(callback) {
-						callback.apply(null,[$.filter.data]);
+						callback.apply(null,[$.filter2.data]);
 					}
 					return;
 				}
 				prev.prop("checked",true);
-				$.filter.data[prev.prop("name")] = prev.prop("value");
+				$.filter2.data[prev.prop("name")] = prev.prop("value");
 				if(show != null) {
 					if(prev.prop("type") == "radio") {
-						$.filter.selected[prev.prop("name")] = $(this).html();
+						$.filter2.selected[prev.prop("name")] = $(this).html();
 					} else if(prev.prop("type") == "checkbox") {
-						$.filter.selected[prev.prop("name")] += $(this).html();
+						$.filter2.selected[prev.prop("name")] += $(this).html();
 					}
-					updateSelected($.filter.selected);
+					updateSelected($.filter2.selected);
 					if(callback) {
-						callback.apply(null,[$.filter.data]);
+						callback.apply(null,[$.filter2.data]);
 					}
 				}
 			});
@@ -68,36 +68,36 @@
 		
 		var updateSelected = function(data){
 			var s = "";
-			for(var i in $.filter.selected) {
-				s += "<label name="+i+" >" + $.filter.selected[i] + "<em></em></label>";
+			for(var i in $.filter2.selected) {
+				s += "<label name="+i+" >" + $.filter2.selected[i] + "<em></em></label>";
 			}
 			show.html(s);
 			$(show).find("em").click(function(){
 				var prev = $(this).parent();
 				var name = prev.attr("name");
-				delete $.filter.data[name];
+				delete $.filter2.data[name];
 				root.find("input[name="+name+"]").prop("checked", false);
-				delete $.filter.selected[name];
-				updateSelected($.filter.selected);
-				if($.filter.callback) {
-					$.filter.callback.apply(null,[$.filter.data]);
+				delete $.filter2.selected[name];
+				updateSelected($.filter2.selected);
+				if($.filter2.callback) {
+					$.filter2.callback.apply(null,[$.filter2.data]);
 				}
 			});
 		};
 		
-		$.filter.clear = function() {
-			$.filter.data = {};
-			$.filter.selected = {};
-			updateSelected($.filter.selected);
+		$.filter2.clear = function() {
+			$.filter2.data = {};
+			$.filter2.selected = {};
+			updateSelected($.filter2.selected);
 			var all = root.find("input");
 			all.prop("checked", false);
-			if($.filter.callback) {
-				$.filter.callback.apply(null,[$.filter.data]);
+			if($.filter2.callback) {
+				$.filter2.callback.apply(null,[$.filter2.data]);
 			}
 		};
 		
 		return filter;
 	}
 	
-	$.filter.init = filter;
+	$.filter2.init = filter;
 })(this);

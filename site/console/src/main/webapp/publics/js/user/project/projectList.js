@@ -56,6 +56,8 @@ define(["common/url","dialog","common/pagging2","jquery.tmpl"], function(url,dia
 					}, this.data.count, this.data.pageSize)
 					self.pg.paging();
 					document[name] = self.pg;
+				} else {
+					self.pg.paging();
 				}
 			},
 			error:function(){

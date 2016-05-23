@@ -60,6 +60,15 @@ define([], function(){
 		s += "<li><a onclick=pagging.pullData("+pageCount+") aria-label=Next title='尾页'>" +
 			"<span aria-hidden=true>&raquo;</span></a></li>";
 		e.html(s);
+		var es = e.children("li");
+		$.each(es, function(n, value){
+			$(value).removeClass("active");
+			$.each($(value).children("a"), function(n,v){
+				if(pagging.current == $(v).html()) {
+					$(value).addClass("active")
+				}
+			});
+		})
 	}
 
 	pagging.prev = function(i) {

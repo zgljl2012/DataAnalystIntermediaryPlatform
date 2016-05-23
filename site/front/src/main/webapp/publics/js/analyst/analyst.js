@@ -3,7 +3,7 @@ var global = {};
 $(function(){
 	$("#noDataHint").hide();
 	// 初始化搜索条件框
-	$.filter.init($("#selectList"), $("#hasSelected"), function(data){
+	$.filter2.init($("#selectList"), $("#hasSelected"), function(data){
 		global.current = 1;
 		pullData(analystServlet, global.current, data);
 	});
@@ -19,7 +19,7 @@ $(function(){
 });
 
 function pullDataByPage(url, current) {
-	pullData(url, current, $.filter.data);
+	pullData(url, current, $.filter2.data);
 }
 
 function showLoading() {
@@ -34,7 +34,7 @@ function hideLoading() {
  * 清空所有条件
  */
 function clear() {
-	$.filter.clear();
+	$.filter2.clear();
 }
 
 /**
@@ -179,6 +179,15 @@ function paging() {
 	s += "<li><a href="+global.href+"#one"+" onclick=pullDataByPage('"+analystServlet+"',"+getPageCount()+") aria-label=Next title='尾页'>" +
 		"<span aria-hidden=true>&raquo;</span></a></li>";
 	e.html(s);
+	var es = e.children("li");
+	$.each(es, function(n, value){
+		$(value).removeClass("active");
+		$.each($(value).children("a"), function(n,v){
+			if(global.current == $(v).html()) {
+				$(value).addClass("active")
+			}
+		});
+	})
 }
 
 function prev(i) {

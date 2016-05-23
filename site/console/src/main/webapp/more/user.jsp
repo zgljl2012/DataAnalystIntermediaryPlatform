@@ -22,7 +22,7 @@
     	headerPage = "USER";
     %>
   </head>
-	<%-- <%@include file="/include/validate.jsp" %> --%>
+	<%@include file="/include/validate.jsp" %>
   <body>
   	
     <!--导航栏-->
@@ -44,7 +44,7 @@
 				<%@include file="/include/user/consoleUser.jsp" %>
 			</div>
 			<div id="console_user_group" class="tab-pane fade">
-				3
+				<%@include file="/include/user/consoleUserGroup.jsp" %>
 			</div>
 		</div>
     </div>

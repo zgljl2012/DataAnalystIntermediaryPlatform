@@ -55,7 +55,9 @@ require(["jquery-2.1.1.min"], function(){
 				<tr>
 					<td>{{= F02}}</td>
 					<td>{{= F03}}</td>
-					<td class="cp"><a onclick="scConsoleUser({{= F01}})">删除</a><a class="ml10">查看权限</a></td>
+					<td class="cp"><a onclick="scConsoleUser({{= F01}})">删除</a>
+					<a href="permission?gid={{= F04 }}"class="ml10">查看权限</a>
+					<a href="user/addUser?gid={{= F04}}">添加管理员</a></td>
 				</tr>
 				{{/if}}
 				{{/each}}

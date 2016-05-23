@@ -4,8 +4,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zgljl2012.console.AbstractConsoleServlet;
 import com.zgljl2012.framework.controller.Controller;
-import com.zgljl2012.framework.servlet.AbstractServlet;
+import com.zgljl2012.framework.permission.Permission;
 
 /**
  * @author 廖金龙
@@ -14,7 +15,8 @@ import com.zgljl2012.framework.servlet.AbstractServlet;
  */
 @SuppressWarnings("serial")
 @WebServlet(name="user", urlPatterns={"/user"})
-public class UserSerlvet extends AbstractServlet{
+@Permission(name="用户管理")
+public class UserSerlvet extends AbstractConsoleServlet{
 
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse res,
@@ -26,6 +28,12 @@ public class UserSerlvet extends AbstractServlet{
 	protected void post(HttpServletRequest req, HttpServletResponse res,
 			Controller controller) throws Exception {
 		this.forward(req, res, "/more/user.jsp");
+	}
+
+	@Override
+	protected boolean isPermission() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 }

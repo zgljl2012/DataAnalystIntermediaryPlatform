@@ -22,7 +22,7 @@
     	headerPage = "COMPAIGN";
     %>
   </head>
-
+<%@include file="/include/validate.jsp" %>
   <body>
   	
     <!--导航栏-->
@@ -37,6 +37,11 @@
 		                     发送站内信
 		      </a>
 		   </li>
+		   <li>
+		   	  <a href="#adv" data-toggle="tab">
+		                     广告管理
+		      </a>
+		   </li>
 		</ul>
 		<div class="tab-content">
 			<div id="letter" class="tab-pane in active">
@@ -49,12 +54,23 @@
 				<input type="submit" class="button btn-primary mt10" value="发送">
 			</form>
 			</div>
+			<div id="adv" class="tab-pane in">
+				<%@include file="/include/system/ad.jsp" %>
+			</div>
 		</div>
 	</div>
 	</div>
     
    <!--底部导航栏-->
    <%@include file="/include/footer.jsp" %>
+    <%@include file="/include/dialog.jsp" %>
+    <script type="text/javascript">
+    require(["jquery-2.1.1"],function(){
+ 	   require(["bootstrap.min"], function() {
+ 			   
+ 	   })
+    })
     
+    </script>
   </body>
 </html>

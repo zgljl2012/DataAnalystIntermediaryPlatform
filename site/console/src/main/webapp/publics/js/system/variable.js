@@ -21,12 +21,15 @@ define(["common/url","common/request","common/pagging2",
 					if(pg == null) {
 						pg = new pagging(name, function(cur){
 							current = cur;
+							pg.current = cur;
 							variable.list(function(data){
 								variable.tmpl(data, mTmpl, mTarget);
 							});
 						}, data.count, data.pageSize)
 						pg.paging();
 						document[name] = pg;
+					} else {
+						pg.paging();
 					}
 				}
 			})

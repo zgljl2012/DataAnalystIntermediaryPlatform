@@ -9,8 +9,14 @@ define(["common/dialog2"], function(dialog, option) {
 			data:option.data,
 			type:option.type,
 			success:function(data){
-				if(option.success) {
-					option.success.apply([],[data]);
+				var d = eval('('+data+')');
+				if(d.status == "false") {
+					dialog.showAlert(d.error);
+					data = {};
+				} else {
+					if(option.success) {
+						option.success.apply([],[data]);
+					}
 				}
 			},
 			error:function() {

@@ -164,6 +164,15 @@ function paging() {
 		"<span aria-hidden=true>&raquo;</span></a></li>";
 	var e = $("#paging");
 	e.html(s);
+	var es = e.children("li");
+	$.each(es, function(n, value){
+		$(value).removeClass("active");
+		$.each($(value).children("a"), function(n,v){
+			if(global.current == $(v).html()) {
+				$(value).addClass("active")
+			}
+		});
+	})
 }
 
 function prev(i) {

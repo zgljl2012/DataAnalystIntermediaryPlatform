@@ -4,10 +4,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zgljl2012.console.AbstractConsoleServlet;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.permission.Permission;
 import com.zgljl2012.framework.service.annotation.Impl;
-import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.modules.project.ProjectManage;
 
@@ -19,7 +19,7 @@ import com.zgljl2012.modules.project.ProjectManage;
 @SuppressWarnings("serial")
 @WebServlet(name="projectPage", urlPatterns={"/project/page/*"})
 @Permission(name="项目审核")
-public class ProjectPageServlet extends AbstractServlet{
+public class ProjectPageServlet extends AbstractConsoleServlet{
 	
 	@Impl
 	ProjectManage projectManage;
@@ -40,6 +40,11 @@ public class ProjectPageServlet extends AbstractServlet{
 	protected void post(HttpServletRequest req, HttpServletResponse res,
 			Controller controller) throws Exception {
 		
+	}
+
+	@Override
+	protected boolean isPermission() {
+		return true;
 	}
 
 }

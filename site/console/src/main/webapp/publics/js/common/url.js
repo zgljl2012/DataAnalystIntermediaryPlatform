@@ -15,9 +15,11 @@ define(["common/config"], function(config) {
 			},
 			front:console+"user/front",
 			console:console+"user/console",
+			group:console+"user/group",
 		},
 		system:{
-			variable:console+"variable"
+			variable:console+"variable",
+			ad:console+"ad",
 		}
 	}
 	return url;

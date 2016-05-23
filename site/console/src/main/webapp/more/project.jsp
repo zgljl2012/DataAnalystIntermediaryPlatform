@@ -25,7 +25,7 @@
     	headerPage = "PROJECT";
     %>
   </head>
-
+<%@include file="/include/validate.jsp" %>
   <body>
   	
     <!--导航栏-->

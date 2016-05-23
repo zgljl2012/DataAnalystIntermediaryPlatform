@@ -1,4 +1,8 @@
+<%@page import="com.zgljl2012.common.database.T80"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@page import="java.util.List"%>
 <%@page language="java" contentType="text/html; charset=utf-8" %>
+<%@page import="com.zgljl2012.modules.front.user.AdvertisementManage" %>
 <!DOCTYPE html>
 <html lang="zh">
   <head>
@@ -31,7 +35,13 @@
     <![endif]-->
      
   </head>
-
+<%
+AdvertisementManage am = 
+	controller.getServiceManage().getService(AdvertisementManage.class);
+List<T80> list = am.getAds();
+System.out.println(list.size());
+request.setAttribute("ads", list);
+%>
   <body>
   	
     <!--导航栏-->
@@ -41,33 +51,28 @@
     <div class="container">
         <div id="myC" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-          <li data-target="#myC" data-slide-to="0" class="active"></li>
-          <li data-target="#myC" data-slide-to="1"></li>
-          <li data-target="#myC" data-slide-to="2"></li>
+        	<c:if test="${ads != null && ads.size() >0 }">
+        		<c:forEach begin="0" end="${ads.size()-1}" step="1" var="i">
+        			<li data-target="#myC" data-slide-to="${i}" 
+        				class='${i==0?"active":""}'></li>		
+        		</c:forEach>
+        	</c:if>
         </ol>
         <div class="carousel-inner" role="listbox">
-          <div class="item active">
-              <img src="publics/images/shop.jpg" alt="...">
-              <div class="carousel-caption">
-                <h3>第0个页面</h3>
-                <p>test0</p>
-              </div>
-          </div>
-          <div class="item">
-              <img src="publics/images/subway.jpg" alt="...">
-              <div class="carousel-caption">
-                <h3>第1个页面</h3>
-                <p>test1</p>
-              </div>
-          </div>
-          <div class="item">
-              <img src="publics/images/sunset.jpg" alt="...">
-              <div class="carousel-caption">
-                <h3>第2个页面</h3>
-                <p>test2</p>
-              </div>
-          </div>
+        	<c:if test="${ads != null&& ads.size() >0  }">
+        		<c:forEach begin="0" end="${ads.size()-1}" step="1" var="i">
+        			<div class='item ${i==0?"active":""}'>
+			              <a href="${ads.get(i).getF04()}" target="_blank"><img src="uploadHeadImage?filePath=${ads.get(i).getF02() }" 
+			              width="100%"
+			              alt="..." style="height:400px;"></a>
+			              <div class="carousel-caption">
+			                <h3>${ads.get(i).getF03()}</h3>
+			              </div>
+			          </div>	
+        		</c:forEach>
+        	</c:if>
         </div>
+        <c:if test="${ads != null&& ads.size() >0  }">
           <a class="left carousel-control" href="#myC" role="button" data-slide="prev">
              <span class="glyphicon glyphicon-chevron-left"></span>
              <span class="sr-only">上一页</span>
@@ -76,6 +81,7 @@
             <span class="glyphicon glyphicon-chevron-right"></span>
             <span class="sr-only">下一页</span>
           </a>
+          </c:if>
         </div>
     </div>
     <div class="container"><br></div>
@@ -172,8 +178,8 @@
 								{{each(i, d) data}}
 								{{if d!=null}}
                                 <li class="active"  data-shafa-collapse="accordion">
-                                    <a class="rank-item-title" href="#" target="_blank" title="数据分析师">
-                                        <span class="ranking-item-1">1</span>
+                                    <a class="rank-item-title" href="analyst/{{= d.t20.F01}}" target="_blank" title="数据分析师">
+                                        <span class="ranking-item-1">{{= i+1}}</span>
                                         <h3>{{= d.t20.F02}}</h3>
                                         <span class="rank-item-price">{{= d.avg}}</span>
                                     </a>

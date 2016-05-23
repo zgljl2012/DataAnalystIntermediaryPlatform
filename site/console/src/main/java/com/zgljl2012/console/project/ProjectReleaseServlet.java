@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.zgljl2012.common.variable.LetterVariable;
+import com.zgljl2012.console.AbstractConsoleServlet;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.permission.Permission;
 import com.zgljl2012.framework.service.annotation.Impl;
-import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.framework.util.StringHelper;
 import com.zgljl2012.framework.variable.VariableManage;
@@ -27,7 +27,7 @@ import com.zgljl2012.modules.project.ProjectManage;
 @SuppressWarnings("serial")
 @WebServlet(name="projectRelease", urlPatterns={"/project/realease"})
 @Permission(name="项目发布或审核不通过")
-public class ProjectReleaseServlet extends AbstractServlet{
+public class ProjectReleaseServlet extends AbstractConsoleServlet{
 	
 	private static final SimpleDateFormat sdf = 
 			new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
@@ -77,6 +77,11 @@ public class ProjectReleaseServlet extends AbstractServlet{
 		}
 		String context = req.getContextPath();
 		this.redirect(res, context+"/more/project.jsp");
+	}
+
+	@Override
+	protected boolean isPermission() {
+		return true;
 	}
 
 }

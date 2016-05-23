@@ -1,13 +1,18 @@
 
-define(["common/url","common/dialog2","common/pagging2","jquery.tmpl"], 
-		function(url,dialog,pagging){
+define(["common/url","common/dialog2","common/pagging2","common/request","jquery.tmpl"], 
+		function(url,dialog,pagging,request){
 	var op_url = url.user.front;
 	var op_url2 = url.user.console;
-	var doc = function(status, isConsole) {
+	var op_url3 = url.user.group;
+	var doc = function(status, isConsole, isGroup) {
 		this.url = url.user.front;
 		if(isConsole==true) {
 			this.url = url.user.console;
 		}
+		if(isGroup == true) {
+			this.url = url.user.group;
+		}
+		console.log(this.url)
 		this.data = {"data":[]},
 		this.pg = null,
 		this.current = 1;
@@ -25,12 +30,15 @@ define(["common/url","common/dialog2","common/pagging2","jquery.tmpl"],
 		var tmplTarget = _tmplTarget;
 		var status = this.status;
 		var self = this;
-		$.ajax({
+		request.get({
 			url:this.url,
 			data:{current:this.current},
 			success:function(_data){
 				if(_data == null) {
 					dialog.showAlert("数据出错，请刷新重试");
+				}
+				if(self.url == url.user.group) {
+					console.log(_data)
 				}
 				this.data = eval("("+_data+")");
 				this.data = filterData(this.data);
@@ -53,10 +61,9 @@ define(["common/url","common/dialog2","common/pagging2","jquery.tmpl"],
 					}, this.data.count, this.data.pageSize)
 					self.pg.paging();
 					document[name] = self.pg;
+				} else {
+					self.pg.paging();
 				}
-			},
-			error:function(){
-				dialog.showAlert("网络出错，请刷新重试！");
 			}
 		});
 	}

@@ -252,9 +252,10 @@ public class ProjectManageImpl extends AbstractService implements ProjectManage{
 							t.setF07(rs.getDate(7));
 							t.setF08(rs.getInt(8));
 							String content =rs.getString(9); 
-							content = content.replace("\r", "\\r");
-							content = content.replace("\n", "\\n");
-							System.out.println(content);
+							if(!StringHelper.isEmpty(content)) {
+								content = content.replace("\r", "\\r");
+								content = content.replace("\n", "\\n");
+							}
 							t.setF09(null);
 							t.setF10(rs.getDate(10));
 							t.setF11(rs.getDate(11));

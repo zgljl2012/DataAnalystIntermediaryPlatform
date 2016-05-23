@@ -15,7 +15,7 @@ public class H23 {
 	public int F01;
 	
 	/**
-	 * 用户表
+	 * 用户组表
 	 */
 	public int F02;
 	

@@ -83,6 +83,16 @@ define([], function(){
 		s += "<li><a onclick="+this.name+".pullData("+pageCount+") aria-label=Next title='尾页'>" +
 			"<span aria-hidden=true>&raquo;</span></a></li>";
 		e.html(s);
+		var es = e.children("li");
+		var self = this;
+		$.each(es, function(n, value){
+			$(value).removeClass("active");
+			$.each($(value).children("a"), function(n,v){
+				if(self.current == $(v).html()) {
+					$(value).addClass("active")
+				}
+			});
+		})
 	}
 	
 	return pagging;

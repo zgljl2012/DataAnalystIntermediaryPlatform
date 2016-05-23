@@ -4,12 +4,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zgljl2012.console.AbstractConsoleServlet;
 import com.zgljl2012.console.module.service.manage.MyVariableManage;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.database.PagingInfo;
 import com.zgljl2012.framework.permission.Permission;
 import com.zgljl2012.framework.service.annotation.Impl;
-import com.zgljl2012.framework.servlet.AbstractServlet;
 import com.zgljl2012.framework.util.JSON;
 import com.zgljl2012.framework.util.StringHelper;
 
@@ -21,7 +21,7 @@ import com.zgljl2012.framework.util.StringHelper;
 @SuppressWarnings("serial")
 @WebServlet(name="variableServlet", urlPatterns={"/variable"})
 @Permission(name="常量配置查看")
-public class VariableServlet extends AbstractServlet{
+public class VariableServlet extends AbstractConsoleServlet{
 	
 	@Impl
 	private MyVariableManage vm;
@@ -58,6 +58,11 @@ public class VariableServlet extends AbstractServlet{
 			json.put("pageSize", ""+10);
 			out(res, json);
 		
+	}
+
+	@Override
+	protected boolean isPermission() {
+		return true;
 	}
 
 }

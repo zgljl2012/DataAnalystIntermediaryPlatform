@@ -33,6 +33,13 @@ public interface HtUserManage extends Service{
 	public JSON consoleUser(PagingInfo info);
 	
 	/**
+	 * 分页查询T20
+	 * @param info
+	 * @return
+	 */
+	public JSON consoleGroup(PagingInfo info);
+	
+	/**
 	 * 删除用户
 	 * @param uid
 	 */
@@ -61,4 +68,19 @@ public interface HtUserManage extends Service{
 	 * @param uid
 	 */
 	public void scConsoleUser(int uid);
+	
+	/**
+	 * 添加管理员组
+	 * @param name
+	 */
+	public void addConsoleUserGroup(String name);
+	
+	/**
+	 * 添加管理员
+	 * @param gid
+	 * @param name
+	 */
+	public void addConsoleUser(int gid, String name, String pwd);
+	
+	
 }

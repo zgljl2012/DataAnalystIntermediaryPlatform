@@ -3,10 +3,14 @@
 <%@ page import="com.zgljl2012.framework.controller.Controller" %>
 <%@ page import="com.zgljl2012.common.variable.SystemVariable" %>
 <%@ page import="com.zgljl2012.framework.servlet.session.LjlSession" %>
+<%@ page import="com.zgljl2012.console.module.service.manage.PermissionManage" %>
 <%
 	Controller controller = (Controller)application.getAttribute("controller");
 	// 常量管理类
 	VariableManage variableManage = controller.getVariableManage();
+	// 权限管理
+	PermissionManage permissionManage = 
+		controller.getServiceManage().getService(PermissionManage.class);
 	// 定制的Session
 	LjlSession ljlSession = controller.getSession(session);
 	String path = request.getContextPath(); 

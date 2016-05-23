@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.zgljl2012.framework.controller.Controller;
+import com.zgljl2012.framework.exceptions.AuthorizationLimitException;
 import com.zgljl2012.framework.exceptions.PostException;
 import com.zgljl2012.framework.util.JSON;
 
@@ -21,6 +22,7 @@ import com.zgljl2012.framework.util.JSON;
 public abstract class AbstractServlet extends HttpServlet{
 	
 	protected Controller controller;
+	
 	
 	@Override
 	public final void init() throws ServletException {
@@ -62,15 +64,17 @@ public abstract class AbstractServlet extends HttpServlet{
 		resp.setCharacterEncoding("utf-8");
 		try {
 			post(req, resp, controller);
+		} catch(AuthorizationLimitException e) {
+			String error = "more/error/error.jsp";
+			req.setAttribute("error", "抱歉，您无此权限");
+			this.forward(req, resp, error);
 		} catch(PostException e) {
 			e.printStackTrace();
 			JSON json = new JSON();
 			json.put("status", "error");
 			json.put("description", e.getMessage());
 			out(resp, json);
-		}
-		catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
