@@ -29,11 +29,12 @@ public class ConfirmEmailBox extends AbstractServlet{
 		String hexCode = req.getParameter("hexCode");
 		try {
 			um.confirmEmailBox(email, hexCode);
-			out(res,"验证成功");
+			req.setAttribute("msg", "验证成功");
 		} catch(PostException e) {
 			e.printStackTrace();
-			out(res, e.getMessage());
+			req.setAttribute("msg", e.getMessage());
 		}
+		this.forward(req, res, "/more/user/confirm.jsp");
 	}
 
 	@Override
