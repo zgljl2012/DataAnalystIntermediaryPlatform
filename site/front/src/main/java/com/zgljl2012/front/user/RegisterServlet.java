@@ -4,6 +4,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zgljl2012.common.variable.SystemVariable;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.exceptions.VerifyCodeTimeoutException;
 import com.zgljl2012.framework.service.annotation.Impl;
@@ -33,8 +34,8 @@ public class RegisterServlet extends AbstractServlet{
 	}
 
 	@Override
-	protected void post(HttpServletRequest req, HttpServletResponse res,
-			Controller controller) throws Exception {
+	protected void post(final HttpServletRequest req, HttpServletResponse res,
+			final Controller controller) throws Exception {
 		// TODO Auto-generated method stub
 		String username = req.getParameter("username");
 		String email = req.getParameter("email");
@@ -59,7 +60,11 @@ public class RegisterServlet extends AbstractServlet{
 			if(uid > 0) {
 				new RegisterValidate(controller).processRegister(uid, email, new RegisterUrl(){
 					public String url(String email, String hexCode) {
-						return "http://localhost:8080/register.jsp?email="+email+"&hexCode="+hexCode;
+						String domain = controller.getVariableManage()
+								.getValue(SystemVariable.DOMAIN);
+						String context = req.getContextPath();
+						return "http://" + domain + context + 
+								"/confirm/email?email="+email+"&hexCode="+hexCode;
 					}
 				});
 			}

@@ -46,7 +46,7 @@ public class RegisterValidate extends AbstractService{
 		String hexCode = MD5Util.encode2hex(code);
 		String url = registerUrl.url(t.F02, hexCode);
 		///邮件的内容
-        StringBuffer sb=new StringBuffer("点击下面链接激活账号，24小时生效，否则重新注册账号，链接只能使用一次，请尽快激活！</br>");
+        StringBuffer sb=new StringBuffer("点击下面链接激活账号，激活后用户方可进行投标操作，请尽快激活！</br>");
         sb.append("<a href=\"");
         sb.append(url); 
         sb.append("\">"); 

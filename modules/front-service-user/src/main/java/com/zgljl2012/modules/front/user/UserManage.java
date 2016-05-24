@@ -106,4 +106,6 @@ public interface UserManage extends Service {
 	 */
 	public int getUidByUsername(String username) throws PostException;
 	
+	
+	public void confirmEmailBox(String email, String hexCode) throws PostException;
 }

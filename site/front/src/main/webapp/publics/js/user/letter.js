@@ -60,6 +60,7 @@ define(["common/request","common/url","common/pagging2", "jquery.tmpl"],
 			if (readed == 'false') {
 				letter.read(id);
 			}
+			$(item).find("span").css("font-weight","400");
 		},
 		read:function(id) {
 			request.post({

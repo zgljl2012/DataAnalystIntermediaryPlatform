@@ -6,6 +6,8 @@ import com.zgljl2012.framework.variable.VariableClass;
 @VariableClass(key="SYSTEM", name="系统常量")
 public enum SystemVariable implements VariableBean{
 	
+	DOMAIN("域名","localhost:8080"),
+	
 	SITENAME("网站名称"){
 		@Override
 		public String getValue() {

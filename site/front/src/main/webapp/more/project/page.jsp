@@ -1,6 +1,8 @@
+<%@page import="com.zgljl2012.common.database.T10"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ page import="com.zgljl2012.common.database.enums.Gender" %>
 <%@ page import="com.zgljl2012.modules.project.BidManage" %>
+<%@ page import="com.zgljl2012.modules.front.user.UserManage" %>
 <%@ page import="com.zgljl2012.framework.util.JSON" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <!DOCTYPE html>
@@ -28,6 +30,7 @@
 <%
 	headerPage="XMSC";
 	BidManage bidManage = controller.getServiceManage().getService(BidManage.class);
+	UserManage userManage = controller.getServiceManage().getService(UserManage.class);
 	boolean isMatch = false;
 	boolean isSelected = false;
 	int projectId = Integer.parseInt(
@@ -38,6 +41,8 @@
 			ljlSession.getUserId());
 	}
 	int userId = controller.getSession(session).getUserId();
+	T10 t = userManage.getT10(userId);
+	System.out.println(t.getF08().name());
 	request.setAttribute("isMatch", isMatch);
 	request.setAttribute("isSelected", isSelected);
 	int selectId = -1; 
@@ -93,8 +98,17 @@
     			</div>
     			<div class="mt5 col-sm-4">
     				<input type="text" name="quote_price" class="m-input-form-control" placeholder="请输入您的报价">
-    				<input type="button" id="release" value="发布" class="btn btn-primary" <%if(!ljlSession.isLogined()) out.println("disabled"); %>>
+    				<input type="button" id="release" value="发布" class="btn btn-primary" 
+    				<%if(!ljlSession.isLogined()||
+    						t==null||t!=null&&!t.getF08().name().equals("QY")) out.println("disabled"); %>>
+    				<%if(ljlSession.isLogined()&&(
+    						t==null||t!=null&&!t.getF08().name().equals("QY"))){%>
+    				<div>
+    					<span class="red fs08 mt10">未激活用户不可投标</span>
+    				</div>
+    				<%} %>
     			</div>
+    			
     			</form>
     		</div>
     	</div>

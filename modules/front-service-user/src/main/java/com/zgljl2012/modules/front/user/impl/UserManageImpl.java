@@ -17,6 +17,7 @@ import com.zgljl2012.common.variable.LetterVariable;
 import com.zgljl2012.framework.controller.Controller;
 import com.zgljl2012.framework.exceptions.PostException;
 import com.zgljl2012.framework.service.AbstractService;
+import com.zgljl2012.framework.util.MD5Util;
 import com.zgljl2012.framework.util.StringHelper;
 import com.zgljl2012.framework.variable.VariableManage;
 import com.zgljl2012.modules.front.user.UserManage;
@@ -329,5 +330,46 @@ public class UserManageImpl extends AbstractService implements UserManage{
 			this.close(conn);
 		}
 		return 0;
+	}
+
+	@Override
+	public void confirmEmailBox(String email, String hexCode)
+			throws PostException {
+		String sql = "SELECT F01,F02,F03,F04 FROM T11 WHERE F02 LIKE ? ORDER BY F04 DESC LIMIT 1";
+		Connection conn = this.getConnection();
+		ResultSet rs = null;
+		try {
+			conn.setAutoCommit(false);
+			rs = this.select(conn, sql, email);
+			if(rs.next()) {
+				int uid = rs.getInt(1);
+				String hc = rs.getString(3);
+				if(StringHelper.isEmpty(hc)||StringHelper.isEmpty(hexCode)) {
+					throw new PostException("验证失败");
+				}
+				if(hexCode.equals(MD5Util.encode2hex(hc))) {
+					sql = "UPDATE T10 SET F08='QY' WHERE F01 = ?";
+					this.execute(conn, sql, uid);
+				} else {
+					throw new PostException("验证失败");
+				}
+			} else {
+				throw new PostException("没有找到此邮箱");
+			}
+			conn.commit();
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			throw new PostException("验证失败");
+		} finally {
+			close(rs);
+			close(conn);
+		}
+		
+		
 	}	
 }

@@ -38,25 +38,10 @@
     <div class="panel panel-default">
     	<div class="panel-heading">站内信</div>
     	<div class="panel-body">
-    	<div id="noDataHint" class="row tc orange fs15 mt10 display_none">暂无数据</div>
 			<div id="loading" class="row tc">
 				<img src="publics/images/loadingBig.gif"></img>
 			</div>
-			<%-- 分页 --%>
-			<div class="row col-sm-12 fl">
-			<ul class="pagination fs08 ml30 mt10 cp" name="paging">
-				<li>
-					<a href="#" aria-label="Previous">
-						<span aria-hidden="true">&laquo;</span>
-					</a>
-				</li>
-				<li>
-					<a href="#" aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-					</a>
-				</li>
-			</ul>
-			</div>
+			
 			
 			<div class="container" id="target">
 				<div class="row">
@@ -74,6 +59,7 @@
 				</div>
 				</div>
 				<br>
+				<div id="noDataHint" class="row tc orange fs15 mt10 display_none">暂无数据</div>
 				<script id="tmpl" type="text/x-jquery-tmpl">
 				{{each(i, d) data}}
                 {{if d!=null }}
@@ -83,14 +69,15 @@
 					<span><input type="checkbox" name="lid" value="{{= id}}"></span>
 				</div>
 				<div class="col-sm-6">
-					<span><label>{{= title}}</label></span>
+					<span {{= readed=='false'?"style=font-weight:bold;":"" }}>{{= title}}</span>
 				</div>
 				<div class="col-sm-3">
-					<span><label>{{= timestamp}}</label></span>
+					<span>{{= timestamp}}</span>
 				</div>
 				</div>
 				<div class="row display_none w90 mtr-content">
-					<div class="col-sm-12"><pre>{{= content}}</pre></div>
+					<div class="col-sm-12">
+					<pre style="background:transparent;border-color:transparent;">{{= content}}</pre></div>
 				</div>
 				</div>
 				{{/if}}
@@ -128,7 +115,6 @@
 		   	   $("#loading").hide();
 		   	   $("ul[name=paging]").hide();
 		   	   letter.load($("#tmpl"), $("#target"), function(data){
-		   		   console.log(data.count);
 		   		   if(data==null||data.count==0||
 		   				   data.data==null||data.data.length==0) {
 		   			   $("#noDataHint").show();

@@ -41,12 +41,12 @@
    <%@include file="/include/footer.jsp" %>
    <%--对话框 --%>
    <%@include file="/include/dialog.jsp" %>
+   <script src="publics/js/common/dialog.js"></script>
    <%if("FXS".equals(userType)) { %>
     	<script src="/front/publics/js/user/index.js"></script>
     <%} else { %>
     	<script src="/front/publics/js/user/qy.js"></script>
     <%} %>
-   <script src="publics/js/common/dialog.js"></script>
    <script>
    <%--用户类型--%>
    var userType = '<%=userType%>';

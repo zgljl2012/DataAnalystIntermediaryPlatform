@@ -39,7 +39,6 @@
       			<div class="col-sm-5">
       				<span>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱:</span>
       				<input class="m-input-form-control" type="text" name="email" value="" maxlength="18" disabled/>
-      				<a onclick="edit('email','编辑','完成', updateEmail)" class="cp">编辑</a>
       			</div>
       			<div class="col-sm-5">
       				<span>出生日期:</span>
